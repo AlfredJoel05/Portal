@@ -1,0 +1,17 @@
+GET http://localhost:3000/viewprofile
+
+###
+
+POST http://localhost:3000/editprofile
+Content-Type: application/json
+
+{
+    "cf_name" : "John",
+    "cl_name" : "Smith",
+    "c_mobile" : "9123456789",
+    "c_street" : "JDWSELS",
+    "c_city" : "AL",
+    "c_state" : "VS",
+    "c_country" : "GB",
+    "c_pin" : "123645"
+}

@@ -1,0 +1,81 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">View / Edit Profile</h5>
+        </div>
+        <div class="card-body">
+          <form name="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="row">
+              <div class="col-md-5 pr-1">
+                <div class="form-group">
+                  <label>Customer ID (disabled)</label>
+                  <input type="text" class="form-control" disabled="" placeholder={{username}}>
+                </div>
+              </div>
+              <div class="col-md-3 px-1">
+                <div class="form-group">
+                  <label>First Name</label>
+                  <input type="text" class="form-control" placeholder={{f_name}}  formControlName="cf_name">
+                </div>
+              </div>
+              <div class="col-md-4 pl-1">
+                <div class="form-group">
+                  <label>Last Name</label>
+                  <input type="text" class="form-control" placeholder={{l_name}}  formControlName="cl_name">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 pr-1">
+                <div class="form-group">
+                  <label>Mobile Number</label>
+                  <input type="text" class="form-control" placeholder={{mobile}}  formControlName="c_mobile">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Street</label>
+                  <input type="text" class="form-control" placeholder={{street}}  formControlName="c_street">
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>City</label>
+                  <input type="text" class="form-control" placeholder={{city}}  formControlName="c_city">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>State</label>
+                  <input type="text" class="form-control" placeholder={{state}}  formControlName="c_state">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 pr-1">
+                <div class="form-group">
+                  <label>Country</label>
+                  <input type="text" class="form-control" placeholder={{country}}  formControlName="c_country">
+                </div>
+              </div>
+              <div class="col-md-4 px-1">
+                <div class="form-group">
+                  <label>Pin Code</label>
+                  <input type="text" class="form-control" placeholder={{pin}}  formControlName="c_pin">
+                </div>
+              </div>
+              <button align="center" class="btn bt">Submit Changes</button>
+            </div>
+            <hr>
+          </form>
+        </div>
+      </div>
+    </div>
+</div>
