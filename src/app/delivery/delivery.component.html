@@ -7,33 +7,33 @@
               <div class="card-header">
                 <h4 class="card-title ctitle">Sales Order Details</h4><br>
               </div>
+              <div *ngIf="!spin" class="spinner"><mat-spinner style="margin:0 auto;"></mat-spinner>
               <table class="table table-striped">
                 <thead class="thead">
                 <tr>
-                  <th class="c0" scope="col">S.No.</th>
-                  <th class="c1" scope="col" sortable="name" (sort)="onSort($event)">Item No.</th>
-                  <th class="c2" scope="col" sortable="name" (sort)="onSort($event)">Material Description</th>
-                  <th class="c3" scope="col" sortable="name" (sort)="onSort($event)">Pruchase No.</th>
-                  <th class="c4" scope="col" sortable="name" (sort)="onSort($event)">Net Value</th>
-                  <th class="c5" scope="col" sortable="name" (sort)="onSort($event)">Net Price</th>
-                  <th class="c6" scope="col" sortable="name" (sort)="onSort($event)">Name</th>
-                  <th class="c7" scope="col" sortable="name" (sort)="onSort($event)">Date</th>
-                  <th class="c8" scope="col" sortable="name" (sort)="onSort($event)">Status</th>
+                  <th class="c0" scope="col" sortable="name" (sort)="onSort($event)">Sales Doc</th>
+                  <th class="c1" scope="col" sortable="name" (sort)="onSort($event)">Created On</th>
+                  <th class="c2" scope="col" sortable="name" (sort)="onSort($event)">Sales Org</th>
+                  <th class="c3" scope="col" sortable="name" (sort)="onSort($event)">Delivery Date</th>
+                  <th class="c4" scope="col" sortable="name" (sort)="onSort($event)">Incoterms</th>
+                  <th class="c5" scope="col" sortable="name" (sort)="onSort($event)">SD Item</th>
+                  <th class="c6" scope="col" sortable="name" (sort)="onSort($event)">Currency</th>
+                  <th class="c7" scope="col" sortable="name" (sort)="onSort($event)">Sold To</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr *ngFor="let country of countries">
-                  <th class="Row r0">{{ country.id }}</th>
-                  <td class="Row r1">{{ country.name }}</td>
-                  <td class="Row r2">{{ country.area }}</td>
-                  <td class="Row r3">{{ country.population }}</td>
-                  <td class="Row r4">{{ country.population  }}</td>
-                  <td class="Row r5">{{ country.population  }}</td>
-                  <td class="Row r6">{{ country.population  }}</td>
-                  <td class="Row r7">{{ country.population  }}</td>
-                  <td class="Row r8">{{ country.population  }}</td>
-                </tr>
-                </tbody>
+                <tbody *ngIf="data?.length != 0">
+                  <tr *ngFor="let p of data">
+                    <td class="r0">{{ p.VBELN._text }}</td>
+                    <td class="r1">{{ p.ERDAT._text }}</td>
+                    <td class="r2">{{ p.VKROG._text }}</td>
+                    <td class="r3">{{ p.LFDAT_V._text }}</td>
+                    <td class="r4">{{ p.INCO2._text }}</td>
+                    <td class="r5">{{ p.POSNR._text }}</td>
+                    <td class="r6">{{ p.ARKTX._text }}</td>
+                    <td class="r7">{{ p.CURRENCY._text }}</td>                   
+                    <!-- <td class="r8">{{ p.KUNAG._text }}</td>                    -->
+                  </tr>
+              </tbody>
               </table>
              </div>
             </div>

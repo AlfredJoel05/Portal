@@ -1,0 +1,19 @@
+.card-body{
+    padding-left: 200px;
+}
+
+.ctitle{
+    padding-left: 30px;
+    font-size: 16px;
+    color: red;
+}
+
+.ct{
+    font-weight: bold;
+    color: rgb(77, 190, 255)
+}
+
+.row{
+    justify-content: center;
+    align-items: center;
+}

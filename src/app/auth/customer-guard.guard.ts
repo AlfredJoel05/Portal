@@ -12,7 +12,7 @@ export class CustomerGuardGuard implements CanActivate {
   canActivate() {
       if (this.authService.isLoggedIn)
       {
-        return !!localStorage.getItem('token');
+        return !!sessionStorage.getItem('token');
       }
       else{
       this.router.navigate(['customerlogin'])

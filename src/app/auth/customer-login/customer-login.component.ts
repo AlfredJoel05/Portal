@@ -39,7 +39,7 @@ export class CustomerLoginComponent implements OnInit {
 		this.loginService.loginPostData(this.form.value).subscribe(response => {
 			if(response !== "NULL")
 			{
-				this.success = !!localStorage.getItem('token');
+				this.success = !!sessionStorage.getItem('token');
 				console.log('Component Output:'+this.status);
 				this.result = response; //Username is the result
 				this.router.navigate(['customer/dashboard']);

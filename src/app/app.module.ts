@@ -22,6 +22,7 @@ import { InterceptorService } from './auth/loader/interceptor.service';
 import { CustomerProfileComponent } from './customer-profile/customer-profile.component';
 import { CustomerGuardGuard } from './auth/customer-guard.guard';
 import { TokenService } from './auth/tokenInterceptor/token.service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import { TokenService } from './auth/tokenInterceptor/token.service';
     MatProgressBarModule,
     AppRoutingModule,
     NgbModule,
+    MatProgressSpinnerModule,
     ReactiveFormsModule,
     ToastrModule.forRoot(),
   ],

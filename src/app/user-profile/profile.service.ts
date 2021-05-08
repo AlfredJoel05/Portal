@@ -21,7 +21,6 @@ export class ProfileService {
 
   postData(profileData: any){
     console.log(typeof profileData)
-    const headers = new HttpHeaders().set('Content-Type', 'application/json');
 
     this.httpClient.post('http://localhost:3000/editprofile',profileData).subscribe(res =>{
       

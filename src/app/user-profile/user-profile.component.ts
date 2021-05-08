@@ -52,9 +52,7 @@ export class UserProfileComponent implements OnInit {
     })
   }
 
-  onSubmit(){
-    console.log(this.form.value)
-    
+  onSubmit(){ 
     this.profileService.postData(this.form.value)
   }
 

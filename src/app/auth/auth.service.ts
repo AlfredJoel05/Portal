@@ -13,7 +13,7 @@ export class AuthService {
   private loginPostSubject = new Subject<any>();
   SERVER = "http://localhost:3000";
 
-  isLoggedIn: boolean = false; //Change it to false -- True for testing purposes
+  isLoggedIn: boolean = true; //Change it to false -- True for testing purposes
 
   private logincred = new BehaviorSubject<string>("default Message");
 	loginCred = this.logincred.asObservable();
@@ -37,8 +37,8 @@ export class AuthService {
           token = token.slice(1)
           let username = res.split(':::::')[1]
           username = username.slice(0, username.length - 1)	
-          localStorage.setItem('token', token)
-          localStorage.setItem('username', username)
+          sessionStorage.setItem('token', token)
+          sessionStorage.setItem('username', username)
           this.isLoggedIn = true;
           return username;
 			  }

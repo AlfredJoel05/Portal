@@ -7,34 +7,32 @@
               <div class="card-header">
                 <h4 class="card-title ctitle">Sales Order Details</h4><br>
               </div>
-              <table class="table table-striped">
+              <!-- <table class="table table-striped">
                 <thead class="thead">
                 <tr>
-                  <th class="c0" scope="col">S.No.</th>
+                  <th class="c0" scope="col" sortable="name" (sort)="onSort($event)">Document No.</th>
                   <th class="c1" scope="col" sortable="name" (sort)="onSort($event)">Item No.</th>
                   <th class="c2" scope="col" sortable="name" (sort)="onSort($event)">Material Description</th>
-                  <th class="c3" scope="col" sortable="name" (sort)="onSort($event)">Pruchase No.</th>
-                  <th class="c4" scope="col" sortable="name" (sort)="onSort($event)">Net Value</th>
-                  <th class="c5" scope="col" sortable="name" (sort)="onSort($event)">Net Price</th>
-                  <th class="c6" scope="col" sortable="name" (sort)="onSort($event)">Name</th>
-                  <th class="c7" scope="col" sortable="name" (sort)="onSort($event)">Date</th>
-                  <th class="c8" scope="col" sortable="name" (sort)="onSort($event)">Status</th>
+                  <th class="c3" scope="col" sortable="name" (sort)="onSort($event)">Category</th>
+                  <th class="c4" scope="col" sortable="name" (sort)="onSort($event)">Base Unit</th>
+                  <th class="c5" scope="col" sortable="name" (sort)="onSort($event)">Volume</th>
+                  <th class="c6" scope="col" sortable="name" (sort)="onSort($event)">Weight Unit</th>
+                  <th class="c7" scope="col" sortable="name" (sort)="onSort($event)">Currency</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr *ngFor="let country of countries">
-                  <th class="Row r0">{{ country.id }}</th>
-                  <td class="Row r1">{{ country.name }}</td>
-                  <td class="Row r2">{{ country.area }}</td>
-                  <td class="Row r3">{{ country.population }}</td>
-                  <td class="Row r4">{{ country.population  }}</td>
-                  <td class="Row r5">{{ country.population  }}</td>
-                  <td class="Row r6">{{ country.population  }}</td>
-                  <td class="Row r7">{{ country.population  }}</td>
-                  <td class="Row r8">{{ country.population  }}</td>
-                </tr>
-                </tbody>
-              </table>
+                  <tr *ngFor="let p of data.item">
+                    <td class="r0">{{ p.DOC_NUMBER._text }}</td>
+                    <td class="r1">{{ p.ITM_NUMBER._text }}</td>
+                    <td class="r2">{{ p.SHORT_TEXT._text }}</td>
+                    <td class="r3">{{ p.ITEM_CATEG._text }}</td>
+                    <td class="r4">{{ p.T_BASE_UNIT._text }}</td>
+                    <td class="r5">{{ p.VOLUME._text }}</td>
+                    <td class="r6">{{ p.UNIT_OF_WT._text }}</td>
+                    <td class="r7">{{ p.CURRENCY._text }}</td>                   
+                  </tr>
+              </tbody>
+              </table> -->
              </div>
             </div>
           </div>
