@@ -10,7 +10,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const loginDetails= []
+var loginCred = [];
 
 function verifyToken(req, res, next){
 	if(!req.headers.authorization){
@@ -28,8 +28,6 @@ function verifyToken(req, res, next){
 	next();
 }
 
-
-
 app.use(function(req, res, next) {
 	res.header('Access-Control-Allow-Origin', '*');
 	res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Authorization, Content-Type, Accept');
@@ -45,7 +43,8 @@ app.post('/login', function(req, res) {
 	username = req.body.username;
 	password = req.body.password;
 
-	loginDetails.push(username)
+	loginCred.push(username)
+	console.log('Login Set Username : '+ loginCred)
 
 	hashedPassword = md5(password)
 	hashedPassword = hashedPassword.toUpperCase();
@@ -100,9 +99,8 @@ app.post('/login', function(req, res) {
 // app.get('/viewprofile' ,verifyToken, function(res) {
 app.get('/viewprofile', function(req , res) {
 
-	username = loginDetails[0]
-	username = '0000007006'
-
+	username = loginCred[0]
+	console.log('View Profile: '+username)
 	const loginData =
 	`<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
 	<soapenv:Header/>
@@ -138,10 +136,8 @@ app.get('/viewprofile', function(req , res) {
 // app.post('/editprofile',verifyToken,(res,req)=>
 app.post('/editprofile', (req,res)=>
 {
-	// username = loginDetails[0]
-	username = '0000007006'
-	
-	console.log(req.body.cf_name)
+	username = loginCred[0]
+	// username = '0000007006'
 
 	const loginData = `
 	<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
@@ -175,11 +171,13 @@ var options = {
 
 	request.post(options, function(error, response, body) {
 		if (!error && response.statusCode == 200) {
-			console.log('Edit Profile: Success')
-			res.send('Success')
+			var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
+            result2 = JSON.parse(result1);
+			console.log('Edit Profile: Success' + result2)
+			res.send(JSON.stringify("Success"))
 		}
 		else{
-			res.send('Error')
+			res.send(JSON.stringify('Error'))
 		}
 	});
 })

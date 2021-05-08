@@ -66,6 +66,11 @@ export class DashboardComponent implements OnInit {
   constructor(private httpClient : HttpClient, private dashboardService: DashboardService) { }
 
   ngOnInit() {
+
+    this.dashboardService.getData().subscribe(res => {
+      console.log('Dash Output:'+res)
+    })
+
     this.chartColor = "#FFFFFF";
     this.canvas = document.getElementById("bigDashboardChart");
     this.ctx = this.canvas.getContext("2d");
@@ -417,9 +422,5 @@ export class DashboardComponent implements OnInit {
       }
 
     this.lineChartGradientsNumbersType = 'bar';
-    this.dashboardService.getData().subscribe(res => {
-      this.f_name = res['NAME1']['_text']
-      this.l_name = res['NAME2']['_text']
-    })
   }
 }

@@ -12,11 +12,12 @@ export class CustomerGuardGuard implements CanActivate {
   canActivate() {
       if (this.authService.isLoggedIn)
       {
-        console.log('CanActivate: '+!!localStorage.getItem('token'))
         return !!localStorage.getItem('token');
       }
+      else{
       this.router.navigate(['customerlogin'])
       return false;
+      }
     }
   }
   

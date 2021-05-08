@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { map } from 'rxjs/operators';
+import { Router } from '@angular/router'
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProfileService {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private router : Router) { }
   SERVER = "http://localhost:3000";
 
   getData(){
@@ -23,7 +24,12 @@ export class ProfileService {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
 
     this.httpClient.post('http://localhost:3000/editprofile',profileData).subscribe(res =>{
-      console.log(res)
+      
+      if(res === 'Success'){
+        console.log('Edit Profile:'+res)
+        this.router.navigate(['customer/dashboard'])
+      }
+    
     })
   }
 }
