@@ -25,4 +25,21 @@ export class DashboardService {
         return res
     }))
   }
+  getInq(){
+    return this.httpClient.get(`${this.SERVER}/inquiry`).pipe(map(res => {
+    let ilen = res['SOAP:Envelope']['SOAP:Body']['ns0:ZSD_CUSTOMER_INQUIRY_AJ.Response'].ZSD_INQUIRYDETAILS_AJ_T.item
+    return ilen.length
+  }))}
+
+  getSales(){
+    return this.httpClient.get(`${this.SERVER}/salesorder`).pipe(map(res => {
+    let slen = res['item']
+    return slen.length
+  }))}
+
+  getDel(){
+    return this.httpClient.get(`${this.SERVER}/delivery`).pipe(map(res => {
+      let dlen = res['SOAP:Envelope']['SOAP:Body']['ns0:ZSD_DELIVERY_DETAILS.Response'].IT_DELIVERY_T.item
+      return dlen.length
+    }))}
 }

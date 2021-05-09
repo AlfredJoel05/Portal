@@ -13,6 +13,14 @@ export class DashboardComponent implements OnInit {
   f_name = '';
   l_name = '';
 
+  slen:number;
+  ilen:number;
+  dlen:number;
+
+  slenValid:boolean = false;
+  ilenValid:boolean = false;
+  dlenValid:boolean = false;
+
   public lineBigDashboardChartType;
   public gradientStroke;
   public chartColor;
@@ -69,6 +77,16 @@ export class DashboardComponent implements OnInit {
 
     this.dashboardService.getData().subscribe(res => {
       console.log('Dash Output:'+res)
+    })
+
+    this.dashboardService.getInq().subscribe(res => {
+      this.ilen = res 
+      this.ilenValid = true;
+    })
+    this.dashboardService.getSales().subscribe(res => {this.slen = res
+      this.slenValid = true;})
+    this.dashboardService.getDel().subscribe(res => {
+      this.dlenValid = true;
     })
 
     this.chartColor = "#FFFFFF";

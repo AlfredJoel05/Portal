@@ -19,7 +19,7 @@ export class PayageComponent implements OnInit {
 
   this.httpClient.get(`${this.SERVER}/payage`).subscribe(res => {
     this.data = res['SOAP:Envelope']['SOAP:Body']['ns0:ZFI_PAYMENT_AGING_AJ.Response'].IT_DETAILS.item
-  //     this.spin = false;
+      this.spin = true;
   })
   }
 }

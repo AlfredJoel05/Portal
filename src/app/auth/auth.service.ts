@@ -13,7 +13,7 @@ export class AuthService {
   private loginPostSubject = new Subject<any>();
   SERVER = "http://localhost:3000";
 
-  isLoggedIn: boolean = true; //Change it to false -- True for testing purposes
+  isLoggedIn: boolean = false; //Change it to false -- True for testing purposes
 
   private logincred = new BehaviorSubject<string>("default Message");
 	loginCred = this.logincred.asObservable();

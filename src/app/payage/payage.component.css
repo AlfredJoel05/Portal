@@ -10,6 +10,19 @@
     padding-left: 10px;
 }
 
+.spinner{
+    margin: 0, auto;
+    padding-top: 170px;
+    padding-left: 0px;
+}
+
+.spinner ::ng-deep .mat-progress-spinner circle, .mat-spinner circle {
+    stroke: rgb(255, 195, 30);
+    position: relative;
+    top: 200px;
+    right: 400px;
+}
+
 .btn{
    left: 250px;
 }
@@ -43,21 +56,21 @@ thead{
 thead tr{
     width: 1020px;
     /* background: rgb(0, 165, 216); */
-    background: rgb(245, 43, 16);
-    color: white;
+    background-color: rgb(255, 195, 30);
+    color: #2f2f2f;
     box-shadow: rgba(0, 0, 0, 0.2) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;    
 }
 .c0{
     border-top-left-radius : 10px;
 }
 .c1{
-    padding-left: 20px;
+    padding-left: 10px;
 }
 .c2{
-    padding-left: 130px;
+    padding-left: 50px;
 }
 .c3{
-    padding-left: 133px;
+    padding-left: 53px;
 }
 .c4{
     padding-left: 70px;
@@ -66,14 +79,17 @@ thead tr{
     padding-left: 70px;
 }
 .c6{
-    padding-left: 70px;
+    padding-left: 80px;
 }
 .c7{
     padding-left: 80px;
 }
 .c8{
-    border-top-right-radius : 10px;
     padding-left: 80px;
+}
+.c9{
+    border-top-right-radius : 10px;
+    padding-left: 10px;
 }
 tbody{
     overflow: auto;
@@ -82,31 +98,47 @@ tbody{
 }
 
 .r0{
-    padding-left: 25px;
+    padding-left: 55px;
+    background-color: rgb(47, 47, 47);
+    color: white;
 }
 .r1{
-    padding-left: 55px;
+    padding-left: 120px;
+    background-color: rgb(47, 47, 47);
+    color: white;
 }
 .r2{
-    padding-left: 40px;
+    padding-left: 120px;
+    background-color: rgb(47, 47, 47);
+    color: white;
 }
 .r3{
-    padding-left: 50px;
+    padding-left: 130px;
+    background-color: rgb(47, 47, 47);
+    color: white;
 }
 .r4{
-    padding-left: 100px;
+    padding-left: 150px;
+    background-color: rgb(47, 47, 47);
+    color: white;
 }
 .r5{
-    padding-left: 100px;
+    padding-left: 130px;background-color: rgb(47, 47, 47);
+    color: white;
 }
 .r6{
-    padding-left: 60px;
+    padding-left: 100px;
+    background-color: rgb(47, 47, 47);
+    color: white;
 }
 .r7{
-    padding-left: 50px;
+    padding-left: 120px;
+    background-color: rgb(47, 47, 47);
+    color: white;
 }
 .r8{
-    padding-left: 50px;
+    padding-left: 16px;background-color: rgb(47, 47, 47);
+    color: white;
 }
 
 .tble-responsive{

@@ -10,7 +10,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-var loginCred = ['0000000006'];
+var loginCred = [];
 
 function verifyToken(req, res, next){
 	if(!req.headers.authorization){

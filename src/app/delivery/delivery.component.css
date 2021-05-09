@@ -9,7 +9,18 @@
     width: 1600px;
     padding-left: 10px;
 }
+.spinner{
+    margin: 0, auto;
+    padding-top: 170px;
+    padding-left: 0px;
+}
 
+.spinner ::ng-deep .mat-progress-spinner circle, .mat-spinner circle {
+    stroke: #333333;
+    position: relative;
+    top: 200px;
+    right: 400px;
+}
 .btn{
    left: 250px;
 }
@@ -43,7 +54,7 @@ thead{
 thead tr{
     width: 1020px;
     /* background: rgb(0, 165, 216); */
-    background: rgb(245, 43, 16);
+    background: rgb(39, 39, 39);
     color: white;
     box-shadow: rgba(0, 0, 0, 0.2) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;    
 }
@@ -51,30 +62,29 @@ thead tr{
     border-top-left-radius : 10px;
 }
 .c1{
-    padding-left: 20px;
+    padding-left: 40px;
 }
 .c2{
-    padding-left: 130px;
+    padding-left: 70px;
 }
 .c3{
-    padding-left: 133px;
+    padding-left: 73px;
 }
 .c4{
-    padding-left: 70px;
+    padding-left: 80px;
 }
 .c5{
     padding-left: 70px;
 }
 .c6{
-    padding-left: 70px;
+    padding-left: 140px;
 }
 .c7{
-    border-top-right-radius : 10px;
-    padding-left: 80px;
+    padding-left: 100px;
 }
 .c8{
     border-top-right-radius : 10px;
-    padding-left: 80px;
+    padding-left: 17px;
 }
 tbody{
     overflow: auto;
@@ -86,28 +96,28 @@ tbody{
     padding-left: 25px;
 }
 .r1{
-    padding-left: 55px;
+    padding-left: 65px;
 }
 .r2{
-    padding-left: 40px;
+    padding-left: 100px;
 }
 .r3{
-    padding-left: 50px;
+    padding-left: 140px;
 }
 .r4{
-    padding-left: 100px;
+    padding-left: 110px;
 }
 .r5{
-    padding-left: 100px;
+    padding-left: 85px;
 }
 .r6{
-    padding-left: 60px;
+    padding-left: 70px;
 }
 .r7{
     padding-left: 50px;
 }
 .r8{
-    padding-left: 50px;
+    padding-left: 10px;
 }
 
 .tble-responsive{

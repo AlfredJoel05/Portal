@@ -1,7 +1,7 @@
 <div class="panel-header">
   <div class="header text-center">
     <h2 class="title">SAP iRPA</h2>
-    <p class="category">Video has been uploaded</p>
+    <p class="category">Intelligent Robotic Process Automation</p>
   </div>
 </div>
 <div class="main-content">
@@ -9,7 +9,7 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">
-          <h4 class="card-title ctitle">*This video is a demonstration of working SAP iRPA</h4>
+          <h4 class="card-title ctitle">*This video is a demonstration of SAP iRPA Automation.</h4>
         </div>
         <div class="card-body">
           <video width="1200" height="600" controls>
@@ -27,15 +27,29 @@
             <div class="row">
                 <h4 class="card-title ct">Master Data
                   <p class="category">Upload your .xlxs or .csv file</p>
+                  <input class="upload" type="file" (change)="getFilename($event)" />
                 </h4>
                 <div class="fileUpload">
-                <input type="file" (change)="getFilename($event)" />
-                <button type="button"(click)="upload()">Upload</button>
+                <div class="btn-2">
+                  <a href=""><span>Upload</span></a>
+                </div>
               </div>
             </div>
             <div class="row">
               <div class="col-lg-8 ml-auto mr-auto">
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="places-buttons">
+            <div class="row">
+              <a href="assets/docs/temp-162054466931556825.pdf">Sales Order Prediction</a>
             </div>
           </div>
         </div>

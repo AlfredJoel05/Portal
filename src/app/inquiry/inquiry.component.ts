@@ -22,7 +22,7 @@ export class InquiryComponent implements OnInit {
     this.httpClient.get(`${this.SERVER}/inquiry`).subscribe(res => {
       
       this.data = res['SOAP:Envelope']['SOAP:Body']['ns0:ZSD_CUSTOMER_INQUIRY_AJ.Response'].ZSD_INQUIRYDETAILS_AJ_T.item
-    //     this.spin = false;
+        this.spin = true;
     })
     }
   }

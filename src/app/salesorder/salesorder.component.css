@@ -9,7 +9,18 @@
     width: 1600px;
     padding-left: 10px;
 }
+.spinner{
+    margin: 0, auto;
+    padding-top: 170px;
+    padding-left: 0px;
+}
 
+.spinner ::ng-deep .mat-progress-spinner circle, .mat-spinner circle {
+    stroke: rgb(22, 189, 255);
+    position: relative;
+    top: 200px;
+    right: 400px;
+}
 .btn{
    left: 250px;
 }
@@ -43,7 +54,7 @@ thead{
 thead tr{
     width: 1020px;
     /* background: rgb(0, 165, 216); */
-    background: rgb(245, 43, 16);
+    background: rgb(22, 189, 255);
     color: white;
     box-shadow: rgba(0, 0, 0, 0.2) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;    
 }
