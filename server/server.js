@@ -243,7 +243,7 @@ app.get('/salesorder', function(req , res) {
 	});
 })
 
-app.post('/memo', function(req , res) {
+app.get('/memo', function(req , res) {
 
 	username = loginCred[loginCred.length-1]
 	console.log('Memo: '+username)
@@ -500,13 +500,12 @@ app.post('/memo', function(req , res) {
 		body: loginData
 	};
 
-	request.post(options, function(error, response, body) {
-		if (!error && response.statusCode == 200) {
-			var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
-            result2 = JSON.parse(result1);
-            var resp = result2['SOAP:Envelope']['SOAP:Body']['ns0:ZFI_CREDIT_DEBIT_MEMO_AJ.Response']['IT_DETAILS'];
-            res.send(resp);
-		}
+	request.post(options,function (error, response, body) {        
+        if (!error && response.statusCode == 200) {
+            var result1 = parser.xml2json(body, {compact: true, spaces: 4});
+            result1=JSON.parse(result1);
+            res.send(result1);
+        }
 	});
 })
 
@@ -569,17 +568,16 @@ app.get('/delivery', function(req , res) {
 		body: loginData
 	};
 
-	request.post(options, function(error, response, body) {
-		if (!error && response.statusCode == 200) {
-			var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
-            result2 = JSON.parse(result1);
-            var resp = result2['SOAP:Envelope']['SOAP:Body']['ns0:ZSD_DELIVERY_DETAILS.Response']['IT_DELIVERY_T'];
-            res.send(resp);
-		}
+	request.post(options,function (error, response, body) {        
+        if (!error && response.statusCode == 200) {
+            var result1 = parser.xml2json(body, {compact: true, spaces: 4});
+            result1=JSON.parse(result1);
+            res.send(result1);
+        }
 	});
 })
 
-app.post('/payage', function(req , res) {
+app.get('/payage', function(req , res) {
 
 	username = loginCred[loginCred.length-1]
 	console.log('Payage: '+username)
@@ -836,18 +834,17 @@ app.post('/payage', function(req , res) {
 		body: loginData
 	};
 
-	request.post(options, function(error, response, body) {
-		if (!error && response.statusCode == 200) {
-			var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
-            result2 = JSON.parse(result1);
-            var resp = result2['SOAP:Envelope']['SOAP:Body']['ns0:ZFI_PAYMENT_AGING_AJ.Response']['IT_DETAILS'];
-            res.send(resp);
-		}
-	});
+	request.post(options,function (error, response, body) {        
+			if (!error && response.statusCode == 200) {
+				var result1 = parser.xml2json(body, {compact: true, spaces: 4});
+				result1=JSON.parse(result1);
+				res.send(result1);
+			}
+		});
 })
 
 
-app.post('/inquiry', function(req , res) {
+app.get('/inquiry', function(req , res) {
 
 	username = loginCred[loginCred.length-1]
 	console.log('inquiry: '+username)
@@ -1342,13 +1339,12 @@ app.post('/inquiry', function(req , res) {
 		body: loginData
 	};
 
-	request.post(options, function(error, response, body) {
-		if (!error && response.statusCode == 200) {
-			var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
-            result2 = JSON.parse(result1);
-            var resp = result2['SOAP:Envelope']['SOAP:Body']['ns0:ZSD_CUSTOMER_INQUIRY_AJ.Response']['ZSD_INQUIRYDETAILS_AJ_T'];
-            res.send(resp);
-		}
+	request.post(options,function (error, response, body) {        
+        if (!error && response.statusCode == 200) {
+            var result1 = parser.xml2json(body, {compact: true, spaces: 4});
+            result1=JSON.parse(result1);
+            res.send(result1);
+        }
 	});
 })
 

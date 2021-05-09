@@ -18,7 +18,7 @@ export class PayageComponent implements OnInit {
   ngOnInit(): void {
 
   this.httpClient.get(`${this.SERVER}/payage`).subscribe(res => {
-    this.data = res
+    this.data = res['SOAP:Envelope']['SOAP:Body']['ns0:ZFI_PAYMENT_AGING_AJ.Response'].IT_DETAILS.item
   //     this.spin = false;
   })
   }

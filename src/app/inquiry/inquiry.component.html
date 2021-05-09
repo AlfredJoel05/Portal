@@ -7,7 +7,7 @@
               <div class="card-header">
                 <h4 class="card-title ctitle">Sales Order Details</h4><br>
               </div>
-              <!-- <table class="table table-striped">
+              <table class="table table-striped">
                 <thead class="thead">
                 <tr>
                   <th class="c0" scope="col" sortable="name" (sort)="onSort($event)">Document No.</th>
@@ -21,18 +21,18 @@
                 </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let p of data.item">
+                  <tr *ngFor="let p of data">
                     <td class="r0">{{ p.DOC_NUMBER._text }}</td>
                     <td class="r1">{{ p.ITM_NUMBER._text }}</td>
                     <td class="r2">{{ p.SHORT_TEXT._text }}</td>
                     <td class="r3">{{ p.ITEM_CATEG._text }}</td>
-                    <td class="r4">{{ p.T_BASE_UNIT._text }}</td>
+                    <td class="r4">{{ p.T_BAS_UNIT._text }}</td>
                     <td class="r5">{{ p.VOLUME._text }}</td>
                     <td class="r6">{{ p.UNIT_OF_WT._text }}</td>
                     <td class="r7">{{ p.CURRENCY._text }}</td>                   
                   </tr>
               </tbody>
-              </table> -->
+              </table>
              </div>
             </div>
           </div>

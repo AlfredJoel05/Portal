@@ -7,7 +7,7 @@
               <div class="card-header">
                 <h4 class="card-title ctitle">Sales Order Details</h4><br>
               </div>
-              <div *ngIf="!spin" class="spinner"><mat-spinner style="margin:0 auto;"></mat-spinner>
+              <div *ngIf="!spin" class="spinner"><mat-spinner style="margin:0 auto;"></mat-spinner></div>
               <table class="table table-striped">
                 <thead class="thead">
                 <tr>
@@ -23,7 +23,7 @@
                 </tr>
                 </thead>
                 <tbody *ngIf="data?.length != 0">
-                  <tr *ngFor="let p of data.item">
+                  <tr *ngFor="let p of data">
                     <td class="r0">{{ p.SD_DOC._text }}</td>
                     <td class="r1">{{ p.ITM_NUMBER._text }}</td>
                     <td class="r2">{{ p.SHORT_TEXT._text }}</td>
@@ -36,7 +36,7 @@
                   </tr>
                 </tbody>
               </table>
-             </div>
+             
             </div>
             </div>
           </div>

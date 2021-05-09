@@ -17,8 +17,9 @@ export class DeliveryComponent implements OnInit {
 
   ngOnInit() :void  {
     this.httpClient.get(`${this.SERVER}/delivery`).subscribe(res => {
-      this.data = res['item']
-    //     this.spin = false;
+      this.data = res['SOAP:Envelope']['SOAP:Body']['ns0:ZSD_DELIVERY_DETAILS.Response'].IT_DELIVERY_T.item
+      console.log('Delivery Component'+this.data)
+      this.spin = true;
     })
   }
   

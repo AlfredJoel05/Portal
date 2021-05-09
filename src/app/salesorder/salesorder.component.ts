@@ -19,8 +19,10 @@ export class SalesorderComponent implements OnInit {
   ngOnInit(): void {
 
   this.httpClient.get(`${this.SERVER}/salesorder`).subscribe(res => {
-    this.data = res
-  //     this.spin = false;
+      
+      this.data = res['item']
+      console.log('Sales Component'+this.data)
+      this.spin = true;
   })
   }
 }

@@ -18,7 +18,7 @@ export class MemoComponent implements OnInit {
   ngOnInit(): void {
 
   this.httpClient.get(`${this.SERVER}/memo`).subscribe(res => {
-    this.data = res
+    this.data = res['SOAP:Envelope']['SOAP:Body']['ns0:ZFI_CREDIT_DEBIT_MEMO_AJ.Response'].IT_DETAILS.item
   //     this.spin = false;
   })
   }

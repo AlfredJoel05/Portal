@@ -14,6 +14,8 @@ import { MasterdataComponent } from '../../masterdata/masterdata.component';
 import { ChartsModule } from 'ng2-charts';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 
 @NgModule({
   imports: [
@@ -22,6 +24,7 @@ import { ToastrModule } from 'ngx-toastr';
     FormsModule,
     ReactiveFormsModule,
     ChartsModule,
+    MatProgressSpinnerModule,
     NgbModule,
     ToastrModule.forRoot()
   ],
