@@ -3,27 +3,43 @@ import { CommonModule, } from '@angular/common';
 import { BrowserModule  } from '@angular/platform-browser';
 import { Routes, RouterModule } from '@angular/router';
 
-import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
-import{ CustomerLoginComponent } from './auth/customer-login/customer-login.component'
+
+import { AdminLayoutComponent } from './customerportal/layouts/admin-layout/admin-layout.component';
+import { CustomerLoginComponent } from './customerportal/auth/customer-login/customer-login.component'
+import { CustomerGuardGuard } from './customerportal/auth/customer-guard.guard';
+
+import { VendorAdminLayoutComponent } from './vendorportal/layouts/vendor-admin-layout/vadmin-layout.component';
+import { VendorLoginComponent } from './vendorportal/auth/vendor-login/vendor-login.component';
+import { VendorGuardGuard } from './vendorportal/auth/vendor-guard.guard';
+
 import { AboutComponent } from './about/about.component';
-import { CustomerProfileComponent } from './customer-profile/customer-profile.component'
-import { CustomerGuardGuard } from './auth/customer-guard.guard';
 
 const routes: Routes =[
 
   { path: '', component: LandingPageComponent },
-	{ path: 'customerlogin', component: CustomerLoginComponent},
-	{ path: 'about', component: AboutComponent },
-	{ path:  'auth', loadChildren:  './auth/auth.module#AuthModule' },
-	// { path: '**', redirectTo:'' },
 
-  {path: 'customer', component: AdminLayoutComponent, canActivate: [CustomerGuardGuard], 
+	{ path: 'customerlogin', component: CustomerLoginComponent},
+	{ path:  'auth', loadChildren:  './customerportal/auth/auth.module#AuthModule' },
+  { path: 'customer', component: AdminLayoutComponent, canActivate: [CustomerGuardGuard], 
     children: [
     {
       path: '',
-      loadChildren: './layouts/admin-layout/admin-layout.module#AdminLayoutModule',
+      loadChildren: './customerportal/layouts/admin-layout/admin-layout.module#AdminLayoutModule',
     }]},
+
+  { path: 'vendorlogin', component: VendorLoginComponent},
+  { path:  'auth', loadChildren:  './vendorportal/auth/vauth.module#AuthModule' },
+  { path: 'vendor', component: VendorAdminLayoutComponent, canActivate: [VendorGuardGuard], 
+    children: [
+    {
+      path: '',
+      loadChildren: './vendorportal/layouts/vendor-admin-layout/vadmin-layout.module#VendorAdminLayoutModule',
+    }]},
+        
+
+
+  { path: 'about', component: AboutComponent },
     
 ];
 

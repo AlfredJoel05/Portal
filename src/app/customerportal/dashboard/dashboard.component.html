@@ -1,0 +1,130 @@
+<div class="panel-header panel-header-lg">
+  <!-- <img src = "/assets/img/navhead.jpg" alt="Nav Image?" width="1649px" height="338"/> -->
+  <canvas
+    baseChart
+    id="bigDashboardChart"
+    [datasets]="lineBigDashboardChartData"
+    [labels]="lineBigDashboardChartLabels"
+    [colors]="lineBigDashboardChartColors"
+    [options]="lineBigDashboardChartOptions"
+    [chartType]="lineBigDashboardChartType"
+    (chartHover)="chartHovered($event)"
+    (chartClick)="chartClicked($event)"
+  ></canvas>
+</div>
+<div class="main-content content">
+  <div class="row">
+    <div class="col-lg-4">
+      <div class="card card-chart">
+        <div class="card-header">
+          <h5 class="card-category">Inquiry Details</h5>
+          <h4 class="card-title">Total Inquiry Records</h4>
+        </div>
+        <div class="card-body">
+          <div class="chart-area">
+            <canvas
+              baseChart
+              id="lineChartExample"
+              [datasets]="lineChartData"
+              [labels]="lineChartLabels"
+              [colors]="lineChartColors"
+              [options]="lineChartOptions"
+              [chartType]="lineChartType"
+              (chartHover)="chartHovered($event)"
+              (chartClick)="chartClicked($event)"
+            ></canvas>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div *ngIf="!ilenValid; else elseBlock">
+            <div class="stats">
+              <i class="now-ui-icons loader_refresh spin"></i> Fetching Total
+              Records...
+            </div>
+          </div>
+          <ng-template #elseBlock>
+            <div class="stats">
+              <i class="now-ui-icons design_bullet-list-67"></i> Total Records
+              Fetched: {{ ilen }}
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+      <div class="card card-chart">
+        <div class="card-header">
+          <h5 class="card-category">Sales Order Details</h5>
+          <h4 class="card-title">Total Sales Order Records</h4>
+        </div>
+        <div class="card-body">
+          <div class="chart-area">
+            <!-- <canvas id="lineChartExampleWithNumbersAndGrid"></canvas> -->
+            <canvas
+              baseChart
+              id="lineChartExampleWithNumbersAndGrid"
+              [datasets]="lineChartWithNumbersAndGridData"
+              [labels]="lineChartWithNumbersAndGridLabels"
+              [colors]="lineChartWithNumbersAndGridColors"
+              [options]="lineChartWithNumbersAndGridOptions"
+              [chartType]="lineChartWithNumbersAndGridType"
+              (chartHover)="chartHovered($event)"
+              (chartClick)="chartClicked($event)"
+            ></canvas>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div *ngIf="!slenValid; else elseBlock">
+            <div class="stats">
+              <i class="now-ui-icons loader_refresh spin"></i> Fetching Total
+              Records...
+            </div>
+          </div>
+          <ng-template #elseBlock>
+            <div class="stats">
+              <i class="now-ui-icons design_bullet-list-67"></i> Total Records
+              Fetched: {{ ilen }}
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+      <div class="card card-chart">
+        <div class="card-header">
+          <h5 class="card-category">Delivery Details</h5>
+          <h4 class="card-title">Total Delivery Details</h4>
+        </div>
+        <div class="card-body">
+          <div class="chart-area">
+            <canvas
+              baseChart
+              id="barChartSimpleGradientsNumbers"
+              [datasets]="lineChartGradientsNumbersData"
+              [labels]="lineChartGradientsNumbersLabels"
+              [colors]="lineChartGradientsNumbersColors"
+              [options]="lineChartGradientsNumbersOptions"
+              [chartType]="lineChartGradientsNumbersType"
+              (chartHover)="chartHovered($event)"
+              (chartClick)="chartClicked($event)"
+            ></canvas>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div *ngIf="!dlenValid; else elseBlock">
+            <div class="stats">
+              <i class="now-ui-icons loader_refresh spin"></i> Fetching Total
+              Records...
+            </div>
+          </div>
+          <ng-template #elseBlock>
+            <div class="stats">
+              <i class="now-ui-icons design_bullet-list-67"></i> Total Records
+              Fetched: {{ ilen }}
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

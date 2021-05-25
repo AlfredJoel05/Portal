@@ -7,7 +7,14 @@
 	background-color: #f9fafa;
 	font-family: 'Ubuntu', sans-serif;
 }
-
+#myVideo {
+	position: fixed;
+	right: 0;
+	bottom: 0;
+	min-width: 100%;
+	min-height: 100%;
+  }
+  
 .navigatorPage {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
@@ -19,6 +26,7 @@
 }
 // -------------------Left Icons-------------------//
 .lefticons {
+	background: none;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -69,18 +77,21 @@
 // -------------------Header Text-------------------//
 
 .navigatorLeft {
+	background: rgba(0, 0, 0, 0);
 	.t1 {
 		h1 {
+			background: none;
 			position: absolute;
 			padding-left: 5%;
 			top: 330px;
 			font-weight: 400;
-			color: #405261;
+			color: #1d2b36;
 			font-size: 54px;
 		}
 	}
 	.t2 {
 		h1 {
+			background: none;
 			position: absolute;
 			padding-left: 5%;
 			top: 400px;
@@ -91,6 +102,7 @@
 	}
 	.t3 {
 		h3 {
+			background: none;
 			position: absolute;
 			padding-left: 5%;
 			top: 670px;
@@ -168,6 +180,8 @@
 	opacity: 1;
 }
 
+
+
 .vendor {
 	user-select: none;
 	overflow: hidden;
@@ -175,6 +189,7 @@
 	display: flex;
 	transition: 0.5s;
 	.ctext {
+		width: 100%;
 		padding-top: 25px;
 		padding-left: 4%;
 		position: relative;
@@ -199,9 +214,9 @@
 	}
 }
 
-// .vendor:hover{
-//     transform: translateX(20px);
-// }
+.vendor:hover{
+    transform: translateX(20px);
+}
 
 .vendor:hover .arrow {
 	opacity: 1;

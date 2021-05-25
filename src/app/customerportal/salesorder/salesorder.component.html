@@ -1,0 +1,44 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+        <div class="row">
+          <div class="col-lg-8">
+            <div class="card card-chart customerinq">
+              <div class="card-header">
+                <h4 class="card-title ctitle">Sales Order Details</h4><br>
+              </div>
+              
+              <table class="table table-hover">
+                <thead class="thead">
+                <tr>
+                  <th class="c0" scope="col">S.Doc</th>
+                  <th class="c1" scope="col" sortable="name" (sort)="onSort($event)">Item No.</th>
+                  <th class="c2" scope="col" sortable="name" (sort)="onSort($event)">Material Description</th>
+                  <th class="c3" scope="col" sortable="name" (sort)="onSort($event)">Pruchase No.</th>
+                  <th class="c4" scope="col" sortable="name" (sort)="onSort($event)">Net Value</th>
+                  <th class="c5" scope="col" sortable="name" (sort)="onSort($event)">Net Price</th>
+                  <th class="c6" scope="col" sortable="name" (sort)="onSort($event)">Name</th>
+                  <th class="c7" scope="col" sortable="name" (sort)="onSort($event)">Req.Date</th>
+                  <th class="c8" scope="col" sortable="name" (sort)="onSort($event)">Doc.Date</th>
+                </tr>
+                </thead>
+                <tbody *ngIf="data?.length != 0">
+                  <div *ngIf="!spin" class="spinner"><mat-spinner style="margin:0 auto;"></mat-spinner></div>
+                  <tr *ngFor="let p of data">
+                    <td class="r0">{{ p.SD_DOC._text }}</td>
+                    <td class="r1">{{ p.ITM_NUMBER._text }}</td>
+                    <td class="r2">{{ p.SHORT_TEXT._text }}</td>
+                    <td class="r3">{{ p.PURCH_NO._text }}</td>
+                    <td class="r4">{{ p.NET_VALUE._text }}</td>
+                    <td class="r5">{{ p.NET_PRICE._text }}</td>
+                    <td class="r6">{{ p.NAME._text }}</td>
+                    <td class="r7">{{ p.REQ_DATE._text }}</td>
+                    <td class="r8">{{ p.DOC_DATE._text }}</td>                   
+                  </tr>
+                </tbody>
+              </table>
+             
+            </div>
+            </div>
+          </div>
+</div>

@@ -1,3 +1,7 @@
+<div class="main">
+  <!-- <video autoplay muted loop id="myVideo">
+    <source src="assets/videos/vid.mp4" type="video/mp4">
+  </video> -->
 <div class="navigatorPage">
     <div class="navigatorLeft">
       <div class="lefticons">
@@ -34,8 +38,8 @@
               <h4>Interactive Portal for customers to use</h4>
             </div>
           </div>
-          <div class="vendor">
-            <!-- <a href="#" routerLink="/vendorportal"></a> -->
+
+          <div class="vendor" [routerLink]="['/vendorlogin']">
             <img
               src="assets\images\vp.png"
               width="145"
@@ -46,10 +50,10 @@
               <h3>
                 Vendor Portal
                 <span class="arrow"
-                  ><img src="assets\images\cross.png" width="35" height="35"
+                  ><img src="assets\images\arrow.png" width="25" height="35"
                 /></span>
               </h3>
-              <h4>Coming Soon</h4>
+              <h4>Interactive Portal for vendors to use</h4>
             </span>
           </div>
           <div class="employee">
@@ -89,4 +93,4 @@
       </div>
     </div>
   </div>
-  
+</div>

@@ -5,25 +5,30 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
-
-import { AppRoutingModule } from './app-routing.module';
-import { ComponentsModule } from './components/components.module';
-
-import { AppComponent } from './app.component';
-import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
-
-import { LandingPageComponent } from './landing-page/landing-page.component';
-import { AboutComponent } from './about/about.component';
-import { CustomerLoginComponent } from './auth/customer-login/customer-login.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatProgressBarModule } from '@angular/material/progress-bar'
-import { InterceptorService } from './auth/loader/interceptor.service';
-import { CustomerProfileComponent } from './customer-profile/customer-profile.component';
-import { CustomerGuardGuard } from './auth/customer-guard.guard';
-import { TokenService } from './auth/tokenInterceptor/token.service';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
 
+import { CustomerLoginComponent } from './customerportal/auth/customer-login/customer-login.component';
+import { CustomerGuardGuard } from './customerportal/auth/customer-guard.guard';
+import { TokenService } from './customerportal/auth/tokenInterceptor/token.service';
+import { ComponentsModule } from './customerportal/components/components.module';
+import { InterceptorService } from './customerportal/auth/loader/interceptor.service';
+import { CustomerProfileComponent } from './customerportal/customer-profile/customer-profile.component';
+import { AdminLayoutComponent } from './customerportal/layouts/admin-layout/admin-layout.component';
+
+import { VendorLoginComponent } from './vendorportal/auth/vendor-login/vendor-login.component';
+import { VendorGuardGuard } from './vendorportal/auth/vendor-guard.guard';
+import { VendorTokenService } from './vendorportal/auth/tokenInterceptor/token.service';
+import { VendorComponentsModule } from './vendorportal/components/vcomponents.module'
+import { VendorInterceptorService } from './vendorportal/auth/loader/vinterceptor.service'
+import { VendorAdminLayoutComponent } from './vendorportal/layouts/vendor-admin-layout/vadmin-layout.component';
+
+import { LandingPageComponent } from './landing-page/landing-page.component';
+import { AboutComponent } from './about/about.component';
 
 @NgModule({
   imports: [
@@ -33,6 +38,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     ReactiveFormsModule,
     HttpClientModule,
     ComponentsModule,
+    VendorComponentsModule,
     RouterModule,
     MatProgressBarModule,
     AppRoutingModule,
@@ -44,15 +50,20 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   declarations: [
     AppComponent,
     AdminLayoutComponent,
+    VendorAdminLayoutComponent,
     AboutComponent,
     CustomerProfileComponent,
     LandingPageComponent,
-    CustomerLoginComponent
+    CustomerLoginComponent,
+    VendorLoginComponent,
   ],
   providers: [
     { provide:HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true},
+    { provide:HTTP_INTERCEPTORS, useClass: VendorInterceptorService, multi: true},
     { provide:HTTP_INTERCEPTORS, useClass: TokenService, multi: true},
+    { provide:HTTP_INTERCEPTORS, useClass: VendorTokenService, multi: true},
     CustomerGuardGuard, 
+    VendorGuardGuard,
   ],
   bootstrap: [AppComponent]
 })

@@ -1424,6 +1424,155 @@ app.post('/masterdataupload', (req, res) => {
     })
 });
 
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//-----------------------VENDOR PORTAL----------------------------------------------------
+
+app.post('/vendorlogin', function(req, res) {
+	username = req.body.username;
+	password = req.body.password;
+
+	loginCred.push(username)
+	console.log('Login Set Username : '+ loginCred)
+
+	hashedPassword = md5(password)
+	hashedPassword = hashedPassword.toUpperCase();
+	//827CCB0EEA8A706C4C34A16891F84E7B
+	const loginData =
+		`<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+		<soapenv:Header/>
+		<soapenv:Body>
+		   <urn:ZFM_VLOGIN>
+			  <!--You may enter the following 2 items in any order-->
+			  <PASSWORD>`+hashedPassword+`</PASSWORD>
+			  <USERNAME>`+username+`</USERNAME>
+		   </urn:ZFM_VLOGIN>
+		</soapenv:Body>
+	 </soapenv:Envelope>`;
+
+	var options = {
+		url:
+			'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_VLOGIN_AJ&receiverParty=&receiverService=&interface=SI_VLOGIN_AJ&interfaceNamespace=http://ajpipo.com',
+		headers: {
+			'Content-Type': 'application/xml',
+			Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
+		},
+
+		body: loginData
+	};
+
+	request.post(options, function(error, response, body) {
+		if (!error && response.statusCode == 200) {
+			var response = parser.xml2json(body, { compact: true, spaces: 4 });
+			response = JSON.parse(response);
+			const result = response['SOAP:Envelope']['SOAP:Body']['ns0:ZFM_VLOGIN.Response']['UNAME']['_text']
+			console.log(result)
+			if(result !=="UNUS" && result !=="WP")
+			{	
+				let payload = { subject: username }
+				let token = jwt.sign(payload, 'SeCrEtKeY')
+				let resultVal = token+':::::'+result
+				res.send(JSON.stringify(resultVal))
+			}
+			else if(result === "UNUS")
+			{
+				console.log('Error: UNREGISTERED USER');
+				res.send(JSON.stringify(result))
+			}
+			else{
+				res.send(JSON.stringify(result))
+			}
+		}
+	});
+});
+
+app.get('/getvendorprofile', function(req , res) {
+
+	username = loginCred[loginCred.length-1]
+	// username = "0000000006"
+	console.log('View Profile: '+username)
+	const loginData =
+	`<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+	<soapenv:Header/>
+	<soapenv:Body>
+	   <urn:ZFM_VP_GETDETAILS>
+		  <VENDOR_ID>`+username+`</VENDOR_ID>
+	   </urn:ZFM_VP_GETDETAILS>
+	</soapenv:Body>
+ </soapenv:Envelope>`;
+
+	var options = {
+		url:
+			'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_VP_GETDET_AJ&receiverParty=&receiverService=&interface=SI_VP_GETDET_AJ&interfaceNamespace=http://ajpipo.com',
+		headers: {
+			'Content-Type': 'application/xml',
+			Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
+		},
+
+		body: loginData
+	};
+
+	request.post(options, function(error, response, body) {
+		if (!error && response.statusCode == 200) {
+			var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
+            result2 = JSON.parse(result1);
+            var resp = result2['SOAP:Envelope']['SOAP:Body']['ns0:ZFM_VP_GETDETAILS.Response']['E_DETAILS'];
+            res.send(resp);
+		}
+	});
+})
+
+app.post('/updatevendorprofile', (req,res)=>
+{
+	username = loginCred[loginCred.length-1]
+	// username = '0000007006'
+
+	const loginData = `
+	<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:ZFM_VP_UVENDOR>
+         <!--You may enter the following 9 items in any order-->
+         <CITY>`+req.body.c_city+`</CITY>
+         <COUNTRY>`+req.body.c_country+`</COUNTRY>
+         <FIRST_NAME>`+req.body.cf_name+`</FIRST_NAME>
+         <LAST_NAME>`+req.body.cl_name+`</LAST_NAME>
+         <MOBILE>`+req.body.c_mobile+`</MOBILE>
+         <PINCODE>`+req.body.c_pin+`</PINCODE>
+         <STATE>`+req.body.c_state+`</STATE>
+         <STREET>`+req.body.c_street+`</STREET>
+         <VENDOR_ID>`+username+`</VENDOR_ID>
+      </urn:ZFM_VP_UVENDOR>
+   </soapenv:Body>
+</soapenv:Envelope>`;
+
+var options = {
+	url:
+		'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_VP_UV_AJ&receiverParty=&receiverService=&interface=SI_VP_UV_AJ&interfaceNamespace=http://ajpipo.com',
+	headers: {
+		'Content-Type': 'application/xml',
+		Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
+	},
+
+	body: loginData
+	};
+
+	request.post(options, function(error, response, body) {
+		if (!error && response.statusCode == 200) {
+			var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
+            result2 = JSON.parse(result1);
+			result2 = result2['SOAP:Envelope']['SOAP:Body']['ns0:ZFM_VP_UVENDOR.Response']['UPDATE_STATUS']['_text']
+			console.log('Edit Profile Status:',result2)
+			res.send(JSON.stringify("Success"))
+		}
+		else{
+			res.send(JSON.stringify('Error'))
+		}
+	});
+})
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.listen(3000, () => {
 	console.log('Server Running on Port:3000');
 });
