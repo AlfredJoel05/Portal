@@ -1,0 +1,81 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+        <div class="row">
+          <div class="col-lg-8">
+            <div class="card card-chart customerinq">
+              <div class="card-header">
+                <h4 class="card-title ctitle">Credit Memo Details</h4><br>
+              </div>
+              <table class="table table-striped">
+                <thead class="thead">
+                  <tr>
+                    <th class="c0" scope="col"></th>
+                    <th class="c1" scope="col" sortable="name" (sort)="onSort($event)">Material No.</th>
+                    <th class="c2" scope="col" sortable="name" (sort)="onSort($event)">Company Code</th>
+                    <th class="c3" scope="col" sortable="name" (sort)="onSort($event)">Purchase Order</th>
+                    <th class="c4" scope="col" sortable="name" (sort)="onSort($event)">Fiscal Year</th>
+                    <th class="c5" scope="col" sortable="name" (sort)="onSort($event)">Accounting No.</th>
+                    <th class="c6" scope="col" sortable="name" (sort)="onSort($event)">Amount</th>
+                    <th class="c7" scope="col" sortable="name" (sort)="onSort($event)">Clearing Date</th>
+                    <th class="c8" scope="col" sortable="name" (sort)="onSort($event)">Purchase Info</th>
+                    <th class="c9"></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    <div *ngIf="!spin1" class="spinner"><mat-spinner style="margin:0 auto;"></mat-spinner></div>
+                    <tr *ngFor="let p of credit">
+                      <td class="r0">{{ +p.MATNR._text }}</td>
+                      <td class="r1">{{ p.WERKS._text }}</td>
+                      <td class="r2">{{ p.MENGE._text }}</td>
+                      <td class="r3">{{ p.GJAHR._text }}</td>
+                      <td class="r4">{{ p.BELNR._text }}</td>
+                      <td class="r5">{{ p.DMBTR._text }}</td>
+                      <td class="r6">{{ p.AUGDT._text }}</td>
+                      <td class="r7">{{ p.KOART._text }}</td>
+                      <td class="r8"></td>
+                    </tr>
+                  </tbody>
+              </table>
+              <br>
+              <br>
+              <br>
+              <div class="card card-chart customerinq">
+              <div class="card-header">
+                <h4 class="card-title ctitle">Debit Memo Details</h4><br>
+              </div>
+              <table class="table table-striped">
+                <thead class="thead">
+                  <tr>
+                    <th class="c0" scope="col"></th>
+                    <th class="c1" scope="col" sortable="name" (sort)="onSort($event)">Material No.</th>
+                    <th class="c2" scope="col" sortable="name" (sort)="onSort($event)">Company Code</th>
+                    <th class="c3" scope="col" sortable="name" (sort)="onSort($event)">Purchase Order</th>
+                    <th class="c4" scope="col" sortable="name" (sort)="onSort($event)">Fiscal Year</th>
+                    <th class="c5" scope="col" sortable="name" (sort)="onSort($event)">Accounting No.</th>
+                    <th class="c6" scope="col" sortable="name" (sort)="onSort($event)">Amount</th>
+                    <th class="c7" scope="col" sortable="name" (sort)="onSort($event)">Clearing Date</th>
+                    <th class="c8" scope="col" sortable="name" (sort)="onSort($event)">Purchase Info</th>
+                    <th class="c9"></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    <div *ngIf="!spin2" class="spinner"><mat-spinner style="margin:0 auto;"></mat-spinner></div>
+                    <tr *ngFor="let p of debit">
+                      <td class="r0">{{ +p.MATNR._text }}</td>
+                      <td class="r1">{{ p.WERKS._text }}</td>
+                      <td class="r2">{{ p.MENGE._text }}</td>
+                      <td class="r3">{{ p.GJAHR._text }}</td>
+                      <td class="r4">{{ p.BELNR._text }}</td>
+                      <td class="r5">{{ p.DMBTR._text }}</td>
+                      <td class="r6">{{ p.AUGDT._text }}</td>
+                      <td class="r7">{{ p.KOART._text }}</td>
+                      <td class="r8"></td>
+                    </tr>
+                  </tbody>
+              </table>
+             </div>
+            </div>
+          </div>
+  </div>
+</div>

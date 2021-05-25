@@ -11,7 +11,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { VendorDashboardComponent } from '../../dashboard/vdashboard.component';
 import { VendorprofileComponent } from '../../vendorprofile/vendorprofile.component';
 // import { PayageComponent } from '../../payage/payage.component';
-// import { MemoComponent } from '../../memo/memo.component';
+import { VendormemoComponent } from '../../vendormemo/vendormemo.component';
 // import { InquiryComponent } from '../../inquiry/inquiry.component';
 // import { SalesorderComponent } from '../../salesorder/salesorder.component'
 // import { DeliveryComponent } from '../../delivery/delivery.component';
@@ -38,7 +38,7 @@ import { DummyComponent } from '../../dummy/dummy.component';
     // DeliveryComponent,
     // MasterdataComponent,
     // SalesorderComponent,
-    // MemoComponent,
+    VendormemoComponent,
     DummyComponent,
   ]
 })

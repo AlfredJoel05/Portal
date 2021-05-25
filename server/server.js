@@ -96,7 +96,6 @@ app.post('/login', function(req, res) {
 	});
 });
 
-
 // app.get('/viewprofile' ,verifyToken, function(res) {
 app.get('/viewprofile', function(req , res) {
 
@@ -133,7 +132,6 @@ app.get('/viewprofile', function(req , res) {
 	});
 })
 	
-
 // app.post('/editprofile',verifyToken,(res,req)=>
 app.post('/editprofile', (req,res)=>
 {
@@ -182,7 +180,6 @@ var options = {
 		}
 	});
 })
-
 
 app.get('/salesorder', function(req , res) {
 
@@ -842,7 +839,6 @@ app.get('/payage', function(req , res) {
 			}
 		});
 })
-
 
 app.get('/inquiry', function(req , res) {
 
@@ -1571,6 +1567,111 @@ var options = {
 	});
 })
 
+app.get('/vendormemo', function(req , res) {
+
+	username = loginCred[loginCred.length-1]
+	console.log('Memo: '+username)
+
+
+	const loginData =
+	`<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+	<soapenv:Header/>
+	<soapenv:Body>
+	   <urn:ZFI_VP_CREDIT_DEBIT_MEMO>
+		  <!--You may enter the following 3 items in any order-->
+		  <VENDOR_ID>`+username+`</VENDOR_ID>
+		  <T_CREDIT>
+			 <!--Zero or more repetitions:-->
+			 <item>
+				<!--Optional:-->
+				<KUNNR></KUNNR>
+				<!--Optional:-->
+				<MATNR></MATNR>
+				<!--Optional:-->
+				<WERKS></WERKS>
+				<!--Optional:-->
+				<MENGE></MENGE>
+				<!--Optional:-->
+				<MEINS></MEINS>
+				<!--Optional:-->
+				<BUKRS></BUKRS>
+				<!--Optional:-->
+				<BELNR></BELNR>
+				<!--Optional:-->
+				<GJAHR></GJAHR>
+				<!--Optional:-->
+				<BUZEI></BUZEI>
+				<!--Optional:-->
+				<AUGDT></AUGDT>
+				<!--Optional:-->
+				<KOART></KOART>
+				<!--Optional:-->
+				<DMBTR></DMBTR>
+				<!--Optional:-->
+				<BDIFF></BDIFF>
+				<!--Optional:-->
+				<XBILK></XBILK>
+				<!--Optional:-->
+				<LIFNR></LIFNR>
+			 </item>
+		  </T_CREDIT>
+		  <T_DEBIT>
+			 <!--Zero or more repetitions:-->
+			 <item>
+				<!--Optional:-->
+				<KUNNR></KUNNR>
+				<!--Optional:-->
+				<MATNR></MATNR>
+				<!--Optional:-->
+				<WERKS></WERKS>
+				<!--Optional:-->
+				<MENGE></MENGE>
+				<!--Optional:-->
+				<MEINS></MEINS>
+				<!--Optional:-->
+				<BUKRS></BUKRS>
+				<!--Optional:-->
+				<BELNR></BELNR>
+				<!--Optional:-->
+				<GJAHR></GJAHR>
+				<!--Optional:-->
+				<BUZEI></BUZEI>
+				<!--Optional:-->
+				<AUGDT></AUGDT>
+				<!--Optional:-->
+				<KOART></KOART>
+				<!--Optional:-->
+				<DMBTR></DMBTR>
+				<!--Optional:-->
+				<BDIFF></BDIFF>
+				<!--Optional:-->
+				<XBILK></XBILK>
+				<!--Optional:-->
+				<LIFNR></LIFNR>
+			 </item>
+		  </T_DEBIT>
+	   </urn:ZFI_VP_CREDIT_DEBIT_MEMO>
+	</soapenv:Body>
+ </soapenv:Envelope>`;
+
+	var options = {
+		url: 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_VP_CREDIT_AJ&receiverParty=&receiverService=&interface=SI_VP_CREDIT_AJ&interfaceNamespace=http://ajpipo.com',
+		headers: {
+			'Content-Type': 'application/xml',
+			Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
+		},
+
+		body: loginData
+	};
+
+	request.post(options,function (error, response, body) {        
+        if (!error && response.statusCode == 200) {
+            var result1 = parser.xml2json(body, {compact: true, spaces: 4});
+            result1=JSON.parse(result1);
+            res.send(result1);
+        }
+	});
+})
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.listen(3000, () => {

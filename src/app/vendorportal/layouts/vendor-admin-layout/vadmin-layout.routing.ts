@@ -7,7 +7,7 @@ import { VendorprofileComponent } from '../../vendorprofile/vendorprofile.compon
 // import { DeliveryComponent } from '../../delivery/delivery.component';
 // import { MasterdataComponent } from '../../masterdata/masterdata.component';
 // import { SalesorderComponent } from '../../salesorder/salesorder.component';
-// import { MemoComponent } from '../../memo/memo.component';
+import { VendormemoComponent } from '../../vendormemo/vendormemo.component';
 import { DummyComponent } from '../../dummy/dummy.component';
 
 export const VendorAdminLayoutRoutes: Routes = [
@@ -18,6 +18,6 @@ export const VendorAdminLayoutRoutes: Routes = [
     // { path: 'delivery',          component: DeliveryComponent },
     // { path: 'masterdata',  component: MasterdataComponent },
     // { path: 'salesorder',  component: SalesorderComponent },
-    // { path: 'memo',  component: MemoComponent },
+    { path: 'memo',  component: VendormemoComponent },
     { path: 'dummy',  component: DummyComponent },
 ];

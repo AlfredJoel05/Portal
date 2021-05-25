@@ -1,0 +1,147 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;500;600;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;500;600&display=swap');
+
+.cardrow{
+    width: 100%;
+}
+
+.cardcrad{
+    width: 1600px;
+    padding-left: 10px;
+}
+
+.spinner{
+    margin: 0, auto;
+    padding-top: 170px;
+    padding-left: 0px;
+}
+
+.spinner ::ng-deep .mat-progress-spinner circle, .mat-spinner circle {
+    stroke: #2f2f2f;
+    position: relative;
+    top: 200px;
+    right: 400px;
+}
+
+.btn{
+   left: 250px;
+}
+
+.customerinq{
+    width: 1600px;
+    height: 700px;
+}
+.ctitle{
+    padding-left: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    color: rgb(37, 37, 37)
+}
+
+table{
+    padding-top: 70px;
+    width: 100%;
+}
+
+thead{
+    padding-left: 20px; 
+    font-family: 'Poppins', sans-serif;
+    font-size : 14px;
+    font-weight: 800;
+}
+.thead{
+    width: 100%;
+}
+
+
+thead tr{
+    width: 1020px;
+    /* background: rgb(0, 165, 216); */
+    background-color: rgb(47, 47, 47);
+    color: white;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;    
+}
+.c0{
+    border-top-left-radius : 10px;
+}
+.c1{
+    padding-left: 10px;
+}
+.c2{
+    padding-left: 10px;
+}
+.c3{
+    padding-left: 33px;
+}
+.c4{
+    padding-left: 70px;
+}
+.c5{
+    padding-left: 70px;
+}
+.c6{
+    padding-left: 100px;
+}
+.c7{
+    padding-left: 80px;
+}
+.c8{
+    padding-left: 50px;
+}
+.c9{
+    border-top-right-radius : 10px;
+    padding-left: 10px;
+}
+tbody{
+    overflow: auto;
+    height: 540px;
+    padding-left: 20px;
+}
+
+.r0{
+    padding-left: 55px;
+}
+.r1{
+    padding-left: 120px;
+}
+.r2{
+    padding-left: 190px;
+}
+.r3{
+    padding-left: 130px;
+}
+.r4{
+    padding-left: 150px;
+}
+.r5{
+    padding-left: 160px;
+}
+.r6{
+    padding-left: 100px;
+}
+.r7{
+    padding-left: 150px;
+}
+.r8{
+    padding-left: 53px;
+}
+
+
+.tble-responsive{
+    display: grid;
+    height: 100px;
+    grid-template-columns:repeat(9, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    align-items: center;
+}
+.Title{
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    color: orangered;
+}
+.Title1{
+    font-family: Roboto,sans-serif;
+    font-size: 18px;
+    color: rgb(73, 73, 73);
+}
