@@ -1,0 +1,80 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+        <div class="row">
+          <div class="col-lg-8">
+            <div class="card card-chart customerinq">
+              <div class="card-header">
+                <h4 class="card-title ctitle">Closed Item Details</h4><br>
+              </div>
+              <table class="table table-hover">
+                <thead class="thead">
+                <tr>
+                  <th class="c0" scope="col"></th>
+                  <th class="c1" scope="col" sortable="name" (sort)="onSort($event)">Company Code</th>
+                  <th class="c2" scope="col" sortable="name" (sort)="onSort($event)">Vendor</th>
+                  <th class="c3" scope="col" sortable="name" (sort)="onSort($event)">Cleard Date</th>
+                  <th class="c4" scope="col" sortable="name" (sort)="onSort($event)">Cleared Item</th>
+                  <th class="c5" scope="col" sortable="name" (sort)="onSort($event)">Fiscal Year</th>
+                  <th class="c6" scope="col" sortable="name" (sort)="onSort($event)">Amount</th>
+                  <th class="c7" scope="col" sortable="name" (sort)="onSort($event)">Doc No</th>
+                  <th class="c8" scope="col" sortable="name" (sort)="onSort($event)">Baseline Date</th>
+                  <th class="c9"></th>
+                </tr>
+                </thead>
+                <tbody>
+                  <div *ngIf="!spin1" class="spinner"><mat-spinner style="margin:0 auto;"></mat-spinner></div>
+                  <tr *ngFor="let p of header">
+                    <td class="r0">{{ p.COMP_CODE._text }}</td>
+                    <td class="r1">{{ +p.VENDOR._text }}</td>
+                    <td class="r2">{{ p.CLEAR_DATE._text }}</td>
+                    <td class="r3">{{ p.CLR_DOC_NO._text }}</td>
+                    <td class="r4">{{ p.FISC_YEAR._text }}</td>
+                    <td class="r5">{{ p.AMOUNT._text }}</td>
+                    <td class="r6">{{ p.DOC_NO._text }}</td>
+                    <td class="r7">{{ p.BLINE_DATE._text }}</td>
+                    <td class="r8"></td>
+                  </tr>
+                </tbody>
+              </table>
+              <br>
+              <br>
+              <br>
+              <div class="card card-chart customerinq">
+                <div class="card-header">
+                  <h4 class="card-title ctitle">Open Item Details</h4><br>
+                </div>
+                <table class="table table-hover">
+                  <thead class="thead">
+                  <tr>
+                    <th class="c0" scope="col"></th>
+                    <th class="c1" scope="col" sortable="name" (sort)="onSort($event)">Company Code</th>
+                    <th class="c2" scope="col" sortable="name" (sort)="onSort($event)">Vendor</th>
+                    <th class="c3" scope="col" sortable="name" (sort)="onSort($event)">Cleard Date</th>
+                    <th class="c4" scope="col" sortable="name" (sort)="onSort($event)">Cleared Item</th>
+                    <th class="c5" scope="col" sortable="name" (sort)="onSort($event)">Fiscal Year</th>
+                    <th class="c6" scope="col" sortable="name" (sort)="onSort($event)">Amount</th>
+                    <th class="c7" scope="col" sortable="name" (sort)="onSort($event)">Doc No</th>
+                    <th class="c8" scope="col" sortable="name" (sort)="onSort($event)">Baseline Date</th>
+                    <th class="c9"></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    <div *ngIf="!spin2" class="spinner"><mat-spinner style="margin:0 auto;"></mat-spinner></div>
+                    <tr *ngFor="let p of data">
+                      <td class="r0">{{ p.COMP_CODE._text }}</td>
+                    <td class="r1">{{ +p.VENDOR._text }}</td>
+                    <td class="r2">{{ p.CLEAR_DATE._text }}</td>
+                    <td class="r3">{{ p.CLR_DOC_NO._text }}</td>
+                    <td class="r4">{{ p.FISC_YEAR._text }}</td>
+                    <td class="r5">{{ p.AMT_DOCCUR._text }}</td>
+                    <td class="r6">{{ p.DOC_NO._text }}</td>
+                    <td class="r7">{{ p.BLINE_DATE._text }}</td>
+                    <td class="r8"></td>
+                    </tr>
+                  </tbody>
+                </table>
+             </div>
+            </div>
+          </div>
+</div>

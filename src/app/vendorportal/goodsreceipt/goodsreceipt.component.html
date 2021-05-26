@@ -1,0 +1,83 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+        <div class="row">
+          <div class="col-lg-8">
+            <div class="card card-chart customerinq">
+              <div class="card-header">
+                <h4 class="card-title ctitle">Goods Receipt Header Details</h4><br>
+              </div>
+              
+              <table class="table table-hover">
+                <thead class="thead">
+                <tr>
+                  <th class="c0" scope="col" sortable="name" (sort)="onSort($event)">Document No.</th>
+                  <th class="c1" scope="col" sortable="name" (sort)="onSort($event)">Doc Date</th>
+                  <th class="c2" scope="col" sortable="name" (sort)="onSort($event)">Doc Type</th>
+                  <th class="c3" scope="col" sortable="name" (sort)="onSort($event)">Posting Date</th>
+                  <th class="c4" scope="col" sortable="name" (sort)="onSort($event)">Entry Date</th>
+                  <th class="c5" scope="col" sortable="name" (sort)="onSort($event)">Entry Time</th>
+                  <th class="c6" scope="col" sortable="name" (sort)="onSort($event)">Username</th>
+                  <th class="c7" scope="col" sortable="name" (sort)="onSort($event)">Slip Number</th>
+                  <th class="c9"></th>
+                </tr>
+                </thead>
+                <tbody>
+                  <div *ngIf="!spin1" class="spinner"><mat-spinner style="margin:0 auto;"></mat-spinner></div>
+                  <tr *ngFor="let p of header">
+                    <td class="r0">{{ p.MAT_DOC._text }}</td>
+                    <td class="r1">{{ p.DOC_DATE._text }}</td>
+                    <td class="r2">{{ p.TR_EV_TYPE._text }}</td>
+                    <td class="r3">{{ p.PSTNG_DATE._text }}</td>
+                    <td class="r4">{{ p.ENTRY_DATE._text }}</td>
+                    <td class="r5">{{ p.ENTRY_TIME._text }}</td>
+                    <td class="r6">{{ p.USERNAME._text }}</td>
+                    <td class="r7">{{ p.VER_GR_GI_SLIP._text }}</td>
+                    <td class="r8"></td>
+                  </tr>
+                </tbody>
+              </table>
+              </div>
+              <br>
+              <br>
+              <br>
+              <div class="card card-chart customerinq">
+                <div class="card-header">
+                  <h4 class="card-title ctitle">Goods Receipt Item Details</h4><br>
+                </div>
+                
+                <table class="table table-hover">
+                  <thead class="thead">
+                  <tr>
+                    <th class="c0" scope="col" sortable="name" (sort)="onSort($event)">Material Doc</th>
+                    <th class="c1" scope="col" sortable="name" (sort)="onSort($event)">Material Item</th>
+                    <th class="c2" scope="col" sortable="name" (sort)="onSort($event)">Material</th>
+                    <th class="c3" scope="col" sortable="name" (sort)="onSort($event)">Plant</th>
+                    <th class="c4" scope="col" sortable="name" (sort)="onSort($event)">Move Type</th>
+                    <th class="c5" scope="col" sortable="name" (sort)="onSort($event)">Customer</th>
+                    <th class="c6" scope="col" sortable="name" (sort)="onSort($event)">Sales Order</th>
+                    <th class="c7" scope="col" sortable="name" (sort)="onSort($event)">Item</th>
+                    <th class="c8" scope="col" sortable="name" (sort)="onSort($event)">Unit</th>
+                    <th class="c9"></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    <div *ngIf="!spin2" class="spinner"><mat-spinner style="margin:0 auto;"></mat-spinner></div>
+                    <tr *ngFor="let p of data">
+                      <td class="dr0">{{ p.MAT_DOC._text }}</td>
+                      <td class="dr1">{{ p.MATDOC_ITM._text }}</td>
+                      <td class="dr2">{{ p.MATERIAL._text }}</td>
+                      <td class="dr3">{{ p.PLANT._text }}</td>
+                      <td class="dr4">{{ p.MOVE_TYPE._text }}</td>
+                      <td class="dr5">{{ p.CUSTOMER._text }}</td>
+                      <td class="dr6">{{ p.SALES_ORD._text }}</td>
+                      <td class="dr7">{{ p.S_ORD_ITEM._text }}</td>
+                      <td class="dr8">{{ p.ENTRY_UOM._text }}</td>                   
+                    </tr>
+                  </tbody>
+                </table>
+               
+                </div>
+            </div>
+          </div>
+</div>

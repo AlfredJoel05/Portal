@@ -9,10 +9,10 @@ declare interface RouteInfo {
 }
 export const ROUTES: RouteInfo[] = [
     { path: 'dashboard', title: 'Dashboard',  icon: 'design_app', class: '' },
-    // { path: 'inquiry', title: 'Customer Inquiry',  icon:'objects_spaceship', class: '' },
-    // { path: 'salesorder', title: 'Sales Order',  icon:'shopping_cart-simple', class: '' },
-    // { path: 'delivery', title: 'Delivery Details',  icon:'shopping_delivery-fast', class: '' },
-    // { path: 'payage', title: 'Payment Aging',  icon:'business_money-coins', class: '' },
+    { path: 'request', title: 'Quotation Request',  icon:'objects_spaceship', class: '' },
+    { path: 'goodsreceipt', title: 'Goods Receipt',  icon:'shopping_cart-simple', class: '' },
+    { path: 'purchase', title: 'Purchase',  icon:'shopping_delivery-fast', class: '' },
+    { path: 'payage', title: 'Payment Aging',  icon:'business_money-coins', class: '' },
     { path: 'memo', title: 'Credit/Debit Memo',  icon:'users_single-02', class: '' },
     // { path: 'masterdata', title: 'SAP iRPA / Data Upload',  icon:'arrows-1_cloud-upload-94', class: '' },
     { path: 'vendor-profile', title: 'User Profile',  icon:'users_single-02', class: '' },

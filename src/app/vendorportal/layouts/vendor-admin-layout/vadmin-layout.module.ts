@@ -10,11 +10,11 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { VendorDashboardComponent } from '../../dashboard/vdashboard.component';
 import { VendorprofileComponent } from '../../vendorprofile/vendorprofile.component';
-// import { PayageComponent } from '../../payage/payage.component';
+import { VendorpayageComponent } from '../../vendorpayage/vendorpayage.component';
 import { VendormemoComponent } from '../../vendormemo/vendormemo.component';
-// import { InquiryComponent } from '../../inquiry/inquiry.component';
-// import { SalesorderComponent } from '../../salesorder/salesorder.component'
-// import { DeliveryComponent } from '../../delivery/delivery.component';
+import { GoodsreceiptComponent } from '../../goodsreceipt/goodsreceipt.component';
+import { VendorpurchaseComponent } from '../../vendorpurchase/vendorpurchase.component'
+import { VendorrequestComponent } from '../../vendorrequest/vendorrequest.component'
 // import { MasterdataComponent } from '../../masterdata/masterdata.component';
 import { DummyComponent } from '../../dummy/dummy.component';
 
@@ -33,11 +33,11 @@ import { DummyComponent } from '../../dummy/dummy.component';
   declarations: [
     VendorDashboardComponent,
     VendorprofileComponent,
-    // PayageComponent,
-    // InquiryComponent,
-    // DeliveryComponent,
+    VendorpayageComponent,
+    VendorpurchaseComponent,
+    VendorrequestComponent,
     // MasterdataComponent,
-    // SalesorderComponent,
+    GoodsreceiptComponent,
     VendormemoComponent,
     DummyComponent,
   ]

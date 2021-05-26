@@ -2,22 +2,24 @@ import { Routes } from '@angular/router';
 
 import { VendorDashboardComponent } from '../../dashboard/vdashboard.component';
 import { VendorprofileComponent } from '../../vendorprofile/vendorprofile.component';
-// import { PayageComponent } from '../../payage/payage.component';
+import { VendorpayageComponent } from '../../vendorpayage/vendorpayage.component';
 // import { InquiryComponent } from '../../inquiry/inquiry.component';
 // import { DeliveryComponent } from '../../delivery/delivery.component';
 // import { MasterdataComponent } from '../../masterdata/masterdata.component';
-// import { SalesorderComponent } from '../../salesorder/salesorder.component';
+import { GoodsreceiptComponent } from '../../goodsreceipt/goodsreceipt.component';
 import { VendormemoComponent } from '../../vendormemo/vendormemo.component';
 import { DummyComponent } from '../../dummy/dummy.component';
+import { VendorpurchaseComponent } from '../../vendorpurchase/vendorpurchase.component'
+import { VendorrequestComponent } from '../../vendorrequest/vendorrequest.component'
 
 export const VendorAdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: VendorDashboardComponent },
     { path: 'vendor-profile',   component: VendorprofileComponent },
-    // { path: 'payage',     component: PayageComponent },
-    // { path: 'inquiry',     component: InquiryComponent },
-    // { path: 'delivery',          component: DeliveryComponent },
+    { path: 'payage',     component: VendorpayageComponent },
+    { path: 'request',     component: VendorrequestComponent },
+    { path: 'purchase',          component: VendorpurchaseComponent },
     // { path: 'masterdata',  component: MasterdataComponent },
-    // { path: 'salesorder',  component: SalesorderComponent },
+    { path: 'goodsreceipt',  component: GoodsreceiptComponent },
     { path: 'memo',  component: VendormemoComponent },
     { path: 'dummy',  component: DummyComponent },
 ];

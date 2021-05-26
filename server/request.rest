@@ -1,4 +1,4 @@
-GET http://localhost:3000/getvendorprofile
+GET http://localhost:3000/vendorrequest
 
 ###
 
@@ -6,13 +6,5 @@ POST http://localhost:3000/updatevendorprofile
 Content-Type: application/json
 
 {
-    "username" : "0000000006",
-    "c_city" : "BI",
-    "c_country" : "CO",
-    "cf_name" : "JOHN",
-    "cl_name" : "PIPER",
-    "c_mobile" : "123456789",
-    "c_pin" : "678956",
-    "c_state" : "STA",
-    "c_street" : "STR"
+    "username" : "0000000006"
 }
