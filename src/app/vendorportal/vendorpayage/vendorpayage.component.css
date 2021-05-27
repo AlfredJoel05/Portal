@@ -79,10 +79,10 @@ thead tr{
     padding-left: 70px;
 }
 .c6{
-    padding-left: 80px;
+    padding-left: 100px;
 }
 .c7{
-    padding-left: 80px;
+    padding-left: 120px;
 }
 .c8{
     padding-left: 80px;
@@ -103,27 +103,47 @@ tbody{
     color: white;
 }
 .r1{
-    padding-left: 120px;
+    padding-left: 160px;
     background-color: rgb(47, 47, 47);
     color: white;
 }
 .r2{
-    padding-left: 120px;
+    padding-left: 90px;
+    background-color: rgb(47, 47, 47);
+    color: white;
+}
+.dr2{
+    padding-left: 90px;
     background-color: rgb(47, 47, 47);
     color: white;
 }
 .r3{
-    padding-left: 130px;
+    padding-left: 120px;
+    background-color: rgb(47, 47, 47);
+    color: white;
+}
+.dr3{
+    padding-left: 120px;
     background-color: rgb(47, 47, 47);
     color: white;
 }
 .r4{
-    padding-left: 150px;
+    padding-left: 120px;
     background-color: rgb(47, 47, 47);
     color: white;
 }
+.dr4{
+    padding-left: 170px;
+    background-color: rgb(47, 47, 47);
+    color: white;
+}
+
 .r5{
-    padding-left: 130px;background-color: rgb(47, 47, 47);
+    padding-left: 150px;background-color: rgb(47, 47, 47);
+    color: white;
+}
+.dr5{
+    padding-left: 150px;background-color: rgb(47, 47, 47);
     color: white;
 }
 .r6{
@@ -131,13 +151,27 @@ tbody{
     background-color: rgb(47, 47, 47);
     color: white;
 }
+.dr6{
+    padding-left: 110px;
+    background-color: rgb(47, 47, 47);
+    color: white;
+}
 .r7{
-    padding-left: 120px;
+    padding-left: 100px;
+    background-color: rgb(47, 47, 47);
+    color: white;
+}
+.dr7{
+    padding-left: 119px;
     background-color: rgb(47, 47, 47);
     color: white;
 }
 .r8{
-    padding-left: 16px;background-color: rgb(47, 47, 47);
+    padding-left: 28px;background-color: rgb(47, 47, 47);
+    color: white;
+}
+.dr8{
+    padding-left: 17px;background-color: rgb(47, 47, 47);
     color: white;
 }
 

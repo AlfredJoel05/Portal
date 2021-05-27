@@ -26,7 +26,7 @@
                   <div *ngIf="!spin1" class="spinner"><mat-spinner style="margin:0 auto;"></mat-spinner></div>
                   <tr *ngFor="let p of header">
                     <td class="r0">{{ p.COMP_CODE._text }}</td>
-                    <td class="r1">{{ +p.VENDOR._text }}</td>
+                    <td class="r1">{{ p.VENDOR._text }}</td>
                     <td class="r2">{{ p.CLEAR_DATE._text }}</td>
                     <td class="r3">{{ p.CLR_DOC_NO._text }}</td>
                     <td class="r4">{{ p.FISC_YEAR._text }}</td>
@@ -63,14 +63,14 @@
                     <div *ngIf="!spin2" class="spinner"><mat-spinner style="margin:0 auto;"></mat-spinner></div>
                     <tr *ngFor="let p of data">
                       <td class="r0">{{ p.COMP_CODE._text }}</td>
-                    <td class="r1">{{ +p.VENDOR._text }}</td>
-                    <td class="r2">{{ p.CLEAR_DATE._text }}</td>
-                    <td class="r3">{{ p.CLR_DOC_NO._text }}</td>
-                    <td class="r4">{{ p.FISC_YEAR._text }}</td>
-                    <td class="r5">{{ p.AMT_DOCCUR._text }}</td>
-                    <td class="r6">{{ p.DOC_NO._text }}</td>
-                    <td class="r7">{{ p.BLINE_DATE._text }}</td>
-                    <td class="r8"></td>
+                    <td class="r1">{{ p.VENDOR._text }}</td>
+                    <td class="dr2">{{ p.CLEAR_DATE._text }}</td>
+                    <td class="dr3">{{ p.ITEM_NUM._text }}</td>
+                    <td class="dr4">{{ p.FISC_YEAR._text }}</td>
+                    <td class="dr5">{{ p.AMT_DOCCUR._text }}</td>
+                    <td class="dr6">{{ p.DOC_NO._text }}</td>
+                    <td class="dr7">{{ p.BLINE_DATE._text }}</td>
+                    <td class="dr8"></td>
                     </tr>
                   </tbody>
                 </table>

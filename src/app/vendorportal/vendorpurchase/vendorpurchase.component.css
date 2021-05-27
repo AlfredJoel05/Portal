@@ -74,15 +74,21 @@ thead tr{
     padding-left: 80px;
 }
 .c5{
-    padding-left: 70px;
-}
-.c6{
-    padding-left: 140px;
-}
-.c7{
     padding-left: 100px;
 }
+.c6{
+    padding-left: 100px;
+}
+.tc6{
+    padding-left: 70px;
+}
+.c7{
+    padding-left: 70px;
+}
 .c8{
+    padding-left: 70px;
+}
+.c9{
     border-top-right-radius : 10px;
     padding-left: 17px;
 }
@@ -93,30 +99,58 @@ tbody{
 }
 
 .r0{
-    padding-left: 25px;
+    padding-left: 95px;
 }
 .r1{
-    padding-left: 65px;
+    padding-left: 145px;
 }
 .r2{
-    padding-left: 100px;
-}
-.r3{
-    padding-left: 140px;
-}
-.r4{
     padding-left: 110px;
 }
-.r5{
-    padding-left: 85px;
-}
-.r6{
+.r3{
     padding-left: 70px;
 }
+.r4{
+    padding-left: 130px;
+}
+.r5{
+    padding-left: 170px;
+}
+.r6{
+    padding-left: 120px;
+}
 .r7{
-    padding-left: 50px;
+    padding-left: 140px;
 }
 .r8{
+    padding-left: 27px;
+}
+
+.dr0{
+    padding-left: 85px;
+}
+.dr1{
+    padding-left: 105px;
+}
+.dr2{
+    padding-left: 130px;
+}
+.dr3{
+    padding-left: 45px;
+}
+.dr4{
+    padding-left: 120px; 
+}
+.dr5{
+    padding-left: 140px;
+}
+.dr6{
+    padding-left: 70px;
+}
+.dr7{
+    padding-left: 80px;
+}
+.dr8{
     padding-left: 10px;
 }
 

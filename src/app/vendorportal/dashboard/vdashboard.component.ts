@@ -79,15 +79,18 @@ export class VendorDashboardComponent implements OnInit {
       console.log('Dash Output:'+res)
     })
 
-    // this.dashboardService.getInq().subscribe(res => {
-    //   this.ilen = res 
-    //   this.ilenValid = true;
-    // })
-    // this.dashboardService.getSales().subscribe(res => {this.slen = res
-    //   this.slenValid = true;})
-    // this.dashboardService.getDel().subscribe(res => {
-    //   this.dlenValid = true;
-    // })
+    this.dashboardService.getInq().subscribe(res => {
+      this.ilen = res 
+      this.ilenValid = true;
+    })
+    this.dashboardService.getSales().subscribe(res => {
+      this.slen = res
+      this.slenValid = true;
+    })
+    this.dashboardService.getDel().subscribe(res => {
+      this.dlen = res
+      this.dlenValid = true;
+    })
 
     this.chartColor = "#FFFFFF";
     this.canvas = document.getElementById("bigDashboardChart");
