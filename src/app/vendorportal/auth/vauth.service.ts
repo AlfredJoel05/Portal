@@ -13,7 +13,7 @@ export class VendorAuthService {
   private loginPostSubject = new Subject<any>();
   SERVER = "http://localhost:3000";
 
-  isLoggedIn: boolean = true; // Default Value : false -- True for testing purposes
+  isLoggedIn: boolean = false; // Default Value : false -- True for testing purposes
 
   private logincred = new BehaviorSubject<string>("default Message");
 	loginCred = this.logincred.asObservable();

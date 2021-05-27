@@ -83,9 +83,11 @@ export class DashboardComponent implements OnInit {
       this.ilen = res 
       this.ilenValid = true;
     })
-    this.dashboardService.getSales().subscribe(res => {this.slen = res
+    this.dashboardService.getSales().subscribe(res => {
+      this.slen = res
       this.slenValid = true;})
     this.dashboardService.getDel().subscribe(res => {
+      this.dlen = res
       this.dlenValid = true;
     })
 
