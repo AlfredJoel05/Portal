@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import * as Chartist from 'chartist';
 import { VednorDashboardService } from './vdashboard.service';
 
@@ -71,9 +71,21 @@ export class VendorDashboardComponent implements OnInit {
       return "rgb(" + r + ", " + g + ", " + b + ")";
     }
   }
-  constructor(private httpClient : HttpClient, private dashboardService: VednorDashboardService) { }
+  constructor(private httpClient : HttpClient, private dashboardService: VednorDashboardService, private renderer: Renderer2) { }
 
   ngOnInit() {
+
+    const parent: HTMLElement = document.getElementById('cai-webchat-div');
+
+        console.log("parent:",parent)
+
+        const child = parent.children[0];
+
+        const child2 = child.children[2];
+
+        console.log("Childern2 :",child2)
+
+        this.renderer.setStyle(child2, 'display', 'none');
 
     this.dashboardService.getData().subscribe(res => {
       console.log('Dash Output:'+res)

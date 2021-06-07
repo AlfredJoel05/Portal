@@ -5,6 +5,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { VendorNavbarComponent } from './navbar/vnavbar.component';
 import { VendorSidebarComponent } from './sidebar/vsidebar.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   imports: [
@@ -14,11 +15,14 @@ import { VendorSidebarComponent } from './sidebar/vsidebar.component';
   ],
   declarations: [
     VendorNavbarComponent,
-    VendorSidebarComponent
+    VendorSidebarComponent,
+    FooterComponent
+    
   ],
   exports: [
     VendorNavbarComponent,
-    VendorSidebarComponent
+    VendorSidebarComponent,
+    FooterComponent
   ]
 })
 export class VendorComponentsModule { }
