@@ -5,7 +5,7 @@ import { VendorprofileComponent } from '../../vendorprofile/vendorprofile.compon
 import { VendorpayageComponent } from '../../vendorpayage/vendorpayage.component';
 // import { InquiryComponent } from '../../inquiry/inquiry.component';
 // import { DeliveryComponent } from '../../delivery/delivery.component';
-// import { MasterdataComponent } from '../../masterdata/masterdata.component';
+import { VendorformComponent } from '../../vendorform/vendorform.component';
 import { GoodsreceiptComponent } from '../../goodsreceipt/goodsreceipt.component';
 import { VendormemoComponent } from '../../vendormemo/vendormemo.component';
 import { DummyComponent } from '../../dummy/dummy.component';
@@ -18,7 +18,7 @@ export const VendorAdminLayoutRoutes: Routes = [
     { path: 'payage',     component: VendorpayageComponent },
     { path: 'request',     component: VendorrequestComponent },
     { path: 'purchase',          component: VendorpurchaseComponent },
-    // { path: 'masterdata',  component: MasterdataComponent },
+    { path: 'invoice',  component: VendorformComponent },
     { path: 'goodsreceipt',  component: GoodsreceiptComponent },
     { path: 'memo',  component: VendormemoComponent },
     { path: 'dummy',  component: DummyComponent },

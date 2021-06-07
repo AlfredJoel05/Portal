@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { VendorAdminLayoutRoutes } from './vadmin-layout.routing';
 import { ChartsModule } from 'ng2-charts';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgTinyUrlModule } from 'ng-tiny-url';
 import { ToastrModule } from 'ngx-toastr';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
@@ -15,7 +16,7 @@ import { VendormemoComponent } from '../../vendormemo/vendormemo.component';
 import { GoodsreceiptComponent } from '../../goodsreceipt/goodsreceipt.component';
 import { VendorpurchaseComponent } from '../../vendorpurchase/vendorpurchase.component'
 import { VendorrequestComponent } from '../../vendorrequest/vendorrequest.component'
-// import { MasterdataComponent } from '../../masterdata/masterdata.component';
+import { VendorformComponent } from '../../vendorform/vendorform.component';
 import { DummyComponent } from '../../dummy/dummy.component';
 
 
@@ -27,6 +28,7 @@ import { DummyComponent } from '../../dummy/dummy.component';
     ReactiveFormsModule,
     ChartsModule,
     MatProgressSpinnerModule,
+    NgTinyUrlModule,
     NgbModule,
     ToastrModule.forRoot()
   ],
@@ -36,7 +38,7 @@ import { DummyComponent } from '../../dummy/dummy.component';
     VendorpayageComponent,
     VendorpurchaseComponent,
     VendorrequestComponent,
-    // MasterdataComponent,
+    VendorformComponent,
     GoodsreceiptComponent,
     VendormemoComponent,
     DummyComponent,

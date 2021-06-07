@@ -1476,7 +1476,7 @@ app.post('/masterdataupload', (req, res) => {
 app.post('/vendorlogin', function(req, res) {
 	username = req.body.username;
 	password = req.body.password;
-
+	username = username.toUpperCase();
 	loginCred.push(username);
 	console.log('Login Set Username : ' + loginCred);
 
@@ -3692,6 +3692,77 @@ app.get('/vendorrequest', function(req, res) {
 	var options = {
 		url:
 			'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_VP_RFQ_AJ&receiverParty=&receiverService=&interface=SI_VP_RFQ_AJ&interfaceNamespace=http://ajpipo.com',
+		headers: {
+			'Content-Type': 'application/xml',
+			Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
+		},
+
+		body: loginData
+	};
+
+	request.post(options, function(error, response, body) {
+		if (!error && response.statusCode == 200) {
+			var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
+			result1 = JSON.parse(result1);
+			res.send(result1);
+		}
+	});
+});
+
+app.post('/vendorform', function(req, res) {
+	// username = loginCred[loginCred.length - 1];
+	username = "SA1000"
+	console.log('Vendor Form: ' + username);
+
+	const loginData =
+		`<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+		<soapenv:Header/>
+		<soapenv:Body>
+		   <urn:ZFM_VP_INVOICE_CALLER>
+			  <!--You may enter the following 4 items in any order-->
+			  <I_INVOICENO>`+req.body.number+`</I_INVOICENO>
+			  <I_VENDOR_ID>`+username+`</I_VENDOR_ID>
+			  <I_YEAR>`+req.body.year+`</I_YEAR>
+			  <RETURN>
+				 <!--Zero or more repetitions:-->
+				 <item>
+					<!--Optional:-->
+					<TYPE></TYPE>
+					<!--Optional:-->
+					<ID></ID>
+					<!--Optional:-->
+					<NUMBER></NUMBER>
+					<!--Optional:-->
+					<MESSAGE></MESSAGE>
+					<!--Optional:-->
+					<LOG_NO></LOG_NO>
+					<!--Optional:-->
+					<LOG_MSG_NO></LOG_MSG_NO>
+					<!--Optional:-->
+					<MESSAGE_V1></MESSAGE_V1>
+					<!--Optional:-->
+					<MESSAGE_V2></MESSAGE_V2>
+					<!--Optional:-->
+					<MESSAGE_V3></MESSAGE_V3>
+					<!--Optional:-->
+					<MESSAGE_V4></MESSAGE_V4>
+					<!--Optional:-->
+					<PARAMETER></PARAMETER>
+					<!--Optional:-->
+					<ROW></ROW>
+					<!--Optional:-->
+					<FIELD></FIELD>
+					<!--Optional:-->
+					<SYSTEM></SYSTEM>
+				 </item>
+			  </RETURN>
+		   </urn:ZFM_VP_INVOICE_CALLER>
+		</soapenv:Body>
+	 </soapenv:Envelope>`;
+
+	var options = {
+		url:
+			'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_AJPIPO&receiverParty=&receiverService=&interface=SI_VP_FORMS&interfaceNamespace=http://ajpipo.com',
 		headers: {
 			'Content-Type': 'application/xml',
 			Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
