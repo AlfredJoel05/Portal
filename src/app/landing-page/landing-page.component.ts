@@ -18,7 +18,7 @@ export class LandingPageComponent implements OnInit {
 
         const child2 = child.children[2];
 
-        console.log("Childern2 :",child2)
+        // console.log("Childern2 :",child2)
 
         this.renderer.setStyle(child2, 'display', 'none');
   }

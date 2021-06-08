@@ -226,6 +226,8 @@
 	user-select: none;
 	overflow: hidden;
 	display: flex;
+	transition: 0.5s;
+	width: 90%;
 	.ctext {
 		padding-top: 25px;
 		padding-left: 6%;
@@ -256,9 +258,9 @@
 	}
 }
 
-// .employee:hover{
-//     transform: translateX(20px);
-// }
+.employee:hover{
+    transform: translateX(20px);
+}
 
 .employee:hover .arrow {
 	opacity: 1;
