@@ -75,18 +75,6 @@ export class VendorDashboardComponent implements OnInit {
 
   ngOnInit() {
 
-    const parent: HTMLElement = document.getElementById('cai-webchat-div');
-
-        console.log("parent:",parent)
-
-        const child = parent.children[0];
-
-        const child2 = child.children[2];
-
-        console.log("Childern2 :",child2)
-
-        this.renderer.setStyle(child2, 'display', 'none');
-
     this.dashboardService.getData().subscribe(res => {
       console.log('Dash Output:'+res)
     })
