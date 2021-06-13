@@ -251,9 +251,11 @@
 	}
 
 	.arrow {
+		align-items: center;
+		justify-content: center;
 		position: relative;
-		left: 100px;
-		opacity: 0;
+		left: 105px;
+		opacity:0 ;
 		transition: 0.3s;
 	}
 }

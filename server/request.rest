@@ -1,10 +1,11 @@
-GET http://localhost:3000/vendorrequest
+GET http://localhost:3000/getempprofile
 
 ###
 
-POST http://localhost:3000/updatevendorprofile
+POST http://localhost:3000/emplogin
 Content-Type: application/json
 
 {
-    "username" : "0000000006"
+    "username" : "5015",
+    "password" : "12345"
 }

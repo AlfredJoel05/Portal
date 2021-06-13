@@ -13,6 +13,10 @@ import { VendorAdminLayoutComponent } from './vendorportal/layouts/vendor-admin-
 import { VendorLoginComponent } from './vendorportal/auth/vendor-login/vendor-login.component';
 import { VendorGuardGuard } from './vendorportal/auth/vendor-guard.guard';
 
+import { EmployeeAdminLayoutComponent } from './employeeportal/layouts/employee-admin-layout/eadmin-layout.component';
+import { EmployeeLoginComponent } from './employeeportal/auth/employee-login/employee-login.component';
+import { EmployeeGuardGuard } from './employeeportal/auth/employee-guard.guard';
+
 import { AboutComponent } from './about/about.component';
 
 const routes: Routes =[
@@ -28,6 +32,8 @@ const routes: Routes =[
       loadChildren: './customerportal/layouts/admin-layout/admin-layout.module#AdminLayoutModule',
     }]},
 
+
+
   { path: 'vendorlogin', component: VendorLoginComponent},
   { path:  'auth', loadChildren:  './vendorportal/auth/vauth.module#AuthModule' },
   { path: 'vendor', component: VendorAdminLayoutComponent, canActivate: [VendorGuardGuard], 
@@ -35,6 +41,17 @@ const routes: Routes =[
     {
       path: '',
       loadChildren: './vendorportal/layouts/vendor-admin-layout/vadmin-layout.module#VendorAdminLayoutModule',
+    }]},
+
+
+    
+  { path: 'employeelogin', component: EmployeeLoginComponent},
+  { path:  'auth', loadChildren:  './employeeportal/auth/eauth.module#AuthModule' },
+  { path: 'employee', component: EmployeeAdminLayoutComponent, canActivate: [EmployeeGuardGuard], 
+    children: [
+    {
+      path: '',
+      loadChildren: './employeeportal/layouts/employee-admin-layout/eadmin-layout.module#EmployeeAdminLayoutModule',
     }]},
         
 

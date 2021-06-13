@@ -27,6 +27,13 @@ import { VendorComponentsModule } from './vendorportal/components/vcomponents.mo
 import { VendorInterceptorService } from './vendorportal/auth/loader/vinterceptor.service'
 import { VendorAdminLayoutComponent } from './vendorportal/layouts/vendor-admin-layout/vadmin-layout.component';
 
+import { EmployeeLoginComponent } from './employeeportal/auth/employee-login/employee-login.component';
+import { EmployeeGuardGuard } from './employeeportal/auth/employee-guard.guard';
+import { EmployeeTokenService } from './employeeportal/auth/tokenInterceptor/token.service';
+import { EmployeeComponentsModule } from './employeeportal/components/ecomponents.module'
+import { EmployeeInterceptorService } from './employeeportal/auth/loader/einterceptor.service'
+import { EmployeeAdminLayoutComponent } from './employeeportal/layouts/employee-admin-layout/eadmin-layout.component';
+
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { AboutComponent } from './about/about.component';
 
@@ -39,6 +46,7 @@ import { AboutComponent } from './about/about.component';
     HttpClientModule,
     ComponentsModule,
     VendorComponentsModule,
+    EmployeeComponentsModule,
     RouterModule,
     MatProgressBarModule,
     AppRoutingModule,
@@ -56,14 +64,19 @@ import { AboutComponent } from './about/about.component';
     LandingPageComponent,
     CustomerLoginComponent,
     VendorLoginComponent,
+    EmployeeLoginComponent,
+    EmployeeAdminLayoutComponent,
   ],
   providers: [
     { provide:HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true},
     { provide:HTTP_INTERCEPTORS, useClass: VendorInterceptorService, multi: true},
+    { provide:HTTP_INTERCEPTORS, useClass: EmployeeInterceptorService, multi: true},
     { provide:HTTP_INTERCEPTORS, useClass: TokenService, multi: true},
     { provide:HTTP_INTERCEPTORS, useClass: VendorTokenService, multi: true},
+    { provide:HTTP_INTERCEPTORS, useClass: EmployeeTokenService, multi: true},
     CustomerGuardGuard, 
     VendorGuardGuard,
+    EmployeeGuardGuard,
   ],
   bootstrap: [AppComponent]
 })
