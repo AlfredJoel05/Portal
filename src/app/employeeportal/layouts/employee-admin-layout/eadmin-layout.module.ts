@@ -11,9 +11,10 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { EmployeeDashboardComponent } from '../../dashboard/edashboard.component';
 import { EmployeeprofileComponent } from '../../employeeprofile/employeeprofile.component';
-// import { VendorpayageComponent } from '../../vendorpayage/vendorpayage.component';
+import { FinalSettleComponent } from '../../finalsettlement/fs.component';
 import { LeaveComponent } from '../../leavedetails/leave.component';
 import { DummyComponent } from '../../dummy/dummy.component';
+import { EmployeePayslipComponent } from '../../payslip/employeepayslip.component';
 
 
 @NgModule({
@@ -31,8 +32,9 @@ import { DummyComponent } from '../../dummy/dummy.component';
   declarations: [
     EmployeeDashboardComponent,
     EmployeeprofileComponent,
-    // VendorpayageComponent,
+    FinalSettleComponent,
     LeaveComponent,
+    EmployeePayslipComponent,
     DummyComponent,
   ]
 })

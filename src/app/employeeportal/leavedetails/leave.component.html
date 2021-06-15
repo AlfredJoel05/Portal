@@ -5,15 +5,15 @@
     <div class="col-lg-8">
       <div class="card card-chart customerinq">
         <div class="card-header">
-          <h4 class="card-title ctitle">Leave Details</h4><br>
+          <h2 class="card-title ctitle">Leave Details</h2><br>
         </div>
         <table class="table table-hover">
           <thead class="thead">
             <tr>
               <th class="c0" scope="col" sortable="name" (sort)="onSort($event)">Employee No.</th>
               <th class="c1" scope="col" sortable="name" (sort)="onSort($event)">Subtype</th>
-              <th class="c2" scope="col" sortable="name" (sort)="onSort($event)">Start Date</th>
-              <th class="c3" scope="col" sortable="name" (sort)="onSort($event)">End Date</th>
+              <th class="c2" scope="col" sortable="name" (sort)="onSort($event)">Starting Date</th>
+              <th class="c3" scope="col" sortable="name" (sort)="onSort($event)">Ended Date</th>
               <th class="c4" scope="col" sortable="name" (sort)="onSort($event)">Days</th>
               <th class="c5" scope="col" sortable="name" (sort)="onSort($event)">Hours</th>
               <th class="c6" scope="col" sortable="name" (sort)="onSort($event)">Description</th>
@@ -27,37 +27,116 @@
               <td class="r1">{{ p.SUBTYPE._text }}</td>
               <td class="r2">{{ p.VALIDBEGIN._text }}</td>
               <td class="r3">{{ p.VALIDEND._text }}</td>
-              <td class="r4">{{ p.ABSENCEDAYS._text }}</td>
-              <td class="r5">{{ p.ABSENCEHOURS._text }}</td>
+              <td class="r4">{{ p.ABSENCEDAYS._text | number : '1.0-0' }}</td>
+              <td class="r5">{{ p.ABSENCEHOURS._text| number : '1.0-0' }}</td>
               <td class="r6">{{ p.NAMEOFABSENCETYPE._text }}</td>
               <td class="r8"></td>
             </tr>
           </tbody>
         </table>
-        <table class="table table-hover">
-          <thead class="thead">
-            <tr>
-              <th class="c0" scope="col" sortable="name" (sort)="onSort($event)">Leave Type</th>
-              <th class="c1" scope="col" sortable="name" (sort)="onSort($event)">Description</th>
-              <th class="c2" scope="col" sortable="name" (sort)="onSort($event)">Start Date</th>
-              <th class="c3" scope="col" sortable="name" (sort)="onSort($event)">End Date</th>
-              <th class="c4" scope="col" sortable="name" (sort)="onSort($event)">Days</th>
-              <th class="c9"></th>
-            </tr>
-          </thead>
-        <tbody>
-          <div *ngIf="!spin2" class="spinner"><mat-spinner style="margin:0 auto;"></mat-spinner></div>
-            <tr *ngFor="let p of header">
-              <td class="r0">{{ p.LEAVETYPE._text }}</td>
-              <td class="r1">{{ p.QUOTATEXT._text }}</td>
-              <td class="r2">{{ p.QUOTABEG._text }}</td>
-              <td class="r3">{{ p.QUOTAEND._text }}</td>
-              <td class="r4">{{ p.TIME_UNIT._text }}</td>
-              <td class="r8"></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>           
-    </div>
+        <br>
+        <br>
+        <br>
+        <div class="row">
+        <div class="col-lg-4 col-md-2"  *ngFor="let p of data | slice:1">
+          <div class="card card-chart">
+            <div class="card-header">
+              <h3 class="card-title" style="color:rgb(22, 189, 255);">{{ p.QUOTATEXT._text }}</h3>
+            </div>
+            <div class="card-body text-center">
+              <div class="row border-bottom">
+                <div class="col border-right"><h5 class=" m-0 pt-2">{{ p.ENTITLE._text | number : '1.0-0' }}</h5><br><h6 style="color:rgb(255, 49, 22);">TOTAL LEAVE</h6></div>
+                <div class="col"><h5 class="m-0 pt-2">{{ p.DEDUCT._text | number : '1.0-0' }}</h5><br><h6 style="color:rgb(255, 220, 22);">LEAVE TAKEN</h6></div>
+              </div>
+              <div class="row">
+                <div class="col border-right pt-2"><h5 class="m-0 pt-2">{{ p.ORDERED._text | number : '1.0-0' }}</h5><br><h6 style="color:rgb(22, 189, 255);">LEAVE REQUESTED</h6></div>
+                <div class="col pt-2"><h5 h5 class="m-0 pt-2" >{{ p.DEDUCT._text | number : '1.0-0' }}</h5><br><h6 style="color:rgb(41, 255, 22);">REMAINING DAYS</h6></div>
+              </div>
+          </div>
+          <div class="card-footer">
+          </div>
+          </div>
+        </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col card" style="max-width: 80%;">
+            <div class="card-header">
+              <h2>Leave Request</h2>
+            </div>
+            <div class="card-body">
+                <form name="form" [formGroup]="form" (ngSubmit)="onSubmitRequest()">
+                  <div class="col-md-6 pl-1">
+                    <div class="form-group">
+                        <label>Employee ID</label>
+                        <input type="text" class="form-control" disabled="" placeholder="{{ username }}" />
+                    </div>
+                  </div>
+                    <div class="col-md-6 pl-1">
+                        <div class="form-group">
+                            <label>Start Date</label>
+                            <input type="text" class="form-control" formControlName="sdate" />
+                        </div>
+                    </div>
+                    <div class="col-md-6 pl-1">
+                      <div class="form-group">
+                          <label>End Date</label>
+                          <input type="text" class="form-control" formControlName="edate" />
+                      </div>
+                  </div>
+                    <div class="col-md-6 pl-1">
+                        <div class="form-group">
+                            <label>Leave Type</label>
+                            <input type="text" class="form-control" placeholder="Ex. 1001" formControlName="type" />
+                        </div>
+                    </div>
+                    <button align="center" class="btn bt">Request</button>
+                </form>
+            </div>
+            <div class="card-footer"></div>
+          </div>
+          <div class="col card" style="max-width: 80%;">
+            <div class="card-header">
+              <h2>Leave Delete</h2>
+            </div>
+            <div class="card-body">
+                  <form name="form" [formGroup]="form" (ngSubmit)="onSubmitDelete()">
+                    <div class="col-md-6 pl-1">
+                      <div class="form-group">
+                          <label>Employee ID</label>
+                          <input type="text" class="form-control" disabled="" placeholder="{{ username }}" />
+                      </div>
+                    </div>
+                      <div class="col-md-6 pl-1">
+                          <div class="form-group">
+                              <label>Start Date</label>
+                              <input type="text" class="form-control" formControlName="dsdate" />
+                          </div>
+                      </div>
+                      <div class="col-md-6 pl-1">
+                        <div class="form-group">
+                            <label>End Date</label>
+                            <input type="text" class="form-control" formControlName="dedate" />
+                        </div>
+                    </div>
+                      <div class="col-md-6 pl-1">
+                          <div class="form-group">
+                              <label>Leave Type</label>
+                              <input type="text" class="form-control" placeholder="Ex. 1001" formControlName="dtype" />
+                          </div>
+                      </div>
+                      <div class="col-md-6 pl-1">
+                          <div class="form-group">
+                              <label>Record Number</label>
+                              <input type="text" class="form-control" placeholder="Ex. 1001" formControlName="drecnum" />
+                          </div>
+                      </div>
+                      <button align="center" class="btn bt">Request</button>
+                  </form>
+            </div>
+            <div class="card-footer"></div>
+          </div>
+        </div>           
+      </div>
   </div>
 </div>

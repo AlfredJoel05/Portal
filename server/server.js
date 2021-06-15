@@ -13,206 +13,203 @@ app.use(bodyParser.urlencoded({ extended: true }));
 var loginCred = [];
 
 function verifyToken(req, res, next) {
-	if (!req.headers.authorization) {
-		return res.status(401).send('Unauthorized Request');
-	}
-	let token = req.headers.authorization.split(' ')[1];
-	if (token === 'null') {
-		return res.status(401).send('Unauthorized Request not null');
-	}
-	let payload = jwt.verify(token, 'SeCrEtKeY');
-	if (!payload) {
-		return res.status(401).send('Unauthorized Request no payload');
-	}
-	req.username = payload.subject;
-	next();
+    if (!req.headers.authorization) {
+        return res.status(401).send('Unauthorized Request');
+    }
+    let token = req.headers.authorization.split(' ')[1];
+    if (token === 'null') {
+        return res.status(401).send('Unauthorized Request not null');
+    }
+    let payload = jwt.verify(token, 'SeCrEtKeY');
+    if (!payload) {
+        return res.status(401).send('Unauthorized Request no payload');
+    }
+    req.username = payload.subject;
+    next();
 }
 
 // ---------------Headers---------------
 app.use(function(req, res, next) {
-	res.header('Access-Control-Allow-Origin', '*');
-	res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Authorization, Content-Type, Accept');
-	res.header('Access-Control-Allow-Methods', '*');
-	next();
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Authorization, Content-Type, Accept');
+    res.header('Access-Control-Allow-Methods', '*');
+    next();
 });
 
 app.get('/', (req, res) => {
-	res.send('Server Status : Running');
+    res.send('Server Status : Running');
 });
 
 app.post('/login', function(req, res) {
-	username = req.body.username;
-	password = req.body.password;
+    username = req.body.username;
+    password = req.body.password;
 
-	loginCred.push(username);
-	console.log('Login Set Username : ' + loginCred);
+    loginCred.push(username);
+    console.log('Login Set Username : ' + loginCred);
 
-	hashedPassword = md5(password);
-	hashedPassword = hashedPassword.toUpperCase();
+    hashedPassword = md5(password);
+    hashedPassword = hashedPassword.toUpperCase();
 
-	const loginData =
-		`<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+    const loginData =
+        `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
 	<soapenv:Header/>
 	<soapenv:Body>
 	<urn:ZSD_FM_LOGIN_AJ>
 		<!--You may enter the following 2 items in any order-->
 		<I_PASSWORD>` +
-		hashedPassword +
-		`</I_PASSWORD>
+        hashedPassword +
+        `</I_PASSWORD>
 		<I_USERNAME>` +
-		username +
-		`</I_USERNAME>
+        username +
+        `</I_USERNAME>
 	</urn:ZSD_FM_LOGIN_AJ>
 	</soapenv:Body>
 	</soapenv:Envelope>`;
 
-	var options = {
-		url:
-			'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_CUSTOMER_SENDER_AJ&receiverParty=&receiverService=&interface=SI_LOGIN_SERVICE_AJ&interfaceNamespace=http://ajpipo.com',
-		headers: {
-			'Content-Type': 'application/xml',
-			Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
-		},
+    var options = {
+        url: 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_CUSTOMER_SENDER_AJ&receiverParty=&receiverService=&interface=SI_LOGIN_SERVICE_AJ&interfaceNamespace=http://ajpipo.com',
+        headers: {
+            'Content-Type': 'application/xml',
+            Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
+        },
 
-		body: loginData
-	};
+        body: loginData
+    };
 
-	request.post(options, function(error, response, body) {
-		if (!error && response.statusCode == 200) {
-			var response = parser.xml2json(body, { compact: true, spaces: 4 });
-			response = JSON.parse(response);
-			const result = JsonFind(response);
-			const resultVal = result.checkKey('_text');
-			console.log(resultVal);
-			if (resultVal !== 'NULL') {
-				let payload = { subject: username };
-				let token = jwt.sign(payload, 'SeCrEtKeY');
-				let result = token + ':::::' + resultVal;
-				res.send(JSON.stringify(result));
-			} else {
-				console.log('Error', resultVal);
-				res.send(JSON.stringify(resultVal));
-			}
-		}
-	});
+    request.post(options, function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            var response = parser.xml2json(body, { compact: true, spaces: 4 });
+            response = JSON.parse(response);
+            const result = JsonFind(response);
+            const resultVal = result.checkKey('_text');
+            console.log(resultVal);
+            if (resultVal !== 'NULL') {
+                let payload = { subject: username };
+                let token = jwt.sign(payload, 'SeCrEtKeY');
+                let result = token + ':::::' + resultVal;
+                res.send(JSON.stringify(result));
+            } else {
+                console.log('Error', resultVal);
+                res.send(JSON.stringify(resultVal));
+            }
+        }
+    });
 });
 
 // app.get('/viewprofile' ,verifyToken, function(res) {
 app.get('/viewprofile', function(req, res) {
-	username = loginCred[loginCred.length - 1];
-	console.log('View Profile: ' + username);
-	const loginData =
-		`<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+    username = loginCred[loginCred.length - 1];
+    console.log('View Profile: ' + username);
+    const loginData =
+        `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
 	<soapenv:Header/>
 	<soapenv:Body>
 		<urn:ZSD_CUSTOMER_DETAILS_AJ>
 			<I_CUSTOMER_ID>` +
-		username +
-		`</I_CUSTOMER_ID>
+        username +
+        `</I_CUSTOMER_ID>
 		</urn:ZSD_CUSTOMER_DETAILS_AJ>
 	</soapenv:Body>
 	</soapenv:Envelope>`;
 
-	var options = {
-		url:
-			'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BS_CUSTDET_AJ&receiverParty=&receiverService=&interface=SI_CUSTDET_AJ&interfaceNamespace=http://ajpipo.com',
-		headers: {
-			'Content-Type': 'application/xml',
-			Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
-		},
+    var options = {
+        url: 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BS_CUSTDET_AJ&receiverParty=&receiverService=&interface=SI_CUSTDET_AJ&interfaceNamespace=http://ajpipo.com',
+        headers: {
+            'Content-Type': 'application/xml',
+            Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
+        },
 
-		body: loginData
-	};
+        body: loginData
+    };
 
-	request.post(options, function(error, response, body) {
-		if (!error && response.statusCode == 200) {
-			var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
-			result2 = JSON.parse(result1);
-			var resp = result2['SOAP:Envelope']['SOAP:Body']['ns0:ZSD_CUSTOMER_DETAILS_AJ.Response']['E_IT_CUST_DET'];
-			res.send(resp);
-		}
-	});
+    request.post(options, function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
+            result2 = JSON.parse(result1);
+            var resp = result2['SOAP:Envelope']['SOAP:Body']['ns0:ZSD_CUSTOMER_DETAILS_AJ.Response']['E_IT_CUST_DET'];
+            res.send(resp);
+        }
+    });
 });
 
 // app.post('/editprofile',verifyToken,(res,req)=>
 app.post('/editprofile', (req, res) => {
-	username = loginCred[loginCred.length - 1];
-	// username = '0000007006'
+    username = loginCred[loginCred.length - 1];
+    // username = '0000007006'
 
-	const loginData =
-		`
+    const loginData =
+        `
 	<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
    <soapenv:Header/>
    <soapenv:Body>
       <urn:ZSD_UPDATE_PROFILE_AJ>
          <!--You may enter the following 9 items in any order-->
          <I_CITY>` +
-		req.body.c_city +
-		`</I_CITY>
+        req.body.c_city +
+        `</I_CITY>
          <I_COUNTRY>` +
-		req.body.c_country +
-		`</I_COUNTRY>
+        req.body.c_country +
+        `</I_COUNTRY>
          <I_CUSTOMER_ID>` +
-		username +
-		`</I_CUSTOMER_ID>
+        username +
+        `</I_CUSTOMER_ID>
          <I_MOBILE>` +
-		req.body.c_mobile +
-		`</I_MOBILE>
+        req.body.c_mobile +
+        `</I_MOBILE>
          <I_NAME1>` +
-		req.body.cf_name +
-		`</I_NAME1>
+        req.body.cf_name +
+        `</I_NAME1>
          <I_NAME2>` +
-		req.body.cl_name +
-		`</I_NAME2>
+        req.body.cl_name +
+        `</I_NAME2>
          <I_PINCODE>` +
-		req.body.c_pin +
-		`</I_PINCODE>
+        req.body.c_pin +
+        `</I_PINCODE>
          <I_STATE>` +
-		req.body.c_state +
-		`</I_STATE>
+        req.body.c_state +
+        `</I_STATE>
          <I_STREET>` +
-		req.body.c_street +
-		`</I_STREET>
+        req.body.c_street +
+        `</I_STREET>
       </urn:ZSD_UPDATE_PROFILE_AJ>
    </soapenv:Body>
 </soapenv:Envelope>`;
 
-	var options = {
-		url:
-			'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_UPDATE_PROFILE_AJ&receiverParty=&receiverService=&interface=SI_PROFILE_UPDATE_AJ&interfaceNamespace=http://ajpipo.com',
-		headers: {
-			'Content-Type': 'application/xml',
-			Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
-		},
+    var options = {
+        url: 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_UPDATE_PROFILE_AJ&receiverParty=&receiverService=&interface=SI_PROFILE_UPDATE_AJ&interfaceNamespace=http://ajpipo.com',
+        headers: {
+            'Content-Type': 'application/xml',
+            Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
+        },
 
-		body: loginData
-	};
+        body: loginData
+    };
 
-	request.post(options, function(error, response, body) {
-		if (!error && response.statusCode == 200) {
-			var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
-			result2 = JSON.parse(result1);
-			console.log('Edit Profile: Success' + result2);
-			res.send(JSON.stringify('Success'));
-		} else {
-			res.send(JSON.stringify('Error'));
-		}
-	});
+    request.post(options, function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
+            result2 = JSON.parse(result1);
+            console.log('Edit Profile: Success' + result2);
+            res.send(JSON.stringify('Success'));
+        } else {
+            res.send(JSON.stringify('Error'));
+        }
+    });
 });
 
 app.get('/salesorder', function(req, res) {
-	username = loginCred[loginCred.length - 1];
-	console.log('SalesOrder: ' + username);
+    username = loginCred[loginCred.length - 1];
+    console.log('SalesOrder: ' + username);
 
-	const loginData =
-		`<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+    const loginData =
+        `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
 	<soapenv:Header/>
 	<soapenv:Body>
 	   <urn:ZSD_GET_SALESORDER_AJ>
 		  <!--You may enter the following 9 items in any order-->
 		  <I_CUSTOMER_ID>` +
-		username +
-		`</I_CUSTOMER_ID>
+        username +
+        `</I_CUSTOMER_ID>
 		  <!--Optional:-->
 		  <I_DOCDATE></I_DOCDATE>
 		  <!--Optional:-->
@@ -233,49 +230,48 @@ app.get('/salesorder', function(req, res) {
 		  <!--Optional:-->
 		  <I_PURCHASE_ORDER_NO></I_PURCHASE_ORDER_NO>
 		  <I_SALESORG>` +
-		'SA01' +
-		`</I_SALESORG>
+        'SA01' +
+        `</I_SALESORG>
 		  <!--Optional:-->
 		  <I_TRANSACTION_GRP></I_TRANSACTION_GRP>
 	   </urn:ZSD_GET_SALESORDER_AJ>
 	</soapenv:Body>
  </soapenv:Envelope>`;
 
-	var options = {
-		url:
-			'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_GET_SALESORDER_AJ&receiverParty=&receiverService=&interface=SI_SALES_ORDER_DETAILS_AJ&interfaceNamespace=http://ajpipo.com',
-		headers: {
-			'Content-Type': 'application/xml',
-			Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
-		},
+    var options = {
+        url: 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_GET_SALESORDER_AJ&receiverParty=&receiverService=&interface=SI_SALES_ORDER_DETAILS_AJ&interfaceNamespace=http://ajpipo.com',
+        headers: {
+            'Content-Type': 'application/xml',
+            Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
+        },
 
-		body: loginData
-	};
+        body: loginData
+    };
 
-	request.post(options, function(error, response, body) {
-		if (!error && response.statusCode == 200) {
-			var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
-			result2 = JSON.parse(result1);
-			var resp = result2['SOAP:Envelope']['SOAP:Body']['ns0:ZSD_GET_SALESORDER_AJ.Response']['E_SALESORDERS'];
-			res.send(resp);
-		}
-	});
+    request.post(options, function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
+            result2 = JSON.parse(result1);
+            var resp = result2['SOAP:Envelope']['SOAP:Body']['ns0:ZSD_GET_SALESORDER_AJ.Response']['E_SALESORDERS'];
+            res.send(resp);
+        }
+    });
 });
 
 app.get('/memo', function(req, res) {
-	username = loginCred[loginCred.length - 1];
-	console.log('Memo: ' + username);
+    username = loginCred[loginCred.length - 1];
+    console.log('Memo: ' + username);
 
-	const loginData =
-		`<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+    const loginData =
+        `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
 	<soapenv:Header/>
 	<soapenv:Body>
 	   <urn:ZFI_CREDIT_DEBIT_MEMO_AJ>
 		  <!--You may enter the following 4 items in any order-->
 		  <I_COMPANY_CODE>SA01</I_COMPANY_CODE>
 		  <I_CUSTOMER_ID>` +
-		username +
-		`</I_CUSTOMER_ID>
+        username +
+        `</I_CUSTOMER_ID>
 		  <!--Optional:-->
 		  <I_DOCUMENT_DATE></I_DOCUMENT_DATE>
 		  <IT_DETAILS>
@@ -509,39 +505,38 @@ app.get('/memo', function(req, res) {
 	</soapenv:Body>
  </soapenv:Envelope>`;
 
-	var options = {
-		url:
-			'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BS_CB_AJ&receiverParty=&receiverService=&interface=SI_CB_MEMO_AJ&interfaceNamespace=http://ajpipo.com',
-		headers: {
-			'Content-Type': 'application/xml',
-			Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
-		},
+    var options = {
+        url: 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BS_CB_AJ&receiverParty=&receiverService=&interface=SI_CB_MEMO_AJ&interfaceNamespace=http://ajpipo.com',
+        headers: {
+            'Content-Type': 'application/xml',
+            Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
+        },
 
-		body: loginData
-	};
+        body: loginData
+    };
 
-	request.post(options, function(error, response, body) {
-		if (!error && response.statusCode == 200) {
-			var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
-			result1 = JSON.parse(result1);
-			res.send(result1);
-		}
-	});
+    request.post(options, function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
+            result1 = JSON.parse(result1);
+            res.send(result1);
+        }
+    });
 });
 
 app.get('/delivery', function(req, res) {
-	username = loginCred[loginCred.length - 1];
-	console.log('Delivery: ' + username);
+    username = loginCred[loginCred.length - 1];
+    console.log('Delivery: ' + username);
 
-	const loginData =
-		`<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+    const loginData =
+        `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
 	<soapenv:Header/>
 	<soapenv:Body>
 	   <urn:ZSD_DELIVERY_DETAILS>
 		  <!--You may enter the following 2 items in any order-->
 		  <I_CUSTOMER_ID>` +
-		username +
-		`</I_CUSTOMER_ID>
+        username +
+        `</I_CUSTOMER_ID>
 		  <!--Optional:-->
 		  <IT_DELIVERY_T>
 			 <!--Zero or more repetitions:-->
@@ -578,40 +573,39 @@ app.get('/delivery', function(req, res) {
 	</soapenv:Body>
  </soapenv:Envelope>`;
 
-	var options = {
-		url:
-			'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_DELIVERY_DETAILS_AJ&receiverParty=&receiverService=&interface=SI_DELDET_AJ&interfaceNamespace=http://ajpipo.com',
-		headers: {
-			'Content-Type': 'application/xml',
-			Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
-		},
+    var options = {
+        url: 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_DELIVERY_DETAILS_AJ&receiverParty=&receiverService=&interface=SI_DELDET_AJ&interfaceNamespace=http://ajpipo.com',
+        headers: {
+            'Content-Type': 'application/xml',
+            Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
+        },
 
-		body: loginData
-	};
+        body: loginData
+    };
 
-	request.post(options, function(error, response, body) {
-		if (!error && response.statusCode == 200) {
-			var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
-			result1 = JSON.parse(result1);
-			res.send(result1);
-		}
-	});
+    request.post(options, function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
+            result1 = JSON.parse(result1);
+            res.send(result1);
+        }
+    });
 });
 
 app.get('/payage', function(req, res) {
-	username = loginCred[loginCred.length - 1];
-	console.log('Payage: ' + username);
+    username = loginCred[loginCred.length - 1];
+    console.log('Payage: ' + username);
 
-	const loginData =
-		`<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+    const loginData =
+        `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
 	<soapenv:Header/>
 	<soapenv:Body>
 	   <urn:ZFI_PAYMENT_AGING_AJ>
 		  <!--You may enter the following 4 items in any order-->
 		  <I_COMPNAY_CODE>SA01</I_COMPNAY_CODE>
 		  <I_CUSTOMER_ID>` +
-		username +
-		`</I_CUSTOMER_ID>
+        username +
+        `</I_CUSTOMER_ID>
 		  <!--Optional:-->
 		  <I_DOCUMENT_DATE></I_DOCUMENT_DATE>
 		  <IT_DETAILS>
@@ -845,31 +839,30 @@ app.get('/payage', function(req, res) {
 	</soapenv:Body>
  </soapenv:Envelope>`;
 
-	var options = {
-		url:
-			'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BS_PAYAGE_AJ&receiverParty=&receiverService=&interface=SI_PAYAGE_AJ&interfaceNamespace=http://ajpipo.com',
-		headers: {
-			'Content-Type': 'application/xml',
-			Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
-		},
+    var options = {
+        url: 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BS_PAYAGE_AJ&receiverParty=&receiverService=&interface=SI_PAYAGE_AJ&interfaceNamespace=http://ajpipo.com',
+        headers: {
+            'Content-Type': 'application/xml',
+            Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
+        },
 
-		body: loginData
-	};
+        body: loginData
+    };
 
-	request.post(options, function(error, response, body) {
-		if (!error && response.statusCode == 200) {
-			var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
-			result1 = JSON.parse(result1);
-			res.send(result1);
-		}
-	});
+    request.post(options, function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
+            result1 = JSON.parse(result1);
+            res.send(result1);
+        }
+    });
 });
 
 app.get('/inquiry', function(req, res) {
-	username = loginCred[loginCred.length - 1];
-	console.log('inquiry: ' + username);
+    username = loginCred[loginCred.length - 1];
+    console.log('inquiry: ' + username);
 
-	const loginData = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+    const loginData = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
 	<soapenv:Header/>
 	<soapenv:Body>
 	   <urn:ZSD_CUSTOMER_INQUIRY_AJ>
@@ -1347,306 +1340,301 @@ app.get('/inquiry', function(req, res) {
 	</soapenv:Body>
  </soapenv:Envelope>`;
 
-	var options = {
-		url:
-			'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_CUS_INQ_AJ&receiverParty=&receiverService=&interface=SI_CUS_INQU_AJ&interfaceNamespace=http://ajpipo.com',
-		headers: {
-			'Content-Type': 'application/xml',
-			Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
-		},
+    var options = {
+        url: 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_CUS_INQ_AJ&receiverParty=&receiverService=&interface=SI_CUS_INQU_AJ&interfaceNamespace=http://ajpipo.com',
+        headers: {
+            'Content-Type': 'application/xml',
+            Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
+        },
 
-		body: loginData
-	};
+        body: loginData
+    };
 
-	request.post(options, function(error, response, body) {
-		if (!error && response.statusCode == 200) {
-			var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
-			result1 = JSON.parse(result1);
-			res.send(result1);
-		}
-	});
+    request.post(options, function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
+            result1 = JSON.parse(result1);
+            res.send(result1);
+        }
+    });
 });
 
 app.post('/masterdataupload', (req, res) => {
-	city = req.body.city;
-	console.log(city);
-	country = req.body.country;
-	console.log(country);
-	currency = req.body.currency;
-	console.log(currency);
-	distchannel = req.body.distchannel;
-	console.log(distchannel);
-	division = req.body.division;
-	console.log(division);
-	first_name = req.body.first_name;
-	console.log(first_name);
-	language = req.body.language;
-	console.log(language);
-	last_name = req.body.last_name;
-	console.log(last_name);
-	postal_code = req.body.postal_code;
-	console.log(postal_code);
-	ref_customer = req.body.ref_customer;
-	console.log(ref_customer);
-	sales_org = req.body.sales_org;
-	console.log(sales_org);
-	street = req.body.street;
-	console.log(street);
-	telephone = req.body.telephone;
-	console.log(telephone);
+    city = req.body.city;
+    console.log(city);
+    country = req.body.country;
+    console.log(country);
+    currency = req.body.currency;
+    console.log(currency);
+    distchannel = req.body.distchannel;
+    console.log(distchannel);
+    division = req.body.division;
+    console.log(division);
+    first_name = req.body.first_name;
+    console.log(first_name);
+    language = req.body.language;
+    console.log(language);
+    last_name = req.body.last_name;
+    console.log(last_name);
+    postal_code = req.body.postal_code;
+    console.log(postal_code);
+    ref_customer = req.body.ref_customer;
+    console.log(ref_customer);
+    sales_org = req.body.sales_org;
+    console.log(sales_org);
+    street = req.body.street;
+    console.log(street);
+    telephone = req.body.telephone;
+    console.log(telephone);
 
-	const postData =
-		`<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+    const postData =
+        `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
     <soapenv:Header/>
     <soapenv:Body>
 	<urn:ZFM_MASTERDATA_AJ>
           <!--You may enter the following 13 items in any order-->
           <CITY>` +
-		city +
-		`</CITY>
+        city +
+        `</CITY>
           <COUNTRY>` +
-		country +
-		`</COUNTRY>
+        country +
+        `</COUNTRY>
           <CURRENCY>` +
-		currency +
-		`</CURRENCY>
+        currency +
+        `</CURRENCY>
           <DISTCHANNEL>` +
-		distchannel +
-		`</DISTCHANNEL>
+        distchannel +
+        `</DISTCHANNEL>
           <DIVISION>` +
-		division +
-		`</DIVISION>
+        division +
+        `</DIVISION>
           <FIRST_NAME>` +
-		first_name +
-		`</FIRST_NAME>
+        first_name +
+        `</FIRST_NAME>
           <LANGUAGE>` +
-		language +
-		`</LANGUAGE>
+        language +
+        `</LANGUAGE>
           <LAST_NAME>` +
-		last_name +
-		`</LAST_NAME>
+        last_name +
+        `</LAST_NAME>
           <POSTAL_CODE>` +
-		postal_code +
-		`</POSTAL_CODE>
+        postal_code +
+        `</POSTAL_CODE>
           <REF_CUSTOMER>` +
-		ref_customer +
-		`</REF_CUSTOMER>
+        ref_customer +
+        `</REF_CUSTOMER>
           <SALES_ORG>` +
-		sales_org +
-		`</SALES_ORG>
+        sales_org +
+        `</SALES_ORG>
           <STREET>` +
-		street +
-		` </STREET>
+        street +
+        ` </STREET>
           <TELEPHONE>` +
-		telephone +
-		`</TELEPHONE>
+        telephone +
+        `</TELEPHONE>
 		  </urn:ZFM_MASTERDATA_AJ>
     </soapenv:Body>
  </soapenv:Envelope>`;
-	var options = {
-		url:
-			'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_MD_AJ&receiverParty=&receiverService=&interface=SI_MASTER_DATA_AJ&interfaceNamespace=http://ajpipo.com',
+    var options = {
+        url: 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_MD_AJ&receiverParty=&receiverService=&interface=SI_MASTER_DATA_AJ&interfaceNamespace=http://ajpipo.com',
 
-		headers: {
-			'Content-Type': 'application/xml',
-			Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
-		},
-		body: postData
-	};
-	request.post(options, function(error, response, body) {
-		if (!error && response.statusCode == 200) {
-			var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
-			console.log(result1);
-			result2 = JSON.parse(result1);
-			console.log(result2);
-			// alert(result2);
-			var resp = result2['SOAP:Envelope']['SOAP:Body']['ns0:ZFM_CP_MASTERDATA_UPLOAD.Response']['KUNNR'];
-			// var resp = result2['SOAP:Envelope'];
-			//    var resp = result1['SOAP:Envelope']['SOAP:Body']['ns1:MT_LOGINRESPONSE']['RESULT'];
-			console.log(' customer id created =' + resp['_text']);
-			// res.send(resp._text);
-			res.send(resp);
-		}
-	});
+        headers: {
+            'Content-Type': 'application/xml',
+            Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
+        },
+        body: postData
+    };
+    request.post(options, function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
+            console.log(result1);
+            result2 = JSON.parse(result1);
+            console.log(result2);
+            // alert(result2);
+            var resp = result2['SOAP:Envelope']['SOAP:Body']['ns0:ZFM_CP_MASTERDATA_UPLOAD.Response']['KUNNR'];
+            // var resp = result2['SOAP:Envelope'];
+            //    var resp = result1['SOAP:Envelope']['SOAP:Body']['ns1:MT_LOGINRESPONSE']['RESULT'];
+            console.log(' customer id created =' + resp['_text']);
+            // res.send(resp._text);
+            res.send(resp);
+        }
+    });
 });
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //-----------------------VENDOR PORTAL----------------------------------------------------
 
 app.post('/vendorlogin', function(req, res) {
-	username = req.body.username;
-	password = req.body.password;
-	username = username.toUpperCase();
-	loginCred.push(username);
-	console.log('Login Set Username : ' + loginCred);
+    username = req.body.username;
+    password = req.body.password;
+    username = username.toUpperCase();
+    loginCred.push(username);
+    console.log('Login Set Username : ' + loginCred);
 
-	hashedPassword = md5(password);
-	hashedPassword = hashedPassword.toUpperCase();
-	//827CCB0EEA8A706C4C34A16891F84E7B
-	const loginData =
-		`<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+    hashedPassword = md5(password);
+    hashedPassword = hashedPassword.toUpperCase();
+    //827CCB0EEA8A706C4C34A16891F84E7B
+    const loginData =
+        `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
 		<soapenv:Header/>
 		<soapenv:Body>
 		   <urn:ZFM_VLOGIN>
 			  <!--You may enter the following 2 items in any order-->
 			  <PASSWORD>` +
-		hashedPassword +
-		`</PASSWORD>
+        hashedPassword +
+        `</PASSWORD>
 			  <USERNAME>` +
-		username +
-		`</USERNAME>
+        username +
+        `</USERNAME>
 		   </urn:ZFM_VLOGIN>
 		</soapenv:Body>
 	 </soapenv:Envelope>`;
 
-	var options = {
-		url:
-			'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_VLOGIN_AJ&receiverParty=&receiverService=&interface=SI_VLOGIN_AJ&interfaceNamespace=http://ajpipo.com',
-		headers: {
-			'Content-Type': 'application/xml',
-			Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
-		},
+    var options = {
+        url: 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_VLOGIN_AJ&receiverParty=&receiverService=&interface=SI_VLOGIN_AJ&interfaceNamespace=http://ajpipo.com',
+        headers: {
+            'Content-Type': 'application/xml',
+            Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
+        },
 
-		body: loginData
-	};
+        body: loginData
+    };
 
-	request.post(options, function(error, response, body) {
-		if (!error && response.statusCode == 200) {
-			var response = parser.xml2json(body, { compact: true, spaces: 4 });
-			response = JSON.parse(response);
-			const result = response['SOAP:Envelope']['SOAP:Body']['ns0:ZFM_VLOGIN.Response']['UNAME']['_text'];
-			console.log(result);
-			if (result !== 'UNUS' && result !== 'WP') {
-				let payload = { subject: username };
-				let token = jwt.sign(payload, 'SeCrEtKeY');
-				let resultVal = token + ':::::' + result;
-				res.send(JSON.stringify(resultVal));
-			} else if (result === 'UNUS') {
-				console.log('Error: UNREGISTERED USER');
-				res.send(JSON.stringify(result));
-			} else {
-				res.send(JSON.stringify(result));
-			}
-		}
-	});
+    request.post(options, function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            var response = parser.xml2json(body, { compact: true, spaces: 4 });
+            response = JSON.parse(response);
+            const result = response['SOAP:Envelope']['SOAP:Body']['ns0:ZFM_VLOGIN.Response']['UNAME']['_text'];
+            console.log(result);
+            if (result !== 'UNUS' && result !== 'WP') {
+                let payload = { subject: username };
+                let token = jwt.sign(payload, 'SeCrEtKeY');
+                let resultVal = token + ':::::' + result;
+                res.send(JSON.stringify(resultVal));
+            } else if (result === 'UNUS') {
+                console.log('Error: UNREGISTERED USER');
+                res.send(JSON.stringify(result));
+            } else {
+                res.send(JSON.stringify(result));
+            }
+        }
+    });
 });
 
 app.get('/getvendorprofile', function(req, res) {
-	username = loginCred[loginCred.length - 1];
-	// username = "0000000006"
-	console.log('Vendor View Profile: ' + username);
-	const loginData =
-		`<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+    username = loginCred[loginCred.length - 1];
+    // username = "0000000006"
+    console.log('Vendor View Profile: ' + username);
+    const loginData =
+        `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
 	<soapenv:Header/>
 	<soapenv:Body>
 	   <urn:ZFM_VP_GETDETAILS>
 		  <VENDOR_ID>` +
-		username +
-		`</VENDOR_ID>
+        username +
+        `</VENDOR_ID>
 	   </urn:ZFM_VP_GETDETAILS>
 	</soapenv:Body>
  </soapenv:Envelope>`;
 
-	var options = {
-		url:
-			'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_VP_GETDET_AJ&receiverParty=&receiverService=&interface=SI_VP_GETDET_AJ&interfaceNamespace=http://ajpipo.com',
-		headers: {
-			'Content-Type': 'application/xml',
-			Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
-		},
+    var options = {
+        url: 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_VP_GETDET_AJ&receiverParty=&receiverService=&interface=SI_VP_GETDET_AJ&interfaceNamespace=http://ajpipo.com',
+        headers: {
+            'Content-Type': 'application/xml',
+            Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
+        },
 
-		body: loginData
-	};
+        body: loginData
+    };
 
-	request.post(options, function(error, response, body) {
-		if (!error && response.statusCode == 200) {
-			var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
-			result2 = JSON.parse(result1);
-			var resp = result2['SOAP:Envelope']['SOAP:Body']['ns0:ZFM_VP_GETDETAILS.Response']['E_DETAILS'];
-			res.send(resp);
-		}
-	});
+    request.post(options, function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
+            result2 = JSON.parse(result1);
+            var resp = result2['SOAP:Envelope']['SOAP:Body']['ns0:ZFM_VP_GETDETAILS.Response']['E_DETAILS'];
+            res.send(resp);
+        }
+    });
 });
 
 app.post('/updatevendorprofile', (req, res) => {
-	username = loginCred[loginCred.length - 1];
-	// username = '0000007006'
+    username = loginCred[loginCred.length - 1];
+    // username = '0000007006'
 
-	const loginData =
-		`
+    const loginData =
+        `
 	<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
    <soapenv:Header/>
    <soapenv:Body>
       <urn:ZFM_VP_UVENDOR>
          <!--You may enter the following 9 items in any order-->
          <CITY>` +
-		req.body.c_city +
-		`</CITY>
+        req.body.c_city +
+        `</CITY>
          <COUNTRY>` +
-		req.body.c_country +
-		`</COUNTRY>
+        req.body.c_country +
+        `</COUNTRY>
          <FIRST_NAME>` +
-		req.body.cf_name +
-		`</FIRST_NAME>
+        req.body.cf_name +
+        `</FIRST_NAME>
          <LAST_NAME>` +
-		req.body.cl_name +
-		`</LAST_NAME>
+        req.body.cl_name +
+        `</LAST_NAME>
          <MOBILE>` +
-		req.body.c_mobile +
-		`</MOBILE>
+        req.body.c_mobile +
+        `</MOBILE>
          <PINCODE>` +
-		req.body.c_pin +
-		`</PINCODE>
+        req.body.c_pin +
+        `</PINCODE>
          <STATE>` +
-		req.body.c_state +
-		`</STATE>
+        req.body.c_state +
+        `</STATE>
          <STREET>` +
-		req.body.c_street +
-		`</STREET>
+        req.body.c_street +
+        `</STREET>
          <VENDOR_ID>` +
-		username +
-		`</VENDOR_ID>
+        username +
+        `</VENDOR_ID>
       </urn:ZFM_VP_UVENDOR>
    </soapenv:Body>
 </soapenv:Envelope>`;
 
-	var options = {
-		url:
-			'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_VP_UV_AJ&receiverParty=&receiverService=&interface=SI_VP_UV_AJ&interfaceNamespace=http://ajpipo.com',
-		headers: {
-			'Content-Type': 'application/xml',
-			Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
-		},
+    var options = {
+        url: 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_VP_UV_AJ&receiverParty=&receiverService=&interface=SI_VP_UV_AJ&interfaceNamespace=http://ajpipo.com',
+        headers: {
+            'Content-Type': 'application/xml',
+            Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
+        },
 
-		body: loginData
-	};
+        body: loginData
+    };
 
-	request.post(options, function(error, response, body) {
-		if (!error && response.statusCode == 200) {
-			var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
-			result2 = JSON.parse(result1);
-			result2 = result2['SOAP:Envelope']['SOAP:Body']['ns0:ZFM_VP_UVENDOR.Response']['UPDATE_STATUS']['_text'];
-			console.log('Edit Profile Status:', result2);
-			res.send(JSON.stringify('Success'));
-		} else {
-			res.send(JSON.stringify('Error'));
-		}
-	});
+    request.post(options, function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
+            result2 = JSON.parse(result1);
+            result2 = result2['SOAP:Envelope']['SOAP:Body']['ns0:ZFM_VP_UVENDOR.Response']['UPDATE_STATUS']['_text'];
+            console.log('Edit Profile Status:', result2);
+            res.send(JSON.stringify('Success'));
+        } else {
+            res.send(JSON.stringify('Error'));
+        }
+    });
 });
 
 app.get('/vendormemo', function(req, res) {
-	username = loginCred[loginCred.length - 1];
-	console.log('Vendor Memo: ' + username);
+    username = loginCred[loginCred.length - 1];
+    console.log('Vendor Memo: ' + username);
 
-	const loginData =
-		`<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+    const loginData =
+        `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
 	<soapenv:Header/>
 	<soapenv:Body>
 	   <urn:ZFI_VP_CREDIT_DEBIT_MEMO>
 		  <!--You may enter the following 3 items in any order-->
 		  <VENDOR_ID>` +
-		username +
-		`</VENDOR_ID>
+        username +
+        `</VENDOR_ID>
 		  <T_CREDIT>
 			 <!--Zero or more repetitions:-->
 			 <item>
@@ -1721,39 +1709,38 @@ app.get('/vendormemo', function(req, res) {
 	</soapenv:Body>
  </soapenv:Envelope>`;
 
-	var options = {
-		url:
-			'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_VP_CREDIT_AJ&receiverParty=&receiverService=&interface=SI_VP_CREDIT_AJ&interfaceNamespace=http://ajpipo.com',
-		headers: {
-			'Content-Type': 'application/xml',
-			Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
-		},
+    var options = {
+        url: 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_VP_CREDIT_AJ&receiverParty=&receiverService=&interface=SI_VP_CREDIT_AJ&interfaceNamespace=http://ajpipo.com',
+        headers: {
+            'Content-Type': 'application/xml',
+            Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
+        },
 
-		body: loginData
-	};
+        body: loginData
+    };
 
-	request.post(options, function(error, response, body) {
-		if (!error && response.statusCode == 200) {
-			var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
-			result1 = JSON.parse(result1);
-			res.send(result1);
-		}
-	});
+    request.post(options, function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
+            result1 = JSON.parse(result1);
+            res.send(result1);
+        }
+    });
 });
 
 app.get('/goodsreceipt', function(req, res) {
-	username = loginCred[loginCred.length - 1];
-	console.log('Vendor GoodsReceipt: ' + username);
+    username = loginCred[loginCred.length - 1];
+    console.log('Vendor GoodsReceipt: ' + username);
 
-	const loginData =
-		`<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+    const loginData =
+        `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
 	<soapenv:Header/>
 	<soapenv:Body>
 	   <urn:ZFM_GOODS_RECIPT>
 		  <!--You may enter the following 4 items in any order-->
 		  <VENDOR_ID>` +
-		username +
-		`</VENDOR_ID>
+        username +
+        `</VENDOR_ID>
 		  <T_GOODSMVT_HEADER>
 			 <!--Zero or more repetitions:-->
 			 <item>
@@ -2009,33 +1996,32 @@ app.get('/goodsreceipt', function(req, res) {
 	</soapenv:Body>
  </soapenv:Envelope>`;
 
-	var options = {
-		url:
-			'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_GR_AJ&receiverParty=&receiverService=&interface=SI_GR_AJ&interfaceNamespace=http://ajpipo.com',
-		headers: {
-			'Content-Type': 'application/xml',
-			Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
-		},
+    var options = {
+        url: 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_GR_AJ&receiverParty=&receiverService=&interface=SI_GR_AJ&interfaceNamespace=http://ajpipo.com',
+        headers: {
+            'Content-Type': 'application/xml',
+            Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
+        },
 
-		body: loginData
-	};
+        body: loginData
+    };
 
-	request.post(options, function(error, response, body) {
-		if (!error && response.statusCode == 200) {
-			var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
-			result2 = JSON.parse(result1);
-			var resp = result2['SOAP:Envelope']['SOAP:Body']['ns0:ZFM_GOODS_RECIPT.Response'];
-			res.send(resp);
-		}
-	});
+    request.post(options, function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
+            result2 = JSON.parse(result1);
+            var resp = result2['SOAP:Envelope']['SOAP:Body']['ns0:ZFM_GOODS_RECIPT.Response'];
+            res.send(resp);
+        }
+    });
 });
 
 app.get('/vendorpayage', function(req, res) {
-	username = loginCred[loginCred.length - 1];
-	console.log('Vendor Payage: ' + username);
+    username = loginCred[loginCred.length - 1];
+    console.log('Vendor Payage: ' + username);
 
-	const loginData =
-		`<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+    const loginData =
+        `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
 	<soapenv:Header/>
 	<soapenv:Body>
 	   <urn:ZFM_VP_PAYAGE>
@@ -2046,8 +2032,8 @@ app.get('/vendorpayage', function(req, res) {
 		  <!--Optional:-->
 		  <TO_DATE></TO_DATE>
 		  <VENDOR_ID>` +
-		username +
-		`</VENDOR_ID>
+        username +
+        `</VENDOR_ID>
 		  <T_CLOSEDITEMS>
 			 <!--Zero or more repetitions:-->
 			 <item>
@@ -2522,39 +2508,38 @@ app.get('/vendorpayage', function(req, res) {
 	</soapenv:Body>
  </soapenv:Envelope>`;
 
-	var options = {
-		url:
-			'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_VP_PAYAGE_AJ&receiverParty=&receiverService=&interface=SI_VPAY_AJ&interfaceNamespace=http://ajpipo.com',
-		headers: {
-			'Content-Type': 'application/xml',
-			Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
-		},
+    var options = {
+        url: 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_VP_PAYAGE_AJ&receiverParty=&receiverService=&interface=SI_VPAY_AJ&interfaceNamespace=http://ajpipo.com',
+        headers: {
+            'Content-Type': 'application/xml',
+            Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
+        },
 
-		body: loginData
-	};
+        body: loginData
+    };
 
-	request.post(options, function(error, response, body) {
-		if (!error && response.statusCode == 200) {
-			var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
-			result1 = JSON.parse(result1);
-			res.send(result1);
-		}
-	});
+    request.post(options, function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
+            result1 = JSON.parse(result1);
+            res.send(result1);
+        }
+    });
 });
 
 app.get('/vendorpurchase', function(req, res) {
-	username = loginCred[loginCred.length - 1];
-	console.log('Vendor Purchase: ' + username);
+    username = loginCred[loginCred.length - 1];
+    console.log('Vendor Purchase: ' + username);
 
-	const loginData =
-		`<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+    const loginData =
+        `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
 	<soapenv:Header/>
 	<soapenv:Body>
 	   <urn:ZFM_VP_PURCHASE>
 		  <!--You may enter the following 4 items in any order-->
 		  <VENDOR_ID>` +
-		username +
-		`</VENDOR_ID>
+        username +
+        `</VENDOR_ID>
 		  <T_PO_HEADER>
 			 <!--Zero or more repetitions:-->
 			 <item>
@@ -3104,40 +3089,39 @@ app.get('/vendorpurchase', function(req, res) {
 	</soapenv:Body>
  </soapenv:Envelope>`;
 
-	var options = {
-		url:
-			'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_VP_PR_AJ&receiverParty=&receiverService=&interface=SI_VP_PR_AJ&interfaceNamespace=http://ajpipo.com',
-		headers: {
-			'Content-Type': 'application/xml',
-			Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
-		},
+    var options = {
+        url: 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_VP_PR_AJ&receiverParty=&receiverService=&interface=SI_VP_PR_AJ&interfaceNamespace=http://ajpipo.com',
+        headers: {
+            'Content-Type': 'application/xml',
+            Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
+        },
 
-		body: loginData
-	};
+        body: loginData
+    };
 
-	request.post(options, function(error, response, body) {
-		if (!error && response.statusCode == 200) {
-			var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
-			result1 = JSON.parse(result1);
-			res.send(result1);
-		}
-	});
+    request.post(options, function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
+            result1 = JSON.parse(result1);
+            res.send(result1);
+        }
+    });
 });
 
 app.get('/vendorrequest', function(req, res) {
-	username = loginCred[loginCred.length - 1];
-	// username = "6"
-	console.log('Vendor Request: ' + username);
+    username = loginCred[loginCred.length - 1];
+    // username = "6"
+    console.log('Vendor Request: ' + username);
 
-	const loginData =
-		`<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+    const loginData =
+        `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
 	<soapenv:Header/>
 	<soapenv:Body>
 	   <urn:ZFM_VP_RFQ>
 		  <!--You may enter the following 4 items in any order-->
 		  <VENDOR_ID>` +
-		username +
-		`</VENDOR_ID>
+        username +
+        `</VENDOR_ID>
 		  <T_RETURN>
 			 <!--Zero or more repetitions:-->
 			 <item>
@@ -3689,40 +3673,39 @@ app.get('/vendorrequest', function(req, res) {
 	</soapenv:Body>
  </soapenv:Envelope>`;
 
-	var options = {
-		url:
-			'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_VP_RFQ_AJ&receiverParty=&receiverService=&interface=SI_VP_RFQ_AJ&interfaceNamespace=http://ajpipo.com',
-		headers: {
-			'Content-Type': 'application/xml',
-			Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
-		},
+    var options = {
+        url: 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_VP_RFQ_AJ&receiverParty=&receiverService=&interface=SI_VP_RFQ_AJ&interfaceNamespace=http://ajpipo.com',
+        headers: {
+            'Content-Type': 'application/xml',
+            Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
+        },
 
-		body: loginData
-	};
+        body: loginData
+    };
 
-	request.post(options, function(error, response, body) {
-		if (!error && response.statusCode == 200) {
-			var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
-			result1 = JSON.parse(result1);
-			res.send(result1);
-		}
-	});
+    request.post(options, function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
+            result1 = JSON.parse(result1);
+            res.send(result1);
+        }
+    });
 });
 
 app.post('/vendorform', function(req, res) {
-	// username = loginCred[loginCred.length - 1];
-	username = "SA1000"
-	console.log('Vendor Form: ' + username);
+    // username = loginCred[loginCred.length - 1];
+    username = "SA1000"
+    console.log('Vendor Form: ' + username);
 
-	const loginData =
-		`<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+    const loginData =
+        `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
 		<soapenv:Header/>
 		<soapenv:Body>
 		   <urn:ZFM_VP_INVOICE_CALLER>
 			  <!--You may enter the following 4 items in any order-->
-			  <I_INVOICENO>`+req.body.number+`</I_INVOICENO>
-			  <I_VENDOR_ID>`+username+`</I_VENDOR_ID>
-			  <I_YEAR>`+req.body.year+`</I_YEAR>
+			  <I_INVOICENO>` + req.body.number + `</I_INVOICENO>
+			  <I_VENDOR_ID>` + username + `</I_VENDOR_ID>
+			  <I_YEAR>` + req.body.year + `</I_YEAR>
 			  <RETURN>
 				 <!--Zero or more repetitions:-->
 				 <item>
@@ -3760,24 +3743,23 @@ app.post('/vendorform', function(req, res) {
 		</soapenv:Body>
 	 </soapenv:Envelope>`;
 
-	var options = {
-		url:
-			'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_AJPIPO&receiverParty=&receiverService=&interface=SI_VP_FORMS&interfaceNamespace=http://ajpipo.com',
-		headers: {
-			'Content-Type': 'application/xml',
-			Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
-		},
+    var options = {
+        url: 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_AJPIPO&receiverParty=&receiverService=&interface=SI_VP_FORMS&interfaceNamespace=http://ajpipo.com',
+        headers: {
+            'Content-Type': 'application/xml',
+            Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
+        },
 
-		body: loginData
-	};
+        body: loginData
+    };
 
-	request.post(options, function(error, response, body) {
-		if (!error && response.statusCode == 200) {
-			var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
-			result1 = JSON.parse(result1);
-			res.send(result1);
-		}
-	});
+    request.post(options, function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
+            result1 = JSON.parse(result1);
+            res.send(result1);
+        }
+    });
 });
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -3786,68 +3768,67 @@ app.post('/vendorform', function(req, res) {
 //-----------------------EMPLOYEE PORTAL----------------------------------------------------
 
 app.post('/emplogin', function(req, res) {
-	username = req.body.username;
-	password = req.body.password;
-	username = username.toUpperCase();
-	loginCred.push(username);
-	console.log('Login Set Username : ' + loginCred);
+    username = req.body.username;
+    password = req.body.password;
+    username = username.toUpperCase();
+    loginCred.push(username);
+    console.log('Login Set Username : ' + loginCred);
 
-	//827CCB0EEA8A706C4C34A16891F84E7B
-	const loginData =
-		`<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+    //827CCB0EEA8A706C4C34A16891F84E7B
+    const loginData =
+        `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
 		<soapenv:Header/>
 		<soapenv:Body>
 		   <urn:ZFM_EMP_LOGIN_AJ>
 			  <!--You may enter the following 2 items in any order-->
-			  <EMP_ID>`+username+`</EMP_ID>
-			  <PASSWORD>`+password+`</PASSWORD>
+			  <EMP_ID>` + username + `</EMP_ID>
+			  <PASSWORD>` + password + `</PASSWORD>
 		   </urn:ZFM_EMP_LOGIN_AJ>
 		</soapenv:Body>
 	 </soapenv:Envelope>`;
 
-	var options = {
-		url:
-			'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_AJPIPO&receiverParty=&receiverService=&interface=SI_EMP_LOGIN&interfaceNamespace=http://ajpipo.com',
-		headers: {
-			'Content-Type': 'application/xml',
-			Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
-		},
+    var options = {
+        url: 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_AJPIPO&receiverParty=&receiverService=&interface=SI_EMP_LOGIN&interfaceNamespace=http://ajpipo.com',
+        headers: {
+            'Content-Type': 'application/xml',
+            Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
+        },
 
-		body: loginData
-	};
+        body: loginData
+    };
 
-	request.post(options, function(error, response, body) {
-		if (!error && response.statusCode == 200) {
-			var response = parser.xml2json(body, { compact: true, spaces: 4 });
-			response = JSON.parse(response);
-			const result = response['SOAP:Envelope']['SOAP:Body']['ns0:ZFM_EMP_LOGIN_AJ.Response']['USERNAME']['_text'];
-			console.log(result);
-			if (result !== 'UNUS' && result !== 'WP') {
-				let payload = { subject: username };
-				let token = jwt.sign(payload, 'SeCrEtKeY');
-				let resultVal = token + ':::::' + result;
-				res.send(JSON.stringify(resultVal));
-			} else if (result === 'UNUS') {
-				console.log('Error: UNREGISTERED USER');
-				res.send(JSON.stringify(result));
-			} else {
-				res.send(JSON.stringify(result));
-			}
-		}
-	});
+    request.post(options, function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            var response = parser.xml2json(body, { compact: true, spaces: 4 });
+            response = JSON.parse(response);
+            const result = response['SOAP:Envelope']['SOAP:Body']['ns0:ZFM_EMP_LOGIN_AJ.Response']['USERNAME']['_text'];
+            console.log(result);
+            if (result !== 'UNUS' && result !== 'WP') {
+                let payload = { subject: username };
+                let token = jwt.sign(payload, 'SeCrEtKeY');
+                let resultVal = token + ':::::' + result;
+                res.send(JSON.stringify(resultVal));
+            } else if (result === 'UNUS') {
+                console.log('Error: UNREGISTERED USER');
+                res.send(JSON.stringify(result));
+            } else {
+                res.send(JSON.stringify(result));
+            }
+        }
+    });
 });
 
 app.get('/getempprofile', function(req, res) {
-	username = loginCred[loginCred.length - 1];
-	// username = "0000000006"
-	console.log('Employee View Profile: ' + username);
-	const loginData =
-		`<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+    username = loginCred[loginCred.length - 1];
+    // username = "0000000006"
+    console.log('Employee View Profile: ' + username);
+    const loginData =
+        `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
 		<soapenv:Header/>
 		<soapenv:Body>
 		   <urn:ZFM_EMP_GET_DETAILS_AJ>
 			  <!--You may enter the following 2 items in any order-->
-			  <EMP_ID>`+username+`</EMP_ID>
+			  <EMP_ID>` + username + `</EMP_ID>
 			  <!--Optional:-->
 			  <COMP>
 				 <!--Zero or more repetitions:-->
@@ -3886,102 +3867,100 @@ app.get('/getempprofile', function(req, res) {
 		</soapenv:Body>
 	 </soapenv:Envelope>`;
 
-	var options = {
-		url:
-			'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_AJPIPO&receiverParty=&receiverService=&interface=SI_EMP_GET_DETAILS_AJ&interfaceNamespace=http://ajpipo.com',
-		headers: {
-			'Content-Type': 'application/xml',
-			Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
-		},
+    var options = {
+        url: 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_AJPIPO&receiverParty=&receiverService=&interface=SI_EMP_GET_DETAILS_AJ&interfaceNamespace=http://ajpipo.com',
+        headers: {
+            'Content-Type': 'application/xml',
+            Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
+        },
 
-		body: loginData
-	};
+        body: loginData
+    };
 
-	request.post(options, function(error, response, body) {
-		if (!error && response.statusCode == 200) {
-			var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
-			result2 = JSON.parse(result1);
-			var resp = result2['SOAP:Envelope']['SOAP:Body']['ns0:ZFM_EMP_GET_DETAILS_AJ.Response']; //This has Employee details and company details as tables
-			res.send(resp);
-		}
-	});
+    request.post(options, function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
+            result2 = JSON.parse(result1);
+            var resp = result2['SOAP:Envelope']['SOAP:Body']['ns0:ZFM_EMP_GET_DETAILS_AJ.Response']; //This has Employee details and company details as tables
+            res.send(resp);
+        }
+    });
 });
 
 app.post('/updateempprofile', (req, res) => {
-	username = loginCred[loginCred.length - 1];
-	// username = '0000007006'
+    username = loginCred[loginCred.length - 1];
+    // username = '0000007006'
 
-	const loginData =
-		`<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+    const loginData =
+        `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
 		<soapenv:Header/>
 		<soapenv:Body>
 		   <urn:ZFM_EMP_UPDATE_AJ>
 			  <!--You may enter the following 9 items in any order-->
 			  <!--Optional:-->
-			  <CITY>`+req.body.c_city+`</CITY>
+			  <CITY>` + req.body.c_city + `</CITY>
 			  <!--Optional:-->
 			  <COUNTRY>` +
-			  req.body.c_country +
-			  `</COUNTRY>
+        req.body.c_country +
+        `</COUNTRY>
 			  <!--Optional:-->
-			  <DOB>`+req.body.dob+`</DOB>
-			  <EMP_ID>`+username+`</EMP_ID>
+			  <DOB>` + req.body.dob + `</DOB>
+			  <EMP_ID>` + username + `</EMP_ID>
 			  <!--Optional:-->
 			  <FIRST_NAME>` +
-			  req.body.cf_name +
-			  `</FIRST_NAME>
+        req.body.cf_name +
+        `</FIRST_NAME>
 			  <!--Optional:-->
 			  <LAST_NAME>` +
-			  req.body.cl_name +
-			  `</LAST_NAME>
+        req.body.cl_name +
+        `</LAST_NAME>
 			  <!--Optional:-->
 			  <MOBILE>` +
-			  req.body.c_mobile +
-			  `</MOBILE>
+        req.body.c_mobile +
+        `</MOBILE>
 			  <!--Optional:-->
 			  <PINCODE>` +
-			  req.body.c_pin +
-			  `</PINCODE>
+        req.body.c_pin +
+        `</PINCODE>
 			  <!--Optional:-->
 			  <STREET>` +
-			  req.body.c_street +
-			  `</STREET>
+        req.body.c_street +
+        `</STREET>
 		   </urn:ZFM_EMP_UPDATE_AJ>
 		</soapenv:Body>
 	 </soapenv:Envelope>`;
 
-	var options = {
-		url:
-			'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_AJPIPO&receiverParty=&receiverService=&interface=SI_EMP_UPDATE_AJ&interfaceNamespace=http://ajpipo.com',
-		headers: {
-			'Content-Type': 'application/xml',
-			Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
-		},
+    var options = {
+        url: 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_AJPIPO&receiverParty=&receiverService=&interface=SI_EMP_UPDATE_AJ&interfaceNamespace=http://ajpipo.com',
+        headers: {
+            'Content-Type': 'application/xml',
+            Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
+        },
 
-		body: loginData
-	};
+        body: loginData
+    };
 
-	request.post(options, function(error, response, body) {
-		if (!error && response.statusCode == 200) {
-			var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
-			result2 = JSON.parse(result1);
-			result2 = result2['SOAP:Envelope']['SOAP:Body']['ns0:ZFM_EMP_UPDATE_AJ.Response']['RETURN']['_text'];
-			console.log('Edit Profile Status:', result2);
-			if(result2 === "1"){
-				res.send(JSON.stringify('Success'));
-			}
-			else{
-			res.send(JSON.stringify('Error'));
-			}}
-	});
+    request.post(options, function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
+            result2 = JSON.parse(result1);
+            result2 = result2['SOAP:Envelope']['SOAP:Body']['ns0:ZFM_EMP_UPDATE_AJ.Response']['RETURN']['_text'];
+            console.log('Edit Profile Status:', result2);
+            if (result2 === "1") {
+                res.send(JSON.stringify('Success'));
+            } else {
+                res.send(JSON.stringify('Error'));
+            }
+        }
+    });
 });
 
 app.get('/leavedetails', (req, res) => {
-	username = loginCred[loginCred.length - 1];
-	// username = '0000007006'
-	console.log('Employee Leave Details : ', username)
-	const loginData =
-		`<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+    username = loginCred[loginCred.length - 1];
+    // username = '0000007006'
+    console.log('Employee Leave Details : ', username)
+    const loginData =
+        `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
 		<soapenv:Header/>
 		<soapenv:Body>
 		   <urn:ZFM_EMP_LEAVE_DETAILS_AJ>
@@ -3992,7 +3971,7 @@ app.get('/leavedetails', (req, res) => {
 				 <!--Zero or more repetitions:-->
 				 <item>
 					<!--Optional:-->
-					<EMPLOYEENO>`+username+`</EMPLOYEENO>
+					<EMPLOYEENO>` + username + `</EMPLOYEENO>
 					<!--Optional:-->
 					<SUBTYPE></SUBTYPE>
 					<!--Optional:-->
@@ -4067,38 +4046,37 @@ app.get('/leavedetails', (req, res) => {
 		</soapenv:Body>
 	 </soapenv:Envelope>`;
 
-	var options = {
-		url:
-			'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_AJPIPO&receiverParty=&receiverService=&interface=SI_EMP_LEAVE_DET_AJ&interfaceNamespace=http://ajpipo.com',
-		headers: {
-			'Content-Type': 'application/xml',
-			Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
-		},
+    var options = {
+        url: 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_AJPIPO&receiverParty=&receiverService=&interface=SI_EMP_LEAVE_DET_AJ&interfaceNamespace=http://ajpipo.com',
+        headers: {
+            'Content-Type': 'application/xml',
+            Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
+        },
 
-		body: loginData
-	};
+        body: loginData
+    };
 
-	request.post(options, function(error, response, body) {
-		if (!error && response.statusCode == 200) {
-			var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
-			result2 = JSON.parse(result1);
-			result2 = result2['SOAP:Envelope']['SOAP:Body']['ns0:ZFM_EMP_LEAVE_DETAILS_AJ.Response'];
-			res.send(result2)	
-		}
-	});
+    request.post(options, function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
+            result2 = JSON.parse(result1);
+            result2 = result2['SOAP:Envelope']['SOAP:Body']['ns0:ZFM_EMP_LEAVE_DETAILS_AJ.Response'];
+            res.send(result2)
+        }
+    });
 });
 
 app.post('/leaverequest', (req, res) => {
-	username = loginCred[loginCred.length - 1];
-	// username = '0000007006'
+    username = loginCred[loginCred.length - 1];
+    // username = '0000007006'
 
-	const loginData =
-		`<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+    const loginData =
+        `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
 		<soapenv:Header/>
 		<soapenv:Body>
 		   <urn:ZFM_EMP_LEAVE_REQUEST_AJ>
 			  <!--You may enter the following 7 items in any order-->
-			  <EMP_ID>`+username+`</EMP_ID>
+			  <EMP_ID>` + username + `</EMP_ID>
 			  <END_DATE></END_DATE>
 			  <!--Optional:-->
 			  <END_TIME></END_TIME>
@@ -4113,38 +4091,37 @@ app.post('/leaverequest', (req, res) => {
 		</soapenv:Body>
 	 </soapenv:Envelope>`;
 
-	var options = {
-		url:
-			'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_AJPIPO&receiverParty=&receiverService=&interface=SI_EMP_UPDATE_AJ&interfaceNamespace=http://ajpipo.com',
-		headers: {
-			'Content-Type': 'application/xml',
-			Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
-		},
+    var options = {
+        url: 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_AJPIPO&receiverParty=&receiverService=&interface=SI_EMP_UPDATE_AJ&interfaceNamespace=http://ajpipo.com',
+        headers: {
+            'Content-Type': 'application/xml',
+            Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
+        },
 
-		body: loginData
-	};
+        body: loginData
+    };
 
-	request.post(options, function(error, response, body) {
-		if (!error && response.statusCode == 200) {
-			var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
-			result2 = JSON.parse(result1);
-			result2 = result2['SOAP:Envelope']['SOAP:Body']['ns0:ZFM_EMP_LEAVE_REQUEST_AJ.Response'];
-			res.send(result2)	
-		}
-	});
+    request.post(options, function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
+            result2 = JSON.parse(result1);
+            result2 = result2['SOAP:Envelope']['SOAP:Body']['ns0:ZFM_EMP_LEAVE_REQUEST_AJ.Response'];
+            res.send(result2)
+        }
+    });
 });
 
 app.post('/leavedelete', (req, res) => {
-	username = loginCred[loginCred.length - 1];
-	// username = '0000007006'
+    username = loginCred[loginCred.length - 1];
+    // username = '0000007006'
 
-	const loginData =
-		`<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+    const loginData =
+        `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
 		<soapenv:Header/>
 		<soapenv:Body>
 		   <urn:ZFM_EMP_LEAVE_DELETE_AJ>
 			  <!--You may enter the following 7 items in any order-->
-			  <I_EMP_ID>`+uername+`</I_EMP_ID>
+			  <I_EMP_ID>` + uername + `</I_EMP_ID>
 			  <I_ENDDATE></I_ENDDATE>
 			  <!--Optional:-->
 			  <I_LOCKINDICATOR></I_LOCKINDICATOR>
@@ -4157,73 +4134,182 @@ app.post('/leavedelete', (req, res) => {
 		</soapenv:Body>
 	 </soapenv:Envelope>`;
 
-	var options = {
-		url:
-			'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_AJPIPO&receiverParty=&receiverService=&interface=SI_EMP_LEAVE_DEL_AJ&interfaceNamespace=http://ajpipo.com',
-		headers: {
-			'Content-Type': 'application/xml',
-			Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
-		},
+    var options = {
+        url: 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_AJPIPO&receiverParty=&receiverService=&interface=SI_EMP_LEAVE_DEL_AJ&interfaceNamespace=http://ajpipo.com',
+        headers: {
+            'Content-Type': 'application/xml',
+            Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
+        },
 
-		body: loginData
-	};
+        body: loginData
+    };
 
-	request.post(options, function(error, response, body) {
-		if (!error && response.statusCode == 200) {
-			var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
-			result2 = JSON.parse(result1);
-			result2 = result2['SOAP:Envelope']['SOAP:Body']['ns0:ZFM_EMP_LEAVE_REQUEST_AJ.Response'];
-			res.send(result2)	
-		}
-	});
+    request.post(options, function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
+            result2 = JSON.parse(result1);
+            result2 = result2['SOAP:Envelope']['SOAP:Body']['ns0:ZFM_EMP_LEAVE_REQUEST_AJ.Response'];
+            res.send(result2)
+        }
+    });
 }); //ERROR IN PIPO
 
 app.post('/emppayslip', (req, res) => {
-	username = loginCred[loginCred.length - 1];
-	// username = '0000007006'
+    username = loginCred[loginCred.length - 1];
+    // username = '0000007006'
+	console.log('Employee Payslip: ', username)
 
-	const loginData =
-		`<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+    const loginData =
+        `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
 		<soapenv:Header/>
 		<soapenv:Body>
 		   <urn:ZFM_EMP_PAYSLIP_PDF_AJ>
 			  <!--You may enter the following 3 items in any order-->
-			  <EMP_ID>`+username+`</EMP_ID>
-			  <SEQ_NUM>`+req.body.seqnum+`</SEQ_NUM>
+			  <EMP_ID>` + username + `</EMP_ID>
+			  <SEQ_NUM>` + req.body.month + `</SEQ_NUM>
 			  <!--Optional:-->
 			  <IT_PAYSLIP_HTML>
 				 <!--Zero or more repetitions:-->
 				 <item>
 					<!--Optional:-->
-					<LINE></LINE>
+					<LINE>`+req.body.year+`</LINE>
 				 </item>
 			  </IT_PAYSLIP_HTML>
 		   </urn:ZFM_EMP_PAYSLIP_PDF_AJ>
 		</soapenv:Body>
 	 </soapenv:Envelope>`;
 
-	var options = {
-		url:
-			'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_AJPIPO&receiverParty=&receiverService=&interface=SI_EMP_PAYSLIP_AJ&interfaceNamespace=http://ajpipo.com',
-		headers: {
-			'Content-Type': 'application/xml',
-			Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
-		},
+    var options = {
+        url: 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_AJPIPO&receiverParty=&receiverService=&interface=SI_EMP_PAYSLIP_AJ&interfaceNamespace=http://ajpipo.com',
+        headers: {
+            'Content-Type': 'application/xml',
+            Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
+        },
 
-		body: loginData
-	};
+        body: loginData
+    };
 
-	request.post(options, function(error, response, body) {
-		if (!error && response.statusCode == 200) {
-			var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
-			result2 = JSON.parse(result1);
-			result2 = result2['SOAP:Envelope']['SOAP:Body']['ns0:ZFM_EMP_PAYSLIP_PDF_AJ.Response'];
-			res.send(result2)	
-		}
-	});
+    request.post(options, function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
+            result2 = JSON.parse(result1);
+            result2 = result2['SOAP:Envelope']['SOAP:Body']['ns0:ZFM_EMP_PAYSLIP_PDF_AJ.Response'];
+            res.send(result2)
+        }
+    });
+});
+
+app.post('/empfs', (req, res) => {
+    username = loginCred[loginCred.length - 1];
+    // username = '0000007006'
+	console.log('Employee Payslip: ', username)
+
+    const loginData =
+        `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+		<soapenv:Header/>
+		<soapenv:Body>
+		   <urn:ZFM_EMP_FSETT_AJ>
+			  <!--You may enter the following 5 items in any order-->
+			  <I_EMP_ID>`+ username +`</I_EMP_ID>
+			  <REQ_TYPE>`+ req.body.type +`</REQ_TYPE>
+			  <BASICPAY>
+				 <!--Zero or more repetitions:-->
+				 <item>
+					<!--Optional:-->
+					<EMPLOYEENO></EMPLOYEENO>
+					<!--Optional:-->
+					<SUBTYPE></SUBTYPE>
+					<!--Optional:-->
+					<OBJECTID></OBJECTID>
+					<!--Optional:-->
+					<LOCKINDIC></LOCKINDIC>
+					<!--Optional:-->
+					<VALIDEND></VALIDEND>
+					<!--Optional:-->
+					<VALIDBEGIN></VALIDBEGIN>
+					<!--Optional:-->
+					<RECORDNR></RECORDNR>
+				 </item>
+			  </BASICPAY>
+			  <COMPANYDETAILS>
+				 <!--Zero or more repetitions:-->
+				 <item>
+					<!--Optional:-->
+					<COMP_CODE></COMP_CODE>
+					<!--Optional:-->
+					<COMP_NAME></COMP_NAME>
+					<!--Optional:-->
+					<CITY></CITY>
+					<!--Optional:-->
+					<COUNTRY></COUNTRY>
+					<!--Optional:-->
+					<CURRENCY></CURRENCY>
+					<!--Optional:-->
+					<LANGU></LANGU>
+					<!--Optional:-->
+					<CHRT_ACCTS></CHRT_ACCTS>
+					<!--Optional:-->
+					<FY_VARIANT></FY_VARIANT>
+					<!--Optional:-->
+					<VAT_REG_NO></VAT_REG_NO>
+					<!--Optional:-->
+					<COMPANY></COMPANY>
+					<!--Optional:-->
+					<ADDR_NO></ADDR_NO>
+					<!--Optional:-->
+					<COUNTRY_ISO></COUNTRY_ISO>
+					<!--Optional:-->
+					<CURRENCY_ISO></CURRENCY_ISO>
+					<!--Optional:-->
+					<LANGU_ISO></LANGU_ISO>
+				 </item>
+			  </COMPANYDETAILS>
+			  <WAGETYPES>
+				 <!--Zero or more repetitions:-->
+				 <item>
+					<!--Optional:-->
+					<WAGETYPE></WAGETYPE>
+					<!--Optional:-->
+					<AMOUNT></AMOUNT>
+					<!--Optional:-->
+					<NUMBER></NUMBER>
+					<!--Optional:-->
+					<TIMEUNIT></TIMEUNIT>
+					<!--Optional:-->
+					<INDVALUAT></INDVALUAT>
+					<!--Optional:-->
+					<ADDTOTAMNT></ADDTOTAMNT>
+					<!--Optional:-->
+					<OPERINDIC></OPERINDIC>
+					<!--Optional:-->
+					<NAMEOFWAGETYPE></NAMEOFWAGETYPE>
+				 </item>
+			  </WAGETYPES>
+		   </urn:ZFM_EMP_FSETT_AJ>
+		</soapenv:Body>
+	 </soapenv:Envelope>`;
+
+    var options = {
+        url: 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_AJPIPO&receiverParty=&receiverService=&interface=SI_EMP_FS_AJ&interfaceNamespace=http://ajpipo.com',
+        headers: {
+            'Content-Type': 'application/xml',
+            Authorization: 'Basic UE9VU0VSOlRlY2hAMjAyMQ=='
+        },
+
+        body: loginData
+    };
+
+    request.post(options, function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
+            result2 = JSON.parse(result1);
+            result2 = result2['SOAP:Envelope']['SOAP:Body']['ns0:ZFM_EMP_FSETT_AJ.Response'];
+            res.send(result2)
+        }
+    });
 });
 
 //########################################################################################################################################################
 app.listen(3000, () => {
-	console.log('Server Running on Port:3000');
-});
+        console.log('Server Running on Port:3000');
+    })

@@ -1,0 +1,45 @@
+<div class="panel-header panel-header-sm"></div>
+<div class="main-content">
+    <div class="row">
+        <div class="col">
+            <div class="card card-chart customerinq justify-center align-center">
+                <div class="card-header">
+                    <h4 class="card-title ctitle">Payslip Details</h4>
+                    <br />
+                </div>
+                <div class="row">
+                    <div class="col justify-center align-center">
+                        <div class="col-md-5 pr-1">
+                            <form name="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+                                <div class="form-group">
+                                    <label>Employee ID</label>
+                                    <input type="text" class="form-control" disabled="" placeholder="{{ username }}" />
+                                </div>
+                                <div class="col-md-6 pl-1">
+                                    <div class="form-group">
+                                        <label>Month</label>
+                                        <input type="text" class="form-control" formControlName="month" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6 pl-1">
+                                    <div class="form-group">
+                                        <label>Year</label>
+                                        <input type="text" class="form-control" placeholder="YYYYMMDD" formControlName="year" />
+                                    </div>
+                                </div>
+                                <button align="center" class="btn bt">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col text-center">
+                        <div *ngIf="spin1" class="spinner">
+                            <h2>Generating PDF...</h2>
+                            <mat-spinner style="margin: 0 auto"></mat-spinner>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <iframe [src]="finalLink" title="Payslip PDF" width="98%" height="800" style="border: none; padding-left:13px"></iframe>
+    </div>
+</div>

@@ -50,7 +50,6 @@ export class VendorformComponent implements OnInit {
         this.link = res['SOAP:Envelope']['SOAP:Body']['ns0:ZFM_VP_INVOICE_CALLER.Response']['E_INVOICE_DOC']['_text']
         this.link = encodeURI(this.link)
         this.header = this.header + this.link
-        console.log(this.header)
         this.finalLink = this.sanitizer.bypassSecurityTrustResourceUrl(this.header)
         // this.tiny.shorten(this.header).subscribe(res => {
         //   this.finalLink = res
