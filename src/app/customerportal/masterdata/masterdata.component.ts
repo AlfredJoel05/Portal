@@ -17,6 +17,9 @@ export class MasterdataComponent implements OnInit {
   upload_response;
   public file: any;
   public xl_data: any = [];
+
+  cust : any = []
+
   getFilename(ev: any) {
     this.file = ev.target.files[0];
   }
@@ -38,12 +41,10 @@ export class MasterdataComponent implements OnInit {
     reader.readAsBinaryString(this.file);
   }
   async upload_to_sap() {
-    for (let i = 0; i < this.xl_data.length; i++) {
-      console.log(this.xl_data[i]);
+    for (let i = 0; i < this.xl_data.length; i++) { 
+      
       this.http.post('http://localhost:3000/masterdataupload', this.xl_data[i]).subscribe(result => {
-        
-      alert(result['_text'])
-        
+        this.cust.push(result['KUNNR']['_text'])
       })
     }
   }

@@ -44,7 +44,6 @@ app.post('/login', function(req, res) {
     username = req.body.username;
     password = req.body.password;
 
-    loginCred.push(username);
     console.log('Login Set Username : ' + loginCred);
 
     hashedPassword = md5(password);
@@ -84,6 +83,7 @@ app.post('/login', function(req, res) {
             const resultVal = result.checkKey('_text');
             console.log(resultVal);
             if (resultVal !== 'NULL') {
+				loginCred.push(username);
                 let payload = { subject: username };
                 let token = jwt.sign(payload, 'SeCrEtKeY');
                 let result = token + ':::::' + resultVal;
@@ -1360,32 +1360,21 @@ app.get('/inquiry', function(req, res) {
 });
 
 app.post('/masterdataupload', (req, res) => {
+	username = loginCred[loginCred.length - 1];
+	console.log("Master Data Upload :", username)
     city = req.body.city;
-    console.log(city);
     country = req.body.country;
-    console.log(country);
     currency = req.body.currency;
-    console.log(currency);
     distchannel = req.body.distchannel;
-    console.log(distchannel);
     division = req.body.division;
-    console.log(division);
     first_name = req.body.first_name;
-    console.log(first_name);
     language = req.body.language;
-    console.log(language);
     last_name = req.body.last_name;
-    console.log(last_name);
     postal_code = req.body.postal_code;
-    console.log(postal_code);
     ref_customer = req.body.ref_customer;
-    console.log(ref_customer);
     sales_org = req.body.sales_org;
-    console.log(sales_org);
     street = req.body.street;
-    console.log(street);
     telephone = req.body.telephone;
-    console.log(telephone);
 
     const postData =
         `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
@@ -1393,45 +1382,19 @@ app.post('/masterdataupload', (req, res) => {
     <soapenv:Body>
 	<urn:ZFM_MASTERDATA_AJ>
           <!--You may enter the following 13 items in any order-->
-          <CITY>` +
-        city +
-        `</CITY>
-          <COUNTRY>` +
-        country +
-        `</COUNTRY>
-          <CURRENCY>` +
-        currency +
-        `</CURRENCY>
-          <DISTCHANNEL>` +
-        distchannel +
-        `</DISTCHANNEL>
-          <DIVISION>` +
-        division +
-        `</DIVISION>
-          <FIRST_NAME>` +
-        first_name +
-        `</FIRST_NAME>
-          <LANGUAGE>` +
-        language +
-        `</LANGUAGE>
-          <LAST_NAME>` +
-        last_name +
-        `</LAST_NAME>
-          <POSTAL_CODE>` +
-        postal_code +
-        `</POSTAL_CODE>
-          <REF_CUSTOMER>` +
-        ref_customer +
-        `</REF_CUSTOMER>
-          <SALES_ORG>` +
-        sales_org +
-        `</SALES_ORG>
-          <STREET>` +
-        street +
-        ` </STREET>
-          <TELEPHONE>` +
-        telephone +
-        `</TELEPHONE>
+          <CITY>`+city+`</CITY>
+          <COUNTRY>`+country+`</COUNTRY>
+          <CURRENCY>`+currency+`</CURRENCY>
+          <DISTCHANNEL>`+distchannel+`</DISTCHANNEL>
+          <DIVISION>`+division+`</DIVISION>
+          <FIRST_NAME>`+first_name+`</FIRST_NAME>
+          <LANGUAGE>`+language+`</LANGUAGE>
+          <LAST_NAME>`+last_name+`</LAST_NAME>
+          <POSTAL_CODE>`+postal_code+`</POSTAL_CODE>
+          <REF_CUSTOMER>`+ref_customer+`</REF_CUSTOMER>
+          <SALESORG>`+sales_org+`</SALESORG>
+          <STREET>`+street+`</STREET>
+          <TELEPHONE>`+telephone+`</TELEPHONE>
 		  </urn:ZFM_MASTERDATA_AJ>
     </soapenv:Body>
  </soapenv:Envelope>`;
@@ -1447,17 +1410,14 @@ app.post('/masterdataupload', (req, res) => {
     request.post(options, function(error, response, body) {
         if (!error && response.statusCode == 200) {
             var result1 = parser.xml2json(body, { compact: true, spaces: 4 });
-            console.log(result1);
             result2 = JSON.parse(result1);
-            console.log(result2);
             // alert(result2);
-            var resp = result2['SOAP:Envelope']['SOAP:Body']['ns0:ZFM_CP_MASTERDATA_UPLOAD.Response']['KUNNR'];
-            // var resp = result2['SOAP:Envelope'];
-            //    var resp = result1['SOAP:Envelope']['SOAP:Body']['ns1:MT_LOGINRESPONSE']['RESULT'];
-            console.log(' customer id created =' + resp['_text']);
-            // res.send(resp._text);
+            var resp = result2['SOAP:Envelope']['SOAP:Body']['ns0:ZFM_MASTERDATA_AJ.Response'];
             res.send(resp);
         }
+		else{
+			console.log(response)
+		}
     });
 });
 

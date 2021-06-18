@@ -30,8 +30,14 @@
                   <input class="upload" type="file" (change)="getFilename($event)" />
                 </h4>
                 <div class="fileUpload">
-                <div class="btn-2">
-                  <a href=""><span>Upload</span></a>
+                <div class="btn-2" (click)='upload()'>
+                  <button><span>Upload</span></button>
+                </div>
+              </div>
+              <div *ngIf = "cust?.length != 0" class="col text-center">
+                <h6>Record Created</h6>
+                <div *ngFor = "let i of cust" class='card-header pb-1' style="background: rgb(77, 190, 255); color: #fff">
+                  <h6><b><i>{{+i}}</i></b></h6>
                 </div>
               </div>
             </div>
