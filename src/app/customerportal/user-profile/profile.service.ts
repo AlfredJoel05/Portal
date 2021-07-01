@@ -25,7 +25,8 @@ export class ProfileService {
     this.httpClient.post('http://localhost:3000/editprofile',profileData).subscribe(res =>{
       
       if(res === 'Success'){
-        console.log('Edit Profile:'+res)
+        // console.log('Edit Profile:'+res)
+        alert('Profile Updated Sucessfully')
         this.router.navigate(['customer/dashboard'])
       }
     

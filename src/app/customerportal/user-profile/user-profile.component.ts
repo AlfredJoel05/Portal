@@ -22,6 +22,8 @@ export class UserProfileComponent implements OnInit {
   pin='';
   username='';
   subscription : Subscription;
+  result='Submit Changes';
+  resultValid:Boolean = false;
 
   form = new FormGroup({
 		cf_name: new FormControl(''),
@@ -53,6 +55,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   onSubmit(){ 
+    this.resultValid = true;
     this.profileService.postData(this.form.value)
   }
 

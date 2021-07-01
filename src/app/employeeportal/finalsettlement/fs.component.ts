@@ -13,6 +13,7 @@ export class FinalSettleComponent implements OnInit {
   data:any;
   spin1:boolean = true;
   flag:string;
+  test = {type : 'DISPLAY'}
 
 
   TYPES = ['CREATE', 'DELETE', 'CHECK']
@@ -25,10 +26,10 @@ export class FinalSettleComponent implements OnInit {
 
   ngOnInit(): void {
 
-  // this.httpClient.post(`${this.SERVER}/empfs`, this.form.value ).subscribe(res => {
-  //   this.data = res
-  //   alert(this.flag)
-  // })
+  this.httpClient.post(`${this.SERVER}/empfs`, this.test ).subscribe(res => {
+    this.flag = res['E_DISPLAY_FLAG']['_text']
+    alert(this.flag)
+  }) 
 
   }
 

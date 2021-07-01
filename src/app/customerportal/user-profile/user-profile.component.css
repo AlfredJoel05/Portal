@@ -15,17 +15,21 @@
     height: 900px;
 }
 
+.spinner ::ng-deep .mat-progress-spinner circle, .mat-spinner circle {
+    stroke: #ffffff;
+    position: absolute;
+}
+
+.bt{
+    font-weight: 500;
+    min-width: 150px !important;
+    min-height: 40px !important;
+}
+
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: rgb(0, 255, 221);
+    font-weight: normal;
+    color: rgb(73, 73, 73);
     opacity: 1; /* Firefox */
-  }
-  
-  :-ms-input-placeholder { /* Internet Explorer 10-11 */
-    color: rgb(0, 255, 221);
-  }
-  
-  ::-ms-input-placeholder { /* Microsoft Edge */
-    color: rgb(0, 255, 221);
   }
 
 .ctitle{
@@ -57,4 +61,8 @@
     font-family: Roboto,sans-serif;
     font-size: 18px;
     color: rgb(73, 73, 73);
+}
+
+input{
+    font-weight: bold;
 }

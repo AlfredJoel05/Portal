@@ -14,3 +14,7 @@ body{
     max-height: 100vh;
     overflow: hidden;
 }
+.card-footer{
+    align-content: flex-end;
+    color: #979696;
+}

@@ -13,9 +13,9 @@ export class DashboardComponent implements OnInit {
   f_name = '';
   l_name = '';
 
-  slen:number;
-  ilen:number;
-  dlen:number;
+  public slen:any;
+  public ilen:any;
+  public dlen:any;
 
   slenValid:boolean = false;
   ilenValid:boolean = false;
@@ -78,18 +78,35 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.getData().subscribe(res => {
       // console.log('Dash Output:'+res)
     })
-
-    this.dashboardService.getInq().subscribe(res => {
-      this.ilen = res 
+    if(!!sessionStorage.getItem('Ilen')){
       this.ilenValid = true;
-    })
+      this.ilen = sessionStorage.getItem('Ilen')
+    }else{
+    this.dashboardService.getInq().subscribe(res => {
+      this.ilen = res
+      console.log(this.ilen)
+      this.ilenValid = true;
+    })}
+
+    if(!!sessionStorage.getItem('Slen')){
+      this.slenValid = true;
+      this.slen = sessionStorage.getItem('Slen')
+    }else{
     this.dashboardService.getSales().subscribe(res => {
       this.slen = res
+      console.log(this.slen)
       this.slenValid = true;})
+    }
+
+    if(!!sessionStorage.getItem('Dlen')){
+      this.dlenValid = true
+      this.dlen = sessionStorage.getItem('Dlen')
+    }else{
     this.dashboardService.getDel().subscribe(res => {
       this.dlen = res
+      console.log(this.dlen)
       this.dlenValid = true;
-    })
+    })}
 
     this.chartColor = "#FFFFFF";
     this.canvas = document.getElementById("bigDashboardChart");

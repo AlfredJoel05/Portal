@@ -71,7 +71,14 @@
                   <input type="text" class="form-control" placeholder={{pin}}  formControlName="c_pin">
                 </div>
               </div>
-              <button align="center" class="btn bt">Submit Changes</button>
+              <div class="card-footer">
+                <div *ngIf="!resultValid; else elseBlock">
+                  <button align="center" class="btn bt">{{result}}</button>
+                </div>
+                <ng-template #elseBlock>
+                  <button align="center" class="btn bt"><div class="spinner"><mat-spinner diameter='20' style="margin:0 auto;"></mat-spinner></div></button>
+                </ng-template>
+              </div>
             </div>
             <hr>
           </form>

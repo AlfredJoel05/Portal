@@ -4160,6 +4160,7 @@ app.post('/emppayslip', (req, res) => {
 });
 
 app.post('/empfs', (req, res) => {
+	
     username = loginCred[loginCred.length - 1];
     // username = '0000007006'
 	console.log('Employee Payslip: ', username)
