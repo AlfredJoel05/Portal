@@ -32,6 +32,7 @@ export class VendorprofileComponent implements OnInit {
 		c_country: new FormControl(''),
 		c_pin: new FormControl(''),
 	});
+  resultValid: boolean = false;
 
   constructor(private http: HttpClientModule, private profileService: VendorprofileService, private data : VendorAuthService) { }
 
@@ -52,6 +53,7 @@ export class VendorprofileComponent implements OnInit {
   }
 
   onSubmit(){ 
+    this.resultValid = true;
     this.profileService.postData(this.form.value)
   }
 

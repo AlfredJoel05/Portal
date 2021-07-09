@@ -21,6 +21,7 @@ export class DashboardService {
         var f_name = res['NAME1']['_text']
         var l_name = res['NAME2']['_text']
         this.login = f_name + '+' +l_name
+        sessionStorage.setItem('fullname', f_name+' '+l_name)
         this.messageSource.next(this.login)
         return res
     }))

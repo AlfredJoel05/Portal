@@ -15,6 +15,16 @@
     height: 900px;
 }
 
+.spinner ::ng-deep .mat-progress-spinner circle, .mat-spinner circle {
+    stroke: #ffffff;
+    position: absolute;
+}
+
+.bt{
+    font-weight: 500;
+    min-width: 150px !important;
+    min-height: 40px !important;
+}
 
 .ctitle{
     padding-left: 8px;

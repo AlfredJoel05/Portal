@@ -37,7 +37,6 @@ export class VendorNavbarComponent implements OnInit {
         this.login = message
         this.f_name = this.login.split('+')[0]
         this.l_name = this.login.split('+')[1]
-        console.log('Nav Comp:'+ this.f_name + this.l_name)
       })
 
       this.listTitles = ROUTES.filter(listTitle => listTitle);
@@ -171,8 +170,7 @@ export class VendorNavbarComponent implements OnInit {
     // }
 
     logout(){
-      sessionStorage.removeItem('token')
-      sessionStorage.removeItem('username')
+      sessionStorage.clear()
       this.router.navigate(['/']);
     }
 }

@@ -23,7 +23,7 @@ export class UserProfileComponent implements OnInit {
   username='';
   subscription : Subscription;
   result='Submit Changes';
-  resultValid:Boolean = false;
+  resultValid: boolean = false;
 
   form = new FormGroup({
 		cf_name: new FormControl(''),

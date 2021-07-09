@@ -27,7 +27,8 @@
                   <tr *ngFor="let p of header">
                     <td class="r0">{{ p.MAT_DOC._text }}</td>
                     <td class="r1">{{ p.DOC_DATE._text }}</td>
-                    <td class="r2">{{ p.TR_EV_TYPE._text }}</td>
+                    <!-- <td class="r2">{{ p.TR_EV_TYPE._text }}</td> -->
+                    <td class="r2">Goods Receipt</td>
                     <td class="r3">{{ p.PSTNG_DATE._text }}</td>
                     <td class="r4">{{ p.ENTRY_DATE._text }}</td>
                     <td class="r5">{{ p.ENTRY_TIME._text }}</td>
@@ -51,27 +52,28 @@
                   <tr>
                     <th class="c0" scope="col" sortable="name" (sort)="onSort($event)">Material Doc</th>
                     <th class="c1" scope="col" sortable="name" (sort)="onSort($event)">Material Item</th>
-                    <th class="c2" scope="col" sortable="name" (sort)="onSort($event)">Material</th>
+                    <th class="c2" scope="col" sortable="name" (sort)="onSort($event)">Purchase Order</th>
                     <th class="c3" scope="col" sortable="name" (sort)="onSort($event)">Plant</th>
                     <th class="c4" scope="col" sortable="name" (sort)="onSort($event)">Move Type</th>
-                    <th class="c5" scope="col" sortable="name" (sort)="onSort($event)">Customer</th>
-                    <th class="c6" scope="col" sortable="name" (sort)="onSort($event)">Sales Order</th>
-                    <th class="c7" scope="col" sortable="name" (sort)="onSort($event)">Item</th>
+                    <th class="cc5" scope="col" sortable="name" (sort)="onSort($event)">Vendor</th>
+                    <th class="c6" scope="col" sortable="name" (sort)="onSort($event)">PO Item</th>
+                    <th class="cc6" scope="col" sortable="name" (sort)="onSort($event)">Item</th>
                     <th class="c8" scope="col" sortable="name" (sort)="onSort($event)">Unit</th>
                     <th class="c9"></th>
                   </tr>
                   </thead>
                   <tbody>
                     <div *ngIf="!spin2" class="spinner"><mat-spinner style="margin:0 auto;"></mat-spinner></div>
-                    <tr *ngFor="let p of data">
+                    <tr *ngFor="let p of data | slice:1">
                       <td class="dr0">{{ p.MAT_DOC._text }}</td>
-                      <td class="dr1">{{ p.MATDOC_ITM._text }}</td>
-                      <td class="dr2">{{ p.MATERIAL._text }}</td>
+                      <td class="dr1">{{ +p.MATDOC_ITM._text }}</td>
+                      <td class="dr2">{{ +p.PO_NUMBER._text }}</td>
                       <td class="dr3">{{ p.PLANT._text }}</td>
                       <td class="dr4">{{ p.MOVE_TYPE._text }}</td>
-                      <td class="dr5">{{ p.CUSTOMER._text }}</td>
+                      <td class="dr5">{{ customer }}</td>
+                      <td class="dr8">{{ +p.PO_ITEM._text }}</td>
                       <td class="dr6">{{ p.SALES_ORD._text }}</td>
-                      <td class="dr7">{{ p.S_ORD_ITEM._text }}</td>
+                      <td class="dr7">{{ +p.S_ORD_ITEM._text }}</td>
                       <td class="dr8">{{ p.ENTRY_UOM._text }}</td>                   
                     </tr>
                   </tbody>

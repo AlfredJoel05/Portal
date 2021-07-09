@@ -17,8 +17,15 @@
     <div class="col-lg-4">
       <div class="card card-chart">
         <div class="card-header">
-          <h5 class="card-category">Total Header Records</h5>
-          <h4 class="card-title">Purchase Order Details</h4>
+          <h5 class="card-category">Total Inquiry Details</h5>
+          <h4 class="card-title">
+            <div *ngIf="!ilenValid; else elseBlock">
+              <div class="stats"><i class="now-ui-icons loader_refresh spin"></i> Fetching Total Records...</div>
+            </div>
+            <ng-template #elseBlock>
+              <div class="stats"><i class="now-ui-icons design_bullet-list-67"></i> Total Records Fetched: {{ilen}}</div>
+            </ng-template>
+          </h4>
         </div>
         <div class="card-body">
           <div class="chart-area">
@@ -36,26 +43,22 @@
           </div>
         </div>
         <div class="card-footer">
-          <div *ngIf="!ilenValid; else elseBlock">
-            <div class="stats">
-              <i class="now-ui-icons loader_refresh spin"></i> Fetching Total
-              Records...
-            </div>
-          </div>
-          <ng-template #elseBlock>
-            <div class="stats">
-              <i class="now-ui-icons design_bullet-list-67"></i> Total Records
-              Fetched: {{ ilen }}
-            </div>
-          </ng-template>
+          Inquiry Details
         </div>
       </div>
     </div>
     <div class="col-lg-4 col-md-6">
       <div class="card card-chart">
         <div class="card-header">
-          <h5 class="card-category">Total Header Records</h5>
-          <h4 class="card-title">Goods Receipt Details</h4>
+          <h5 class="card-category">Total Sales Order Details</h5>
+          <h4 class="card-title">
+            <div *ngIf="!slenValid; else else2Block">
+              <div class="stats"><i class="now-ui-icons loader_refresh spin"></i> Fetching Total Records...</div>
+            </div>
+            <ng-template #else2Block>
+              <div class="stats"><i class="now-ui-icons design_bullet-list-67"></i> Total Records Fetched: {{slen}}</div>
+            </ng-template>
+          </h4>
         </div>
         <div class="card-body">
           <div class="chart-area">
@@ -74,26 +77,26 @@
           </div>
         </div>
         <div class="card-footer">
-          <div *ngIf="!slenValid; else elseBlock">
-            <div class="stats">
-              <i class="now-ui-icons loader_refresh spin"></i> Fetching Total
-              Records...
-            </div>
-          </div>
-          <ng-template #elseBlock>
-            <div class="stats">
-              <i class="now-ui-icons design_bullet-list-67"></i> Total Records
-              Fetched: {{ slen }}
-            </div>
-          </ng-template>
+          Sales Order Details
         </div>
       </div>
     </div>
     <div class="col-lg-4 col-md-6">
       <div class="card card-chart">
         <div class="card-header">
-          <h5 class="card-category">Total Header Records</h5>
-          <h4 class="card-title">Purchase Request Details</h4>
+          <h5 class="card-category">Total Delivery Details</h5>
+          <h4 class="card-title">
+            <div *ngIf="!dlenValid; else else3Block">
+              <div class="stats">
+                <i class="now-ui-icons loader_refresh spin"></i> Fetching Total Records...
+              </div>
+            </div>
+            <ng-template #else3Block>
+              <div class="stats">
+                <i class="now-ui-icons design_bullet-list-67"></i> Total Records Fetched: {{dlen}}
+              </div>
+            </ng-template>
+          </h4>
         </div>
         <div class="card-body">
           <div class="chart-area">
@@ -111,18 +114,7 @@
           </div>
         </div>
         <div class="card-footer">
-          <div *ngIf="!dlenValid; else elseBlock">
-            <div class="stats">
-              <i class="now-ui-icons loader_refresh spin"></i> Fetching Total
-              Records...
-            </div>
-          </div>
-          <ng-template #elseBlock>
-            <div class="stats">
-              <i class="now-ui-icons design_bullet-list-67"></i> Total Records
-              Fetched: {{ dlen }}
-            </div>
-          </ng-template>
+          Delivery Details
         </div>
       </div>
     </div>

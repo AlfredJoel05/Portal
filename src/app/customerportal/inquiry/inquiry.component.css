@@ -61,15 +61,16 @@ thead tr{
 }
 .c0{
     border-top-left-radius : 10px;
+    padding-left: 20px;
 }
 .c1{
     padding-left: 20px;
 }
 .c2{
-    padding-left: 130px;
+    padding-left: 100px;
 }
 .c3{
-    padding-left: 133px;
+    padding-left: 73px;
 }
 .c4{
     padding-left: 70px;
@@ -78,7 +79,7 @@ thead tr{
     padding-left: 70px;
 }
 .c6{
-    padding-left: 70px;
+    padding-left: 120px;
 }
 .c7{
     padding-left: 80px;
@@ -98,19 +99,17 @@ tbody{
     padding-left: 25px;
 }
 .r1{
-    padding-left: 105px;
-    ;
+    padding-left: 115px;
 }
 .r2{
-    padding-left: 210px;
-    
+    padding-left: 170px;   
 }
 .r3{
-    padding-left: 230px;
+    padding-left: 200px;
    
 }
 .r4{
-    padding-left: 145px;
+    padding-left: 160px;
    
 }
 .r5{
@@ -118,15 +117,15 @@ tbody{
     
 }
 .r6{
-    padding-left: 160px;
+    padding-left: 130px;
     
 }
 .r7{
-    padding-left: 160px;
+    padding-left: 100px;
     
 }
 .r8{
-    padding-left: 19px;
+    padding-left: 29px;
     
 }
 

@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, Directive, EventEmitter, Input, Output, QueryList, ViewChildren } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 
 @Component({
@@ -12,7 +12,7 @@ export class DeliveryComponent implements OnInit {
   constructor(private httpClient : HttpClient) { }
   data:any;
   spin:boolean = false;
-
+  soldto = sessionStorage.getItem('fullname')
   SERVER = "http://localhost:3000";
 
   ngOnInit() :void  {

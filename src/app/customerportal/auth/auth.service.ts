@@ -3,6 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, Subject } from  'rxjs';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router'
+import { AlertService } from '../../alert/alert.service';
+import { MatDialog } from '@angular/material/dialog';
+import { AlertComponent } from '../../alert/alert.component';
+
 
 @Injectable({
   providedIn: 'root'
@@ -13,12 +17,12 @@ export class AuthService {
   private loginPostSubject = new Subject<any>();
   SERVER = "http://localhost:3000";
 
-  isLoggedIn: boolean = false; //Change it to false -- True for testing purposes
+  isLoggedIn: boolean = true; //Change it to false -- True for testing purposes
 
   private logincred = new BehaviorSubject<string>("default Message");
 	loginCred = this.logincred.asObservable();
 
-  constructor(private httpClient: HttpClient , private router : Router) {
+  constructor(private httpClient: HttpClient , private router : Router, private alertService : AlertService, private dialog : MatDialog) {
     this.loginPost$ = this.loginPostSubject.asObservable();
    }
 
@@ -42,7 +46,9 @@ export class AuthService {
           return username;
 			  }
         else{
-          alert("Incorrect CustomerID or Password");
+          this.alertService.sendMessage('Invalid Username or Password :(')
+          this.alertService.changeIcon('error') //error icon 
+          this.dialog.open(AlertComponent);
           return "NULL";
         }
 

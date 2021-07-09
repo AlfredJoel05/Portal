@@ -156,8 +156,7 @@ export class EmployeeNavbarComponent implements OnInit {
     };
 
     logout(){
-      sessionStorage.removeItem('token')
-      sessionStorage.removeItem('username')
+      sessionStorage.clear();
       this.router.navigate(['/']);
     }
 }

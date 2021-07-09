@@ -24,22 +24,22 @@
         [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="wrap-input100">
           <div class="form-group">
-            <input class="input100" type="text" name="username" placeholder="Customer ID" formControlName="username"
+            <input class="input100" type="text" name="username" placeholder="Customer ID*" formControlName="username"
               [ngClass]="{'is-invalid': form.get('username').touched && form.get('username').invalid}"/>
 
             <div *ngIf="form.get('username').touched && form.get('username').invalid" class="invalid-email">
-              <div *ngIf="form.get('username').errors.required">Customer ID is required*</div>
+              <div *ngIf="form.get('username').errors.required">Customer ID is required field!</div>
               <!-- <div *ngIf="form.get('email').errors.email">Valid Email address is required. For example 'abc@xyz.com'</div> -->
             </div>
           </div>
 
           <div class="passwordfield">
             <div class="form-group">
-                <input type="password" class="input100"  formControlName="password" placeholder="Password"
+                <input type="password" class="input100"  formControlName="password" placeholder="Password*"
                 [ngClass]="{'is-invalid':form.get('password').touched && form.get('password').invalid}" />
 
                 <div *ngIf="form.get('password').touched && form.get('password').invalid"  class="invalid-password">
-                  <div *ngIf="form.get('password').errors.required">Password is required*</div>
+                  <div *ngIf="form.get('password').errors.required">Password is required field!</div>
                 </div>
             </div>
           </div>

@@ -13,6 +13,7 @@ export class GoodsreceiptComponent implements OnInit {
   header:any;
   spin1:boolean = false;
   spin2:boolean = false;
+  customer = sessionStorage.getItem('fullname')
 
   SERVER = "http://localhost:3000";
 

@@ -3,7 +3,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { VendorAuthService } from '../vauth.service';
 import { VendorLoaderService } from '../loader/vloader.service';
 import { Router } from '@angular/router'
-import { BehaviorSubject } from 'rxjs';
+import { AlertService } from '../../../alert/alert.service';
+import { MatDialog } from '@angular/material/dialog';
+import { AlertComponent } from '../../../alert/alert.component';
 
 @Component({
   selector: 'app-vendor-login',
@@ -20,17 +22,27 @@ export class VendorLoginComponent implements OnInit {
 	status = 'Logging in';
 	result = "Invalid User";
 
-	constructor(private loginService: VendorAuthService, public loaderService: VendorLoaderService, private router : Router) {}
+	constructor(private loginService: VendorAuthService, private alertService : AlertService, private dialog : MatDialog, public loaderService: VendorLoaderService, private router : Router) {}
 
 	success:boolean = this.loginService.isLoggedIn;
 	ngOnInit() {}
 	
 	
 	onSubmit() {
+		var checker = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+
 		if (this.form.valid) {
-			this.loginPostData();
+			if(checker.test(this.form.controls.username.value)){
+				this.alertService.sendMessage('Customer ID cannot contain special characters :(')
+				this.alertService.changeIcon('error') //error icon 
+				this.dialog.open(AlertComponent);
+		  	} else {
+				this.loginPostData();
+			}	
 		} else {
-			alert('Fill in the required Fields');
+			this.alertService.sendMessage('Fill in all the required fields!')
+			this.alertService.changeIcon('error') 
+			this.dialog.open(AlertComponent);
 		}
 	}
 

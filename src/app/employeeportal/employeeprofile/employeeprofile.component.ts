@@ -32,6 +32,7 @@ export class EmployeeprofileComponent implements OnInit {
 		c_country: new FormControl(''),
 		c_pin: new FormControl(''),
 	});
+  resultValid: boolean = false;
 
   constructor(private http: HttpClientModule, private profileService: EmployeeprofileService, private data : EmployeeAuthService) { }
 
@@ -51,7 +52,8 @@ export class EmployeeprofileComponent implements OnInit {
     })
   }
 
-  onSubmit(){ 
+  onSubmit(){
+    this.resultValid = true 
     this.profileService.postData(this.form.value)
   }
 

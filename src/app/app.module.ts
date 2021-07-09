@@ -37,6 +37,12 @@ import { EmployeeAdminLayoutComponent } from './employeeportal/layouts/employee-
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { AboutComponent } from './about/about.component';
 
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { AlertComponent } from './alert/alert.component';
+import { SuccessComponent } from './success/success.component';
+
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -54,6 +60,9 @@ import { AboutComponent } from './about/about.component';
     MatProgressSpinnerModule,
     ReactiveFormsModule,
     ToastrModule.forRoot(),
+    MatDialogModule,
+    MatButtonModule,
+    MatIconModule,
   ],
   declarations: [
     AppComponent,
@@ -66,6 +75,8 @@ import { AboutComponent } from './about/about.component';
     VendorLoginComponent,
     EmployeeLoginComponent,
     EmployeeAdminLayoutComponent,
+    AlertComponent,
+    SuccessComponent,
   ],
   providers: [
     { provide:HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true},

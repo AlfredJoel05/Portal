@@ -15,7 +15,9 @@ import { ChartsModule } from 'ng2-charts';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   imports: [
@@ -26,6 +28,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     ChartsModule,
     MatProgressSpinnerModule,
     NgbModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatIconModule,
     ToastrModule.forRoot()
   ],
   declarations: [

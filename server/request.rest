@@ -1,4 +1,4 @@
-GET http://localhost:3000/getempprofile
+GET http://localhost:3000/goodsreceipt
 
 ###
 

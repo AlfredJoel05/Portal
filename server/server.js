@@ -5,6 +5,7 @@ const request = require('request');
 const bodyParser = require('body-parser');
 const md5 = require('md5');
 const jwt = require('jsonwebtoken');
+const { Console } = require('console');
 
 const app = express();
 app.use(bodyParser.json());
@@ -3850,7 +3851,7 @@ app.get('/getempprofile', function(req, res) {
 app.post('/updateempprofile', (req, res) => {
     username = loginCred[loginCred.length - 1];
     // username = '0000007006'
-
+	console.log('Update Proflie Hitted');
     const loginData =
         `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
 		<soapenv:Header/>
@@ -3858,34 +3859,22 @@ app.post('/updateempprofile', (req, res) => {
 		   <urn:ZFM_EMP_UPDATE_AJ>
 			  <!--You may enter the following 9 items in any order-->
 			  <!--Optional:-->
-			  <CITY>` + req.body.c_city + `</CITY>
+			  <CITY>`+ req.body.c_city +`</CITY>
 			  <!--Optional:-->
-			  <COUNTRY>` +
-        req.body.c_country +
-        `</COUNTRY>
+			  <COUNTRY>`+req.body.c_country +`</COUNTRY>
 			  <!--Optional:-->
 			  <DOB>` + req.body.dob + `</DOB>
 			  <EMP_ID>` + username + `</EMP_ID>
 			  <!--Optional:-->
-			  <FIRST_NAME>` +
-        req.body.cf_name +
-        `</FIRST_NAME>
+			  <FIRST_NAME>` + req.body.cf_name +`</FIRST_NAME>
 			  <!--Optional:-->
-			  <LAST_NAME>` +
-        req.body.cl_name +
-        `</LAST_NAME>
+			  <LAST_NAME>`+ req.body.cl_name +`</LAST_NAME>
 			  <!--Optional:-->
-			  <MOBILE>` +
-        req.body.c_mobile +
-        `</MOBILE>
+			  <MOBILE>` + req.body.c_mobile +`</MOBILE>
 			  <!--Optional:-->
-			  <PINCODE>` +
-        req.body.c_pin +
-        `</PINCODE>
+			  <PINCODE>` + req.body.c_pin +`</PINCODE>
 			  <!--Optional:-->
-			  <STREET>` +
-        req.body.c_street +
-        `</STREET>
+			  <STREET>` + req.body.c_street +`</STREET>
 		   </urn:ZFM_EMP_UPDATE_AJ>
 		</soapenv:Body>
 	 </soapenv:Envelope>`;

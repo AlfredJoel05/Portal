@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+::ng-deep.mat-dialog-container{
+    border-radius: 20px;
+    min-width: 700px;
+    min-height: 155px;
+    background-color: #ff4e22;
+    align-items: center;
+}
+
+::ng-deep.mat-dialog-content{
+    margin-bottom: 0px;
+}
+
+button{
+    font-family: 'Poppins', sans-serif;
+    font-size: 19px;
+    font-weight: 500;
+}
+
+h3{
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    color: #ffffff
+}
+
+h5{
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 35px;
+    color: rgb(245, 245, 245);
+}
+mat-icon{
+    font-family: 'Material Icons' !important;
+    font-size: 70px;
+    color: white;
+}
+
+.icon{
+    max-width: 20%;
+}
+
+.content{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 100%;
+    margin-bottom: 0px;
+    color:rgb(245, 245, 245);
+}
+
+.closed{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.btn{
+    border-radius: 10px;
+    transition: ease-in-out .2s;
+    background-color: #ff8567;
+    color:white;
+}
+
+.btn:hover{
+    background-color: #ffffff;
+    color: #ff4e22;
+}

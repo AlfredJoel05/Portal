@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import * as Chartist from 'chartist';
 import { DashboardService } from './dashboard.service';
 
 @Component({
@@ -76,7 +75,6 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
 
     this.dashboardService.getData().subscribe(res => {
-      // console.log('Dash Output:'+res)
     })
     if(!!sessionStorage.getItem('Ilen')){
       this.ilenValid = true;
@@ -84,7 +82,6 @@ export class DashboardComponent implements OnInit {
     }else{
     this.dashboardService.getInq().subscribe(res => {
       this.ilen = res
-      console.log(this.ilen)
       this.ilenValid = true;
     })}
 
@@ -94,7 +91,6 @@ export class DashboardComponent implements OnInit {
     }else{
     this.dashboardService.getSales().subscribe(res => {
       this.slen = res
-      console.log(this.slen)
       this.slenValid = true;})
     }
 
@@ -104,7 +100,6 @@ export class DashboardComponent implements OnInit {
     }else{
     this.dashboardService.getDel().subscribe(res => {
       this.dlen = res
-      console.log(this.dlen)
       this.dlenValid = true;
     })}
 

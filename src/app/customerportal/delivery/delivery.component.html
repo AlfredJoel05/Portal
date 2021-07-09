@@ -7,32 +7,31 @@
               <div class="card-header">
                 <h4 class="card-title ctitle">List of Delivery</h4><br>
               </div>
-              
               <table class="table table-striped">
                 <thead class="thead">
                 <tr>
                   <th class="c0" scope="col" sortable="name" (sort)="onSort($event)">Sales Doc</th>
                   <th class="c1" scope="col" sortable="name" (sort)="onSort($event)">Created On</th>
                   <th class="c2" scope="col" sortable="name" (sort)="onSort($event)">Sales Org</th>
-                  <th class="c3" scope="col" sortable="name" (sort)="onSort($event)">Delivery Date</th>
-                  <th class="c4" scope="col" sortable="name" (sort)="onSort($event)">Incoterms</th>
-                  <th class="c5" scope="col" sortable="name" (sort)="onSort($event)">SD Item</th>
-                  <th class="c6" scope="col" sortable="name" (sort)="onSort($event)">Matrial Description</th>
+                  <th class="c3" scope="col" sortable="name" (sort)="onSort($event)">Item No.</th>
+                  <th class="c4" scope="col" sortable="name" (sort)="onSort($event)">Material Description</th>
+                  <th class="c5" scope="col" sortable="name" (sort)="onSort($event)">Incoterms</th>
+                  <th class="c6" scope="col" sortable="name" (sort)="onSort($event)">Delivery Date</th>
                   <th class="c7" scope="col" sortable="name" (sort)="onSort($event)">Sold To</th>
                   <th class= "c8"></th>
                 </tr>
                 </thead>
                 <tbody>
                   <div *ngIf="!spin" class="spinner"><mat-spinner style="margin:0 auto;"></mat-spinner></div>
-                  <tr *ngFor="let p of data">
-                    <td class="r0">{{ +p.VBELN._text }}</td>
+                  <tr *ngFor="let p of data | slice:1">
+                    <td class="r0">{{ +p.VBELN._text }}</td> 
                     <td class="r1">{{ p.ERDAT._text }}</td>
                     <td class="r2">{{ p.VKORG._text }}</td>
-                    <td class="r3">{{ p.LFDAT_V._text }}</td>
-                    <td class="r4">{{ p.INCO2._text }}</td>
-                    <td class="r5">{{ +p.POSNR._text }}</td>
-                    <td class="r6">{{ p.ARKTX._text }}</td>
-                    <td class="r7">{{ p.KUNAG._text }}</td>                   
+                    <td class="r3">{{ +p.POSNR._text }}</td>
+                    <td class="r4">{{ p.ARKTX._text }}</td>
+                    <td class="r5">{{ p.INCO2._text }}</td>
+                    <td class="r6">{{ p.LFDAT_V._text }}</td>
+                    <td class="r7">{{ soldto }}</td>                   
                     <td class="r8"></td>                   
                   </tr>
               </tbody>

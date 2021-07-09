@@ -27,10 +27,11 @@
                     <td class="r0">{{ p.DOC_NUMBER._text }}</td>
                     <td class="r1">{{ p.CREATED_ON._text }}</td>
                     <td class="r2">{{ p.CREATED_BY._text }}</td>
-                    <td class="r3">{{ p.LAST_ITEM._text }}</td>
+                    <td class="r3">{{ +p.LAST_ITEM._text }}</td>
                     <td class="r4">{{ p.DOC_TYPE._text }}</td>
                     <td class="r5">{{ p.DSCNT1_TO._text }}</td>
-                    <td class="r6">{{ +p.VENDOR._text }}</td>
+                    <!-- <td class="r6">{{ p.VENDOR._text }}</td> -->
+                    <td class="r6">{{ vendorname }}</td>
                     <td class="r7">{{ p.TARGET_VAL._text }}</td>                   
                     <td class="r8"></td>                   
                   </tr>
@@ -63,7 +64,7 @@
                       <td class="dr0">{{ p.DOC_NUMBER._text }}</td>
                       <td class="dr1">{{ p.STATUS._text }}</td>
                       <td class="dr2">{{ p.CHANGED_ON._text }}</td>
-                      <td class="dr3">{{ p.DOC_ITEM._text }}</td>
+                      <td class="dr3">{{ +p.DOC_ITEM._text }}</td>
                       <td class="dr4">{{ p.SHORT_TEXT._text }}</td>
                       <td class="dr5">{{ p.QUANTITY._text }}</td>
                       <td class="dr6">{{ +p.NET_PRICE._text }}</td>

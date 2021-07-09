@@ -13,6 +13,7 @@ export class VendorrequestComponent implements OnInit {
   spin1:boolean = false;
   header:any;
   spin2:boolean = false;
+  vendorname = sessionStorage.getItem('fullname')
 
   SERVER = "http://localhost:3000";
 

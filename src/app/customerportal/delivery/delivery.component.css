@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;500;600;800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;500;600&display=swap');
 
+
 .cardrow{
     width: 100%;
 }
@@ -71,16 +72,16 @@ thead tr{
     padding-left: 73px;
 }
 .c4{
-    padding-left: 80px;
+    padding-left: 120px;
 }
 .c5{
-    padding-left: 70px;
+    padding-left: 120px;
 }
 .c6{
-    padding-left: 140px;
+    padding-left: 80px;
 }
 .c7{
-    padding-left: 100px;
+    padding-left: 70px;
 }
 .c8{
     border-top-right-radius : 10px;
@@ -99,25 +100,25 @@ tbody{
     padding-left: 65px;
 }
 .r2{
-    padding-left: 100px;
+    padding-left: 120px;
 }
 .r3{
     padding-left: 140px;
 }
 .r4{
-    padding-left: 110px;
+    padding-left: 90px;
 }
 .r5{
-    padding-left: 85px;
+    padding-left: 55px;
 }
 .r6{
-    padding-left: 70px;
+    padding-left: 90px;
 }
 .r7{
-    padding-left: 50px;
+    padding-left: 100px;
 }
 .r8{
-    padding-left: 10px;
+    padding-left: 9px;
 }
 
 .tble-responsive{

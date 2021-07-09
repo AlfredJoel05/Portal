@@ -96,10 +96,10 @@ tbody{
 }
 
 .r0{
-    padding-left: 25px;
+    padding-left: 45px;
 }
 .r1{
-    padding-left: 145px;
+    padding-left: 125px;
 }
 .r2{
     padding-left: 110px;
@@ -110,19 +110,19 @@ tbody{
    
 }
 .r4{
-    padding-left: 145px;
+    padding-left: 150px;
    
 }
 .r5{
-    padding-left: 140px;
+    padding-left: 165px;
     
 }
 .r6{
-    padding-left: 160px;
+    padding-left: 150px;
     
 }
 .r7{
-    padding-left: 160px;
+    padding-left: 110px;
     
 }
 .r8{
@@ -156,19 +156,19 @@ tbody{
     padding-left: 145px;
 }
 .dr4{
-    padding-left: 120px; 
+    padding-left: 95px; 
 }
 .dr5{
-    padding-left: 10px;
+    padding-left: 60px;
 }
 .dr6{
-    padding-left: 130px;
+    padding-left: 110px;
 }
 .dr7{
-    padding-left: 80px;
+    padding-left: 120px;
 }
 .dr8{
-    padding-left: 80px;
+    padding-left: 10px;
 }
 .tble-responsive{
     display: grid;

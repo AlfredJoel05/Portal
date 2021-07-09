@@ -3,6 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, Subject } from  'rxjs';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router'
+import { AlertService } from '../../alert/alert.service';
+import { MatDialog } from '@angular/material/dialog';
+import { AlertComponent } from '../../alert/alert.component';
 
 @Injectable({
   providedIn: 'root'
@@ -13,12 +16,12 @@ export class VendorAuthService {
   private loginPostSubject = new Subject<any>();
   SERVER = "http://localhost:3000";
 
-  isLoggedIn: boolean = false; // Default Value : false -- True for testing purposes
+  isLoggedIn: boolean = true; // Default Value : false -- True for testing purposes
 
   private logincred = new BehaviorSubject<string>("default Message");
 	loginCred = this.logincred.asObservable();
 
-  constructor(private httpClient: HttpClient , private router : Router) {
+  constructor(private httpClient: HttpClient , private router : Router, private alertService : AlertService, private dialog : MatDialog) {
     this.loginPost$ = this.loginPostSubject.asObservable();
    }
 
@@ -27,7 +30,6 @@ export class VendorAuthService {
     this.loginPostSubject.next(loginData);
     this.logincred.next(JSON.stringify(loginData));
 
-		console.log('Login Cred in vauthservice: '+ this.loginCred)
     return this.httpClient.post(`${this.SERVER}/vendorlogin`, loginData).pipe(
       map(response =>{ 
         if(response !== "UNUS" && response !== "WP")
@@ -43,11 +45,15 @@ export class VendorAuthService {
           return username;
 			  }
         else if(response === "UNUS"){
-          alert("User Unregistered");
+          this.alertService.sendMessage('Unregistered user sign-in attempt!')
+          this.alertService.changeIcon('error') //error icon 
+          this.dialog.open(AlertComponent);
           return "NULL";
         }
         else {
-          alert("Incorrect VendorID or Password");
+          this.alertService.sendMessage('Invalid Username or Password :(')
+          this.alertService.changeIcon('error') //error icon 
+          this.dialog.open(AlertComponent);
           return "NULL";
         }
 	  })
